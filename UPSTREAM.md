@@ -34,3 +34,7 @@ Upstream kaynağı: https://github.com/mattpocock/skills
 | adapted/diagnose-dotnet | skills/engineering/diagnose | heavy | 2026-05-13 |
 | adapted/to-prd | skills/engineering/to-prd | light | 2026-05-13 |
 | adapted/to-issues | skills/engineering/to-issues | light | 2026-05-13 |
+| adapted/tdd-react | skills/engineering/tdd | heavy | 2026-05-13 |
+| adapted/tdd-react-native | skills/engineering/tdd | heavy | 2026-05-13 |
+| adapted/improve-codebase-architecture | skills/engineering/improve-codebase-architecture | heavy | 2026-05-13 |
+| adapted/prototype | skills/engineering/prototype | medium | 2026-05-13 |

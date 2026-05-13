@@ -10,6 +10,9 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 - Adapted skills: grill-with-docs, tdd-dotnet, diagnose-dotnet
 - Rubion skills: setup-precommit-dotnet, scaffold-vsa-feature, scaffold-microservice, migrate-legacy-to-vsa, setup-otel-dotnet, ef-core-migration-review, tubitak-1507-document, setup-rubion-skills (bootstrap, GitHub + Jira adapter şablonları)
 - Adapted skills (light): to-prd, to-issues — issue tracker-agnostic, docs/agents/issue-tracker.md adapter'ından okur
+- Adapted skills (heavy): tdd-react (Vitest + RTL + MSW + TanStack Query), tdd-react-native (Jest + RTL-RN + Maestro + Expo), improve-codebase-architecture (VSA/Clean karar ağacı, Domain vs Integration Event, Repository eleştirisi, Monolith→Mikroservis)
+- Adapted skill (medium): prototype (4 mod — Backend CLI, Backend API, Frontend variants, Mobile/Expo)
+- Brief v1.0 → v1.1: Linear → GitHub+Jira değişikliği, setup-rubion-skills + ADR-002/003 eklemeleri dokümante edildi
 - Docs: skill-authoring.md, stack-conventions.md
 - ADR'ler: 001 (VSA default), 002 (PostgreSQL primary), 003 (MediatR CQRS)
 

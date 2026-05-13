@@ -27,7 +27,7 @@ Bu repo Rubion'un internal asset'i olacak. Hem AI-augmented development workflow
 - ORM: EF Core (default), Dapper (perf-critical)
 - Test: xUnit + FluentAssertions + NSubstitute + Testcontainers
 - Observability: OpenTelemetry + Serilog
-- Issue tracker: **Linear** (varsayılan)
+- Issue tracker: **GitHub Issues** veya **Jira Cloud** (proje bazlı — adapter pattern ile, bkz. `skills/setup-rubion-skills`)
 
 **Mimari tercih:** **Vertical Slice Architecture** (Jimmy Bogard) + CQRS + MediatR. Clean Architecture sadece overkill olmadığında.
 
@@ -191,7 +191,7 @@ Orijinal "deep modules" felsefesi (Ousterhout) korunur. Aşağıdaki .NET patter
 Sadece "vertical slice" tanımına Rubion açıklığı:
 - Slice tek mikroservise sığıyorsa: ideal
 - Multiple service değişikliği gerekiyorsa: PRD'de açıkça belirt, contract değişiklikleri ayrı issue
-- Linear default; GitHub Issues alternatif
+- Issue tracker: GitHub Issues veya Jira (adapter pattern — `docs/agents/issue-tracker.md`)
 
 #### 3.8 `adapted/prototype/` — adaptation_level: **medium**
 
@@ -223,6 +223,7 @@ Bunlar tamamen Rubion'a özel, upstream'de karşılığı yok. `skills/` klasör
 - [ ] `skills/setup-otel-dotnet/` — OpenTelemetry kurulumu (Jaeger/Tempo target'la)
 - [ ] `skills/ef-core-migration-review/` — Migration üretildikten sonra review: destructive operation var mı, prod-safe mi
 - [ ] `skills/tubitak-1507-document/` — TÜBİTAK 1507 başvuru dokümanı için teknik bölüm üretici (R&D yenilikçilik vurgusu)
+- [ ] `skills/setup-rubion-skills/` — bootstrap; yeni projede `docs/agents/issue-tracker.md` (GitHub veya Jira) ve `docs/agents/domain.md` kurar (v1.1'de eklendi)
 
 Her skill için ayrı bir issue/task açılabilir, hepsi birlikte yazılması zorunlu değil.
 
@@ -230,7 +231,10 @@ Her skill için ayrı bir issue/task açılabilir, hepsi birlikte yazılması zo
 
 - [ ] `docs/sync-process.md` — Aylık upstream sync prosedürü (checklist olarak)
 - [ ] `docs/skill-authoring.md` — Yeni skill nasıl yazılır, hangi yapıyı izler
-- [ ] `docs/adr/` — Rubion'un mimari kararları (örn: "ADR-001: Vertical Slice neden default")
+- [ ] `docs/adr/` — Rubion'un mimari kararları:
+  - ADR-001: Vertical Slice neden default
+  - ADR-002: PostgreSQL birincil, MSSQL legacy/enterprise (v1.1)
+  - ADR-003: MediatR ile CQRS pipeline (v1.1)
 - [ ] `docs/stack-conventions.md` — Naming, folder structure, dependency tercihleri
 
 ---
@@ -472,6 +476,36 @@ Faz 4 (Rubion özel skill'ler) ve Faz 5 (dokümantasyon detayı) ayrı turlarda 
 
 ---
 
-**Brief versiyonu:** 1.0
+**Brief versiyonu:** 1.1
 **Hazırlayan:** Murat Kızılelma + Claude
 **Tarih:** 2026-05-13
+
+---
+
+## 9. Değişiklik Notları (v1.1 — 2026-05-13)
+
+Brief v1.0'a göre değişen ve eklenen kalemler:
+
+### Değişti
+
+- **Issue tracker:** "Linear (varsayılan)" → "GitHub Issues veya Jira Cloud (adapter pattern)". Gerekçe: müşteri projelerinin %100'ü ya GitHub ya Jira kullanıyor; Linear kapsam dışına alındı. Adapter pattern `skills/setup-rubion-skills/` ile her projede tek seferlik konfigüre edilir.
+
+### Eklendi (brief v1.0'da listelenmemişti)
+
+- **`skills/setup-rubion-skills/`** — bootstrap skill. Yeni projede `docs/agents/issue-tracker.md` (GitHub veya Jira şablonu) ve `docs/agents/domain.md` (single/multi-context) üretir. `to-prd`, `to-issues` vb. skill'ler buradan okur.
+- **`docs/adr/0002-postgresql-primary-database.md`** ve **`docs/adr/0003-mediatr-cqrs-pipeline.md`** — brief sadece ADR-001'i örneklemişti; üretim sırasında bu iki karar netleşti ve dokümante edildi.
+
+### Faz 3 Kapsamı Tamamlandı
+
+Brief v1.0 Done Definition "en az 3 adapte skill" der; v1.1 ile **Faz 3'ün tüm maddeleri** karşılandı:
+
+| Skill | Adaptation | Durum |
+|---|---|---|
+| 3.1 grill-with-docs | light | ✓ |
+| 3.2 tdd-dotnet | heavy | ✓ |
+| 3.3 tdd-react | heavy | ✓ |
+| 3.4 tdd-react-native | heavy | ✓ |
+| 3.5 diagnose-dotnet | heavy | ✓ |
+| 3.6 improve-codebase-architecture | heavy | ✓ |
+| 3.7 to-prd + to-issues | light | ✓ |
+| 3.8 prototype | medium | ✓ |
