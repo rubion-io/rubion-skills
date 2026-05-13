@@ -14,14 +14,38 @@ Yeni veya mevcut bir projede bu kütüphaneyi nasıl kullanacağını öğren: *
 
 ## Kurulum
 
-```bash
-# Tek bir projede kullanmak için
-cp -r adapted/* /path/to/your/project/.claude/skills/
-cp -r skills/* /path/to/your/project/.claude/skills/
+Skill'ler **Claude Code** ve **Cursor**'un global skill klasörlerine junction (Windows) veya symlink (Linux/macOS) olarak bağlanır. Repo'da `git pull` yaptığında global klasörler otomatik güncellenmiş olur — manuel sync gerekmez.
 
-# veya symlink
-ln -s $(pwd)/adapted /path/to/your/project/.claude/skills-adapted
+### Windows (PowerShell)
+
+```powershell
+.\scripts\install.ps1                 # Claude + Cursor (varsayılan)
+.\scripts\install.ps1 -Target claude  # sadece Claude Code
+.\scripts\install.ps1 -Target cursor  # sadece Cursor
+.\scripts\install.ps1 -Force          # mevcut klasörlerin üzerine yaz
+.\scripts\install.ps1 -Uninstall      # tüm junction'ları kaldır
 ```
+
+### Linux / macOS (Bash)
+
+```bash
+./scripts/install.sh                  # Claude + Cursor (varsayılan)
+./scripts/install.sh --target=claude  # sadece Claude Code
+./scripts/install.sh --target=cursor  # sadece Cursor
+./scripts/install.sh --force          # mevcut klasörlerin üzerine yaz
+./scripts/install.sh --uninstall      # tüm symlink'leri kaldır
+```
+
+### Bağlanan Yerler
+
+| Tool | Yol |
+|---|---|
+| Claude Code | `~/.claude/skills/<skill-name>` |
+| Cursor | `~/.cursor/skills-cursor/<skill-name>` |
+
+(Windows'ta `~` = `%USERPROFILE%`)
+
+Her `adapted/*` ve `skills/*` alt klasörü, isim korunarak hedef klasörde bir junction/symlink olarak görünür. `vendor/` dahil edilmez.
 
 ## Yapı
 
