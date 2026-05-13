@@ -32,4 +32,5 @@ Upstream kaynağı: https://github.com/mattpocock/skills
 | adapted/grill-with-docs | skills/engineering/grill-with-docs | light | 2026-05-13 |
 | adapted/tdd-dotnet | skills/engineering/tdd | heavy | 2026-05-13 |
 | adapted/diagnose-dotnet | skills/engineering/diagnose | heavy | 2026-05-13 |
-| ... | ... | ... | ... |
+| adapted/to-prd | skills/engineering/to-prd | light | 2026-05-13 |
+| adapted/to-issues | skills/engineering/to-issues | light | 2026-05-13 |
