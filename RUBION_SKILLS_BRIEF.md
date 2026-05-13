@@ -224,6 +224,7 @@ Bunlar tamamen Rubion'a özel, upstream'de karşılığı yok. `skills/` klasör
 - [ ] `skills/ef-core-migration-review/` — Migration üretildikten sonra review: destructive operation var mı, prod-safe mi
 - [ ] `skills/tubitak-1507-document/` — TÜBİTAK 1507 başvuru dokümanı için teknik bölüm üretici (R&D yenilikçilik vurgusu)
 - [ ] `skills/setup-rubion-skills/` — bootstrap; yeni projede `docs/agents/issue-tracker.md` (GitHub veya Jira) ve `docs/agents/domain.md` kurar (v1.1'de eklendi)
+- [ ] `skills/dispatch-agents/` — orchestrator; `ready-for-agent` etiketli bağımsız issue'ları paralel subagent'lara dağıtır, her biri kendi worktree'sinde implementasyonu yapar ve PR açar (v1.2'de eklendi)
 
 Her skill için ayrı bir issue/task açılabilir, hepsi birlikte yazılması zorunlu değil.
 
@@ -476,7 +477,7 @@ Faz 4 (Rubion özel skill'ler) ve Faz 5 (dokümantasyon detayı) ayrı turlarda 
 
 ---
 
-**Brief versiyonu:** 1.1
+**Brief versiyonu:** 1.2
 **Hazırlayan:** Murat Kızılelma + Claude
 **Tarih:** 2026-05-13
 
@@ -494,6 +495,10 @@ Brief v1.0'a göre değişen ve eklenen kalemler:
 
 - **`skills/setup-rubion-skills/`** — bootstrap skill. Yeni projede `docs/agents/issue-tracker.md` (GitHub veya Jira şablonu) ve `docs/agents/domain.md` (single/multi-context) üretir. `to-prd`, `to-issues` vb. skill'ler buradan okur.
 - **`docs/adr/0002-postgresql-primary-database.md`** ve **`docs/adr/0003-mediatr-cqrs-pipeline.md`** — brief sadece ADR-001'i örneklemişti; üretim sırasında bu iki karar netleşti ve dokümante edildi.
+
+### v1.2 — Dispatch Orchestrator (2026-05-13)
+
+- **`skills/dispatch-agents/`** — brief v1.0 ve v1.1'de yoktu. Issue tracker'daki bağımsız `ready-for-agent` issue'larını paralel Claude Code subagent'larına dağıtır; her subagent kendi git worktree'sinde `scaffold-vsa-feature` + `tdd-dotnet` zincirini çalıştırır, PR açar. Brief'in "AI-native software methodology" çıktısının en somut göstergesi. GitHub + Jira için iki adapter.
 
 ### Faz 3 Kapsamı Tamamlandı
 

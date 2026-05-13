@@ -42,6 +42,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | 8 | İlk feature için PRD | [`adapted/to-prd`](../adapted/to-prd/SKILL.md) → GitHub'a yayınla | GitHub'da `#1: PRD: <feature>` issue |
 | 9 | PRD'yi tracer-bullet dilimlere böl | [`adapted/to-issues`](../adapted/to-issues/SKILL.md) | Bağımlılık linkli 3-5 issue (`#2, #3, #4`) |
 | 10 | Her issue için inner döngü | [`skills/scaffold-vsa-feature`](../skills/scaffold-vsa-feature/SKILL.md) → [`adapted/tdd-dotnet`](../adapted/tdd-dotnet/SKILL.md) | Çalışan feature + test'ler |
+| 10b | 3+ bağımsız issue varsa, paralel batch | [`skills/dispatch-agents`](../skills/dispatch-agents/SKILL.md) | Her biri kendi worktree'sinde çalışan subagent'lar, açılmış PR'lar, dispatch raporu |
 | 11 | DB değişikliği olursa | [`skills/ef-core-migration-review`](../skills/ef-core-migration-review/SKILL.md) | Migration güvenlik raporu (merge öncesi) |
 | 12 | Frontend katmanı | [`adapted/tdd-react`](../adapted/tdd-react/SKILL.md) veya [`adapted/tdd-react-native`](../adapted/tdd-react-native/SKILL.md) | Frontend test'leri |
 | 13 | Bug / perf sorunu | [`adapted/diagnose-dotnet`](../adapted/diagnose-dotnet/SKILL.md) | Disipline edilmiş root-cause analizi |
@@ -68,6 +69,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | 8 | Yeni feature için PRD | [`adapted/to-prd`](../adapted/to-prd/SKILL.md) → Jira'ya Story | Jira'da yeni Story (`RUB-N`) |
 | 9 | Story'yi sub-task'lara böl | [`adapted/to-issues`](../adapted/to-issues/SKILL.md) | Jira Subtask'lar + "Blocks" link'leri |
 | 10 | Feature implementasyonu | [`skills/scaffold-vsa-feature`](../skills/scaffold-vsa-feature/SKILL.md) → [`adapted/tdd-dotnet`](../adapted/tdd-dotnet/SKILL.md) | Yeni VSA dilim + testler |
+| 10b | 3+ bağımsız issue varsa, paralel batch | [`skills/dispatch-agents`](../skills/dispatch-agents/SKILL.md) | Subagent başına PR, dispatch raporu |
 | 11 | DB değişikliği | [`skills/ef-core-migration-review`](../skills/ef-core-migration-review/SKILL.md) | 1 yıllık projede büyük tablo var → CONCURRENTLY önemli |
 | 12 | Bug / perf | [`adapted/diagnose-dotnet`](../adapted/diagnose-dotnet/SKILL.md) | EF Core N+1, DLX, dotnet-trace |
 | 13 | Refactor zamanı | [`adapted/improve-codebase-architecture`](../adapted/improve-codebase-architecture/SKILL.md) — Adaylar fazı | Numaralı deepening önerileri |
