@@ -13,6 +13,7 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 - Adapted skills (heavy): tdd-react (Vitest + RTL + MSW + TanStack Query), tdd-react-native (Jest + RTL-RN + Maestro + Expo), improve-codebase-architecture (VSA/Clean karar ağacı, Domain vs Integration Event, Repository eleştirisi, Monolith→Mikroservis)
 - Adapted skill (medium): prototype (4 mod — Backend CLI, Backend API, Frontend variants, Mobile/Expo)
 - Brief v1.0 → v1.1: Linear → GitHub+Jira değişikliği, setup-rubion-skills + ADR-002/003 eklemeleri dokümante edildi
+- docs/getting-started.md: Geliştirici onboarding rehberi — Senaryo 1 (sıfır proje + GitHub) ve Senaryo 2 (1 yıllık proje + Jira) için adım adım skill path'leri, karşılaştırma tablosu, ilk gün checklist'i. README'den erişilebilir.
 - Docs: skill-authoring.md, stack-conventions.md
 - ADR'ler: 001 (VSA default), 002 (PostgreSQL primary), 003 (MediatR CQRS)
 

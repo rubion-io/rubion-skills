@@ -4,6 +4,14 @@ Claude Code / agent skill kütüphanesi — Rubion'un .NET + React/RN + monolith
 
 Temel alınan kaynak: [mattpocock/skills](https://github.com/mattpocock/skills) (MIT).
 
+## Buradan Başla
+
+Yeni veya mevcut bir projede bu kütüphaneyi nasıl kullanacağını öğren: **[docs/getting-started.md](docs/getting-started.md)**
+
+İki senaryo için adım adım path:
+- **Sıfırdan proje + GitHub** → hangi skill, hangi sırayla
+- **1 yıllık mevcut proje + Jira** → anlama, retrofit, iyileştirme
+
 ## Kurulum
 
 ```bash
