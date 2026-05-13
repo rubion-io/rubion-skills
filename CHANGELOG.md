@@ -4,7 +4,15 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
-### Added
+### Added (Hafta 2)
+- `docs/adr/0004-database-per-service.md`: Database-per-Service karar gerekçesi — Saga pattern, CDC raporlama, Shared DB neden reddedildi.
+- `docs/adr/0005-masstransit-rabbitmq.md`: MassTransit + RabbitMQ stack kararı — transport-agnostic abstraction, NServiceBus/CAP/raw RabbitMQ neden reddedildi.
+- `docs/adr/0006-observability-stack.md`: OTel + Grafana Ecosystem (Jaeger dev, Tempo prod, Prometheus, Loki) — Datadog/AppInsights neden reddedildi.
+- `docs/adr/0007-ef-core-over-dapper.md`: EF Core varsayılan ORM — Dapper escape hatch koşulları, Repository pattern silme testi.
+- `docs/adr/0008-test-stack.md`: Test stack (.NET xUnit+FluentAssertions+NSubstitute+Testcontainers, React Vitest+MSW, RN Maestro) — her seçimin gerekçesi.
+- ADR referansları skill'lere eklendi: `improve-codebase-architecture` → ADR-004, `scaffold-microservice` → ADR-005, `setup-otel-dotnet` → ADR-006, `diagnose-dotnet` → ADR-006+007, `tdd-dotnet/react/react-native` → ADR-008.
+
+### Added (Hafta 1 — önceki commit)
 - Initial repo skeleton
 - Vendor of mattpocock/skills @ f304057d61d3df3c9fd992ac2b6e3833cb9325fb
 - Adapted skills: grill-with-docs, tdd-dotnet, diagnose-dotnet

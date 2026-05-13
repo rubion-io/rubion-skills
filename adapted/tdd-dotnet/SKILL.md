@@ -52,6 +52,8 @@ DOĞRU (dikey):
 | Web integration | `WebApplicationFactory<Program>` |
 | Contract test | PactNet (sadece mikroservis contract'larında) |
 
+> **Bu seçimlerin gerekçesi** (xUnit vs NUnit, NSubstitute vs Moq, Testcontainers vs in-memory) → **[ADR-008](../../docs/adr/0008-test-stack.md)**
+
 ### Proje Yapısı
 
 ```

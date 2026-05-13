@@ -10,7 +10,9 @@ stack: [dotnet, csharp, ef-core, opentelemetry, rabbitmq, serilog]
 
 # Diagnose — .NET / Rubion
 
-Zor hataları çözmek için disiplin. Aşamaları yalnızca açıkça gerekçelendirirsen atla.
+Zor hataları çözmek için disiplin.
+
+> **Stack kararları:** EF Core vs Dapper seçimi → **[ADR-007](../../docs/adr/0007-ef-core-over-dapper.md)** | Observability (OTel + Serilog) → **[ADR-006](../../docs/adr/0006-observability-stack.md)** Aşamaları yalnızca açıkça gerekçelendirirsen atla.
 
 Codebase'i incelerken projenin domain glossary'ini kullan. Dokunduğun alandaki ADR'leri gözden geçir.
 

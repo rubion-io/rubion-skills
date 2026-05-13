@@ -73,7 +73,7 @@ dotnet add package Serilog.AspNetCore
 dotnet add package Serilog.Sinks.Console
 dotnet add package Serilog.Enrichers.Environment
 
-# RabbitMQ (mesajlaşma varsa)
+# RabbitMQ / MassTransit (mesajlaşma varsa) — bkz. ADR-005
 dotnet add package MassTransit.RabbitMQ
 ```
 

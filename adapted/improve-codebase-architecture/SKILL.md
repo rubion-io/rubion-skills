@@ -185,6 +185,8 @@ Shared DB:
 
 Rubion default: **Database-per-service**, raporlama için **read replica + CDC + data warehouse**.
 
+> Karar gerekçesi ve Saga pattern detayı → **[ADR-004](../../docs/adr/0004-database-per-service.md)**
+
 ---
 
 ## Sık Karşılaşılan Derinleştirme Fırsatları (Rubion'da)

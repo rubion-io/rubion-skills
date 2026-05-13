@@ -10,6 +10,8 @@ stack: [react, typescript, vitest, react-testing-library, msw, tanstack-query]
 
 # TDD — React / Rubion
 
+> **Stack seçimi gerekçesi** (Vitest vs Jest, MSW vs axios mock, RTL) → **[ADR-008](../../docs/adr/0008-test-stack.md)**
+
 ## Felsefe
 
 **Davranışı test et, implementasyonu değil.** Kullanıcının yaptığını yap (tıkla, yaz, gör), DOM'da görülmesi gerekeni assert et. State, props veya internal hook çağrılarını test etme.

@@ -6,6 +6,8 @@ stack: [dotnet, csharp, opentelemetry, jaeger, prometheus]
 
 # Setup OpenTelemetry — .NET / Rubion
 
+> **Mimari karar:** Observability stack seçimi (OpenTelemetry + Jaeger dev / Grafana Tempo prod + Prometheus + Serilog) için → **[ADR-006](../../docs/adr/0006-observability-stack.md)**
+
 ## Paketler
 
 ```bash

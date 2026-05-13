@@ -10,6 +10,8 @@ stack: [react-native, expo, typescript, jest, react-testing-library, maestro]
 
 # TDD — React Native / Rubion
 
+> **Stack seçimi gerekçesi** (Maestro vs Detox, jest-expo preset) → **[ADR-008](../../docs/adr/0008-test-stack.md)**
+
 ## Felsefe (Web ile Aynı)
 
 Kullanıcının yaptığını yap, kullanıcının gördüğünü assert et. Implementation detayını test etme.
