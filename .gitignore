@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+
+# Visual Studio
+.vs/
+*.user
+
+# .NET build outputs
+bin/
+obj/
+
+# Rider
+.idea/
+
+# Temp / local
+*.tmp
+*.log
