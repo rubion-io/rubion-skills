@@ -4,6 +4,9 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 4)
+- `skills/tubitak-1507-document/examples/01-ai-production-planning-application.md`: Tam doldurulmuş TÜBİTAK 1507 başvurusu örneği — Milagro Yazılım A.Ş. hayali şirketi, plastik enjeksiyon sektörü için "AI-Destekli Üretim Planlama Sistemi". 6 bölüm: Amaç/Kapsam, Özgün Değer (5 makale + 5 ticari ürün analizi + 3 özgün katkı), 4 Ar-Ge Faaliyeti (teknik içerik + belirsizlik + başarı kriteri + risk), Gantt tablosu (18 ay), Ekip (5 kişi, 54 ay-kişi), Bütçe (5.176.000 TL). Adapte etme notları dahil.
+
 ### Added (Hafta 3)
 - `evals/` klasörü: 18 skill için trigger accuracy eval suite.
   - `evals/runner.ts`: Anthropic API tabanlı eval runner — her query için hangi skill trigger olduğunu kontrol eder, %80 accuracy eşiği, PASS/FAIL raporu.

@@ -604,9 +604,9 @@ Bu, **kimse adına PR merge edilmeyecek** demek değil; sadece review request'i 
 6. ~~**Gün 1-2 (4 saat):** Eval format + 360 query yazma~~ ✓
 7. ~~**Gün 3 (2 saat):** Runner script + CI integration~~ ✓
 
-### Hafta 4 — TÜBİTAK Özel
+### Hafta 4 — TÜBİTAK Özel ✓ TAMAMLANDI
 
-8. **Gün 1-2 (2 saat):** `tubitak-1507-document` için example (madde 1.5) — TÜBİTAK başvurusu yaklaşıyorsa öne çek
+8. ~~**Gün 1-2 (2 saat):** `tubitak-1507-document` için example (madde 1.5) — TÜBİTAK başvurusu yaklaşıyorsa öne çek~~ ✓
 
 ---
 
