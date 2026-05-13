@@ -4,7 +4,7 @@ upstream_commit: f304057d61d3df3c9fd992ac2b6e3833cb9325fb
 last_reviewed: 2026-05-13
 adaptation_level: heavy
 name: diagnose-dotnet
-description: .NET projelerinde disiplinli hata ayıklama döngüsü. Reproduce → minimize → hypothesize → instrument → fix → regression-test. dotnet-trace, BenchmarkDotNet, EF Core N+1, OpenTelemetry trace okuma ve RabbitMQ DLX ile desteklenmiş. "Diagnose this" / "debug this" / "something is broken" / performance sorunu bildirildiğinde kullan.
+description: .NET'te disiplinli hata ayıklama: reproduce → minimize → hypothesize → instrument → fix. EF Core N+1, OTel trace, RabbitMQ DLX desteğiyle. "Debug this", "performance issue", "something is broken" denildiğinde. Yeni feature yazımı için kullanma.
 stack: [dotnet, csharp, ef-core, opentelemetry, rabbitmq, serilog]
 ---
 

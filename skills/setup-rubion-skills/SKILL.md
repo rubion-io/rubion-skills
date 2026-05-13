@@ -1,6 +1,6 @@
 ---
 name: setup-rubion-skills
-description: Rubion skill kütüphanesini yeni bir projede kullanılabilir hale getirir. Issue tracker (GitHub veya Jira) ve domain doc (CONTEXT.md / ADR) yerleşimini docs/agents/ altına yazar. to-prd, to-issues, tdd-dotnet, diagnose-dotnet skill'lerinin ilk çalıştırılmasından önce bir kerelik çalıştırılır. "skill setup", "rubion init", "issue tracker config" denildiğinde kullan.
+description: Rubion skill kütüphanesini bir projede bootstrap eder — issue tracker (GitHub/Jira) ve domain doc yerleşimini `docs/agents/` altına yazar. "skill setup", "rubion init" denildiğinde. Sadece bir kez, proje başlangıcında çalıştır.
 stack: []
 ---
 

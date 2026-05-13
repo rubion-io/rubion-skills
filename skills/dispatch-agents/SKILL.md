@@ -1,12 +1,16 @@
 ---
 name: dispatch-agents
-description: Issue tracker'daki `ready-for-agent` etiketli ve birbirinden bağımsız issue'ları paralel subagent'lara dağıtır. Her subagent kendi git worktree'sinde çalışır, scaffold-vsa-feature + tdd-dotnet kombinasyonuyla implementasyonu yapar, PR açar. "İssue'ları dağıt", "paralel implementasyon", "AFK batch", "agent'lara böl" denildiğinde kullan.
+description: Bağımsız `ready-for-agent` issue'larını paralel subagent'lara dağıtır — her biri git worktree'de scaffold-vsa-feature + tdd-dotnet zinciriyle implementasyonu yapar, PR açar. "Paralel implementasyon", "AFK batch" denildiğinde. Sıralı bağımlı işler için kullanma.
 stack: []
 ---
 
 # Dispatch Agents — Rubion
 
 Bağımsız issue'ları paralel ajanlara dağıtarak implementasyon yaptırma orchestrator'ı. Bu skill **kod yazmaz** — yazdırır.
+
+> **Önemli:** Bu skill bir **orchestrator**'dur — Claude Code'un Agent dispatch yeteneğini kullanır.
+> Eğer kullandığın araç (Cursor, VS Code Copilot Chat, vb.) paralel subagent desteği vermiyorsa,
+> sonundaki "Manuel Mod" bölümüne git.
 
 ---
 
@@ -29,6 +33,7 @@ Bağımsız issue'ları paralel ajanlara dağıtarak implementasyon yaptırma or
 
 ## Ön Koşullar
 
+- **Claude Code v2.x+** ve `Agent` tool'unun subagent dispatch desteği — `isolation: "worktree"` ve `run_in_background: true` parametreleri gerekli. **Cursor'da native çalışmaz** (Manuel Mod bölümünü kullan).
 - [`setup-rubion-skills`](../setup-rubion-skills/SKILL.md) çalıştırılmış (`docs/agents/issue-tracker.md` var)
 - Git worktree desteği aktif (`git --version` ≥ 2.5)
 - Branch koruması: `main` doğrudan push reddediyor (agent'lar feature branch açacak)

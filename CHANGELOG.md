@@ -20,7 +20,18 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 - ADR'ler: 001 (VSA default), 002 (PostgreSQL primary), 003 (MediatR CQRS)
 
 ### Changed
-- (yok)
+- 5 skill description kısaltıldı (~%40 azalma) — trigger doğruluğu için keyword density artırıldı, negatif sınırlar eklendi: `setup-rubion-skills` (385→195 char), `dispatch-agents` (355→220), `improve-codebase-architecture` (347→200), `diagnose-dotnet` (344→215), `prototype` (326→180).
+- `scaffold-microservice` frontmatter'dan `kubernetes` kaldırıldı — içerikte K8s manifest yok, yanıltıcıydı. Stack: `[dotnet, csharp, docker]`.
+- `dispatch-agents` SKILL.md: "Ön Koşullar" bölümüne Claude Code v2.x+ gereksinimi ve Cursor uyarısı eklendi. Skill başına orchestrator uyarı kutusu eklendi.
+- `tdd-react-native` SKILL.md: "Bare React Native — Expo Olmayan Projeler" bölümü eklendi (jest preset, native modül mock'ları, Detox vs Maestro karşılaştırması).
+
+### Added
+- `adapted/tdd-react-native/examples/01-form-component-with-validation.md`: Login form TDD akışı (render → validation → API mock → refactor hook → Maestro E2E).
+- `adapted/improve-codebase-architecture/examples/01-shallow-repository-deepening.md`: OrderService 8 method silme testi analizi, 3 derinleştirme önerisi (Repository sil, entity method, VSA slice).
+- `skills/migrate-legacy-to-vsa/examples/01-orderservice-to-vsa-walkthrough.md`: Strangler Fig ile OrderService → VSA tam walkthrough (8 adım, her adımda commit).
+- `skills/scaffold-microservice/examples/01-inventory-service-from-scratch.md`: Inventory.Api sıfırdan (dotnet new → paketler → Program.cs → DbContext → Dockerfile → docker-compose → smoke test → Testcontainers integration test).
+- `.github/PULL_REQUEST_TEMPLATE.md`: Skill + ADR PR checklist'i.
+- `.github/CODEOWNERS`: Tüm skill ve doc değişikliklerine otomatik review request.
 
 ### Removed
 - (yok)

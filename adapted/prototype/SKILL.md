@@ -4,7 +4,7 @@ upstream_commit: f304057d61d3df3c9fd992ac2b6e3833cb9325fb
 last_reviewed: 2026-05-13
 adaptation_level: medium
 name: prototype
-description: Bir tasarımı bağlamadan önce keşfetmek için throwaway prototip kurar. Dört mod arasında dallanır — Backend CLI (logic POC, dotnet new console), Backend API (Minimal API endpoint POC), Frontend UI variants (Vite + ?variant=a|b|c), Mobile (Expo). "Bunu prototip et", "POC yap", "tasarımı dene" denildiğinde kullan.
+description: Throwaway prototip kurar — Backend CLI, Minimal API, Vite UI variants veya Expo modlarından biriyle. "Prototip et", "POC yap", "tasarımı dene" denildiğinde. Production kod için kullanma — çıktı silinir.
 stack: [dotnet, csharp, react, vite, react-native, expo]
 ---
 

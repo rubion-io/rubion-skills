@@ -1,0 +1,8 @@
+# CODEOWNERS — PR açıldığında bu kişilere review request atanır
+
+adapted/                    @muratkizilelma
+skills/                     @muratkizilelma
+docs/adr/                   @muratkizilelma
+vendor/                     @muratkizilelma
+evals/                      @muratkizilelma
+*.md                        @muratkizilelma

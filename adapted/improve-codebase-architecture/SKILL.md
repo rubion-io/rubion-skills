@@ -4,7 +4,7 @@ upstream_commit: f304057d61d3df3c9fd992ac2b6e3833cb9325fb
 last_reviewed: 2026-05-13
 adaptation_level: heavy
 name: improve-codebase-architecture
-description: Codebase'de derinleştirme fırsatlarını (deep module) tespit eder. .NET / VSA / CQRS bağlamında VSA vs Clean Architecture kararı, Domain vs Integration Event ayrımı, Repository pattern eleştirisi, Monolith→Mikroservis kararı dahil. "Mimari iyileştir", "refactor fırsatı bul", "tightly coupled modülleri ayır" denildiğinde kullan.
+description: .NET codebase'de "deep module" fırsatlarını tespit eder — VSA/Clean kararı, Repository eleştirisi, Domain vs Integration Event, Monolith→Mikroservis dahil. "Mimari iyileştir", "refactor fırsatı bul" denildiğinde. Yeni proje iskeleti için kullanma.
 stack: [dotnet, csharp, architecture]
 ---
 

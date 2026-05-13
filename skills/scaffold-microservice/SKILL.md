@@ -1,7 +1,7 @@
 ---
 name: scaffold-microservice
 description: Yeni bir .NET mikroservis iskeleti oluşturur. ASP.NET Core API projesi + opsiyonel Worker + Dockerfile + docker-compose entry + temel paketler. "Yeni mikroservis ekle", "servis iskeleti", "scaffold microservice" denildiğinde kullan.
-stack: [dotnet, csharp, docker, kubernetes]
+stack: [dotnet, csharp, docker]
 ---
 
 # Scaffold Microservice — Rubion
