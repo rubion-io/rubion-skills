@@ -1,0 +1,27 @@
+{
+  "skill": "dispatch-agents",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "ready-for-agent issue'larını paralel agent'lara dağıt", "should_trigger": true },
+    { "query": "AFK batch: 5 issue var, paralel implementasyon yap", "should_trigger": true },
+    { "query": "Issue'ları agent'lara böl, hepsini aynı anda çalıştır", "should_trigger": true },
+    { "query": "Bu bağımsız 4 issue'yu paralel worktree'lerde implement et", "should_trigger": true },
+    { "query": "Subagent'ları dispatch et, PR'ları otomatik açılsın", "should_trigger": true },
+    { "query": "ready-for-agent label'lı issue'ları al ve başlat", "should_trigger": true },
+    { "query": "Paralel implementasyon: 3 bağımsız task var", "should_trigger": true },
+    { "query": "Agent'lara issue dağıt, ben başka şeylerle ilgileneceğim", "should_trigger": true },
+    { "query": "Bu sprint'teki bağımsız issue'ları otomatik kodlat", "should_trigger": true },
+    { "query": "Batch dispatch: Jira RUB-142, RUB-143, RUB-144", "should_trigger": true },
+
+    { "query": "Tek bir issue'yu implement et", "should_trigger": false },
+    { "query": "VSA feature scaffold et", "should_trigger": false },
+    { "query": "Issue'ları alt task'lara böl", "should_trigger": false },
+    { "query": "PRD'den issue'lar oluştur", "should_trigger": false },
+    { "query": "Bu bağımlı issue'ları sırayla çöz", "should_trigger": false },
+    { "query": "GitHub issue oluştur", "should_trigger": false },
+    { "query": "Jira ticket güncelle", "should_trigger": false },
+    { "query": "Kod review yap", "should_trigger": false },
+    { "query": "TDD ile feature yaz", "should_trigger": false },
+    { "query": "CI pipeline kur", "should_trigger": false }
+  ]
+}

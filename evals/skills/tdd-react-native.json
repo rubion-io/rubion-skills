@@ -1,0 +1,27 @@
+{
+  "skill": "tdd-react-native",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Expo login screen için TDD yapalım", "should_trigger": true },
+    { "query": "React Native form component'ini test et", "should_trigger": true },
+    { "query": "jest-expo ile RN component testi yaz", "should_trigger": true },
+    { "query": "Maestro ile E2E flow yaz", "should_trigger": true },
+    { "query": "AsyncStorage mock'layarak test et", "should_trigger": true },
+    { "query": "React Native navigation testini nasıl yaparım", "should_trigger": true },
+    { "query": "@testing-library/react-native ile Pressable test et", "should_trigger": true },
+    { "query": "RN TDD red-green-refactor akışı", "should_trigger": true },
+    { "query": "Expo SDK ile yazılmış screen için test", "should_trigger": true },
+    { "query": "react-native-permissions mock yaz", "should_trigger": true },
+
+    { "query": "React web component'i test et", "should_trigger": false },
+    { "query": ".NET integration test Testcontainers ile", "should_trigger": false },
+    { "query": "Expo ile prototip kur", "should_trigger": false },
+    { "query": "Mobile UI variant'ı dene", "should_trigger": false },
+    { "query": "Detox legacy nasıl kaldırılır", "should_trigger": false },
+    { "query": "Android Studio kurulumu", "should_trigger": false },
+    { "query": "React Native navigasyon yapısını düzenle", "should_trigger": false },
+    { "query": "Vitest ile hook testi yaz", "should_trigger": false },
+    { "query": "EAS Build konfigürasyonu", "should_trigger": false },
+    { "query": "MSW ile API mock", "should_trigger": false }
+  ]
+}

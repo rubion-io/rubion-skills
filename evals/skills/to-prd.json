@@ -1,0 +1,27 @@
+{
+  "skill": "to-prd",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu konuşmayı PRD'ye dönüştür", "should_trigger": true },
+    { "query": "Feature dokümanı oluştur ve GitHub'a yayınla", "should_trigger": true },
+    { "query": "PRD üret: sipariş onay akışı", "should_trigger": true },
+    { "query": "Bunu PRD yap, Jira'ya story olarak at", "should_trigger": true },
+    { "query": "Product Requirements Document hazırla", "should_trigger": true },
+    { "query": "Bu feature için spec yaz, issue tracker'a gönder", "should_trigger": true },
+    { "query": "Konuşmamızdan PRD sentezle", "should_trigger": true },
+    { "query": "PRD: müşteri kredi limiti kontrolü", "should_trigger": true },
+    { "query": "Feature dokümanı üret GitHub Issues'a", "should_trigger": true },
+    { "query": "Bu fikri PRD formatında yaz", "should_trigger": true },
+
+    { "query": "PRD'yi issue'lara böl", "should_trigger": false },
+    { "query": "Issue tracker bağla", "should_trigger": false },
+    { "query": "Feature implement et", "should_trigger": false },
+    { "query": "Domain terminolojisi netleştir", "should_trigger": false },
+    { "query": "ADR yaz", "should_trigger": false },
+    { "query": "User story nedir?", "should_trigger": false },
+    { "query": "Jira sprint planla", "should_trigger": false },
+    { "query": "README güncelle", "should_trigger": false },
+    { "query": "Stakeholder sunumu hazırla", "should_trigger": false },
+    { "query": "Roadmap oluştur", "should_trigger": false }
+  ]
+}

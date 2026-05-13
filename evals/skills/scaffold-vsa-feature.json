@@ -1,0 +1,27 @@
+{
+  "skill": "scaffold-vsa-feature",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "CreateOrder için VSA feature iskelet oluştur", "should_trigger": true },
+    { "query": "Yeni feature ekle: CancelOrder command", "should_trigger": true },
+    { "query": "VSA slice scaffold et, Handler + Validator + Endpoint", "should_trigger": true },
+    { "query": "GetOrders query için dilim oluştur", "should_trigger": true },
+    { "query": "Bu feature için Command + Handler + Test dosyaları üret", "should_trigger": true },
+    { "query": "Yeni MediatR feature iskeletini kur", "should_trigger": true },
+    { "query": "Vertical Slice feature scaffold", "should_trigger": true },
+    { "query": "UpdateCustomer için slice dosyaları oluştur", "should_trigger": true },
+    { "query": "Minimal API endpoint + handler + validator scaffold", "should_trigger": true },
+    { "query": "Feature boilerplate üret: PlaceOrder", "should_trigger": true },
+
+    { "query": "Yeni mikroservis projesi oluştur", "should_trigger": false },
+    { "query": "Bu feature'ı TDD ile implemente et", "should_trigger": false },
+    { "query": "Mevcut OrderService'i refactor et", "should_trigger": false },
+    { "query": "EF Core migration ekle", "should_trigger": false },
+    { "query": "Codebase mimari analiz yap", "should_trigger": false },
+    { "query": "React component oluştur", "should_trigger": false },
+    { "query": "PRD yaz", "should_trigger": false },
+    { "query": "Issue'lara böl", "should_trigger": false },
+    { "query": "OpenTelemetry kur", "should_trigger": false },
+    { "query": "Legacy service'i VSA'ya taşı", "should_trigger": false }
+  ]
+}

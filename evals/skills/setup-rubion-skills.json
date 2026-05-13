@@ -1,0 +1,27 @@
+{
+  "skill": "setup-rubion-skills",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Rubion skills'i bu projeye kur", "should_trigger": true },
+    { "query": "Skill setup yap, GitHub Issues kullanacağız", "should_trigger": true },
+    { "query": "Rubion init: Jira bağla", "should_trigger": true },
+    { "query": "docs/agents/ klasörünü oluştur", "should_trigger": true },
+    { "query": "Issue tracker konfigürasyonu: GitHub", "should_trigger": true },
+    { "query": "Bu projeye rubion skills bootstrap et", "should_trigger": true },
+    { "query": "to-prd ve to-issues skill'lerini kullanmak istiyorum, önce ne yapmalıyım?", "should_trigger": true },
+    { "query": "Yeni projede skill setup: Jira + domain doc", "should_trigger": true },
+    { "query": "Rubion methodology'yi projeye entegre et", "should_trigger": true },
+    { "query": "Issue tracker adapter konfigürasyonu yap", "should_trigger": true },
+
+    { "query": "Husky pre-commit hook kur", "should_trigger": false },
+    { "query": "OpenTelemetry ekle", "should_trigger": false },
+    { "query": "GitHub Actions CI kur", "should_trigger": false },
+    { "query": "Yeni skill yaz", "should_trigger": false },
+    { "query": "Jira ticket oluştur", "should_trigger": false },
+    { "query": "CONTEXT.md güncelle", "should_trigger": false },
+    { "query": "Agent'ları dispatch et", "should_trigger": false },
+    { "query": "PRD oluştur", "should_trigger": false },
+    { "query": "Skill'leri global install et", "should_trigger": false },
+    { "query": "ADR-001 yaz", "should_trigger": false }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "skill": "tdd-react",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "React OrderCard component için test yaz", "should_trigger": true },
+    { "query": "RTL ile bu button'un tıklanmasını test et", "should_trigger": true },
+    { "query": "Vitest ile custom hook testi yazalım", "should_trigger": true },
+    { "query": "MSW ile API mock'layarak form submit test et", "should_trigger": true },
+    { "query": "TanStack Query ile veri çeken component'i test et", "should_trigger": true },
+    { "query": "React Testing Library ile red-green-refactor yapalım", "should_trigger": true },
+    { "query": "useAuth hook'u için test yaz", "should_trigger": true },
+    { "query": "Bu React component'inin davranışını test et", "should_trigger": true },
+    { "query": "user-event ile form doldurma testi", "should_trigger": true },
+    { "query": "Vitest + RTL ile component TDD", "should_trigger": true },
+
+    { "query": "React Native screen için test yaz", "should_trigger": false },
+    { "query": ".NET handler için xUnit testi yaz", "should_trigger": false },
+    { "query": "Vite ile prototip oluştur", "should_trigger": false },
+    { "query": "React component'ini refactor et", "should_trigger": false },
+    { "query": "Maestro E2E flow yaz", "should_trigger": false },
+    { "query": "VSA feature scaffold et", "should_trigger": false },
+    { "query": "Next.js API route oluştur", "should_trigger": false },
+    { "query": "OrderService mimari sorunlarını analiz et", "should_trigger": false },
+    { "query": "GitHub Actions CI pipeline kur", "should_trigger": false },
+    { "query": "Bu JavaScript'te hata var neden?", "should_trigger": false }
+  ]
+}

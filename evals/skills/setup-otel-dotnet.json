@@ -1,0 +1,27 @@
+{
+  "skill": "setup-otel-dotnet",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Projeye OpenTelemetry ekle", "should_trigger": true },
+    { "query": "Jaeger kurulumu yap, trace görmek istiyorum", "should_trigger": true },
+    { "query": "OTel kur, distributed tracing istiyorum", "should_trigger": true },
+    { "query": "Grafana Tempo'ya trace gönder", "should_trigger": true },
+    { "query": "EF Core enstrümantasyonu ekle", "should_trigger": true },
+    { "query": "Correlation ID propagation kur", "should_trigger": true },
+    { "query": "Tracing ekle: ASP.NET Core + HttpClient", "should_trigger": true },
+    { "query": "Prometheus metrics endpoint ekle", "should_trigger": true },
+    { "query": "Serilog + OTel entegrasyonu kur", "should_trigger": true },
+    { "query": "Mikroserviste distributed trace görmek istiyorum", "should_trigger": true },
+
+    { "query": "Trace'de yavaş span var, debug et", "should_trigger": false },
+    { "query": "Jaeger'da kırmızı span ne anlama geliyor?", "should_trigger": false },
+    { "query": "Performance profili al", "should_trigger": false },
+    { "query": "Loglara bakayım hata nerede", "should_trigger": false },
+    { "query": "Pre-commit hook kur", "should_trigger": false },
+    { "query": "GitHub Actions CI pipeline", "should_trigger": false },
+    { "query": "Yeni servis scaffold et", "should_trigger": false },
+    { "query": "Observability stack seç (ADR)", "should_trigger": false },
+    { "query": "EF Core N+1 tespiti", "should_trigger": false },
+    { "query": "Docker compose hazırla", "should_trigger": false }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "skill": "prototype",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu logic'i prototip et, throwaway olabilir", "should_trigger": true },
+    { "query": "POC yap: bu endpoint contract mantıklı mı?", "should_trigger": true },
+    { "query": "UI variant'larını dene: A, B, C", "should_trigger": true },
+    { "query": "Tasarımı dene, gerçek kod değil", "should_trigger": true },
+    { "query": "Expo Snack ile mobil prototip kur", "should_trigger": true },
+    { "query": "Backend CLI prototipi oluştur, state machine dene", "should_trigger": true },
+    { "query": "Vite ile UI variant A/B testi", "should_trigger": true },
+    { "query": "Minimal API endpoint POC yap", "should_trigger": true },
+    { "query": "Throwaway prototip: pricing kuralı doğru mu?", "should_trigger": true },
+    { "query": "Bu özelliği production'a geçirmeden önce hızlıca dene", "should_trigger": true },
+
+    { "query": "Production feature implement et", "should_trigger": false },
+    { "query": "Bu component'i TDD ile yaz", "should_trigger": false },
+    { "query": "VSA slice scaffold et", "should_trigger": false },
+    { "query": "Yeni mikroservis kur", "should_trigger": false },
+    { "query": "React projesine test ekle", "should_trigger": false },
+    { "query": "PRD oluştur", "should_trigger": false },
+    { "query": "Mevcut kodu refactor et", "should_trigger": false },
+    { "query": "UI design system kur", "should_trigger": false },
+    { "query": "Figma'dan kod üret", "should_trigger": false },
+    { "query": "Performans optimizasyonu yap", "should_trigger": false }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "skill": "to-issues",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu PRD'yi GitHub issue'larına böl", "should_trigger": true },
+    { "query": "Implementation ticket'larını oluştur", "should_trigger": true },
+    { "query": "Planı tracer-bullet dilimlere böl, Jira'ya yaz", "should_trigger": true },
+    { "query": "Bu spec'ten issue'lar üret, bağımlılıkları linkle", "should_trigger": true },
+    { "query": "Feature'ı alt task'lara böl ve issue tracker'a ekle", "should_trigger": true },
+    { "query": "Iş paketlerini oluştur: GitHub Issues", "should_trigger": true },
+    { "query": "PRD'den Jira subtask'lar üret", "should_trigger": true },
+    { "query": "Bu feature plan'ını 3-5 bağımsız issue'ya böl", "should_trigger": true },
+    { "query": "Dikey dilimler: her biri deploy edilebilir, issue oluştur", "should_trigger": true },
+    { "query": "Spec'i ticket'lara çevir, bağımlılık grafiği çıkar", "should_trigger": true },
+
+    { "query": "PRD yaz", "should_trigger": false },
+    { "query": "Issue'ları implement et", "should_trigger": false },
+    { "query": "Agent'lara issue dağıt", "should_trigger": false },
+    { "query": "Jira ticket güncelle", "should_trigger": false },
+    { "query": "GitHub Projects board kur", "should_trigger": false },
+    { "query": "Sprint planla", "should_trigger": false },
+    { "query": "Backlog refinement yap", "should_trigger": false },
+    { "query": "Acceptance criteria yaz", "should_trigger": false },
+    { "query": "Issue tracker bağla", "should_trigger": false },
+    { "query": "Tek issue oluştur", "should_trigger": false }
+  ]
+}

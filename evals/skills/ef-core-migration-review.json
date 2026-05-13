@@ -1,0 +1,27 @@
+{
+  "skill": "ef-core-migration-review",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu EF Core migration güvenli mi?", "should_trigger": true },
+    { "query": "Migration review yap: AddCustomerIndex", "should_trigger": true },
+    { "query": "Bu migration'da veri kaybı riski var mı?", "should_trigger": true },
+    { "query": "DROP COLUMN var production'da sorun çıkar mı?", "should_trigger": true },
+    { "query": "Migration'ı merge etmeden önce kontrol et", "should_trigger": true },
+    { "query": "Bu migration kilitleme yapıyor mu?", "should_trigger": true },
+    { "query": "Büyük tabloda ALTER TABLE safe mi?", "should_trigger": true },
+    { "query": "Migration geri alınabilir mi?", "should_trigger": true },
+    { "query": "AddMigration sonrası review istiyorum", "should_trigger": true },
+    { "query": "Migration production-safety açısından incele", "should_trigger": true },
+
+    { "query": "EF Core migration nasıl yazılır?", "should_trigger": false },
+    { "query": "Yeni EF Core migration oluştur", "should_trigger": false },
+    { "query": "dotnet ef migrations add komutunu çalıştır", "should_trigger": false },
+    { "query": "Veritabanı şeması nasıl güncellenir?", "should_trigger": false },
+    { "query": "ORM seçimi yapalım", "should_trigger": false },
+    { "query": "EF Core N+1 sorunu debug et", "should_trigger": false },
+    { "query": "PostgreSQL index ekle", "should_trigger": false },
+    { "query": "Database-per-service kararı ver", "should_trigger": false },
+    { "query": "Dapper ile raw SQL yaz", "should_trigger": false },
+    { "query": "TDD ile repository testi yaz", "should_trigger": false }
+  ]
+}

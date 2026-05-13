@@ -1,0 +1,27 @@
+{
+  "skill": "tubitak-1507-document",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "TÜBİTAK 1507 başvurusu için Ar-Ge bölümlerini yaz", "should_trigger": true },
+    { "query": "1507 başvurusu teknik doküman hazırla", "should_trigger": true },
+    { "query": "KOBİ Ar-Ge başvurusu için yenilikçilik analizi yaz", "should_trigger": true },
+    { "query": "TÜBİTAK dokümanı üret: iş paketi planı", "should_trigger": true },
+    { "query": "Ar-Ge faaliyetleri tanımı yaz", "should_trigger": true },
+    { "query": "Teknolojik belirsizlik ifadesi oluştur (TÜBİTAK için)", "should_trigger": true },
+    { "query": "1507 başvurusu: Bölüm 2 özgün değer ve literatür taraması", "should_trigger": true },
+    { "query": "Ay-kişi tablosu hazırla TÜBİTAK için", "should_trigger": true },
+    { "query": "KOBİ desteği başvuru teknik içerikleri", "should_trigger": true },
+    { "query": "TÜBİTAK 1507 için proje tanım bölümlerini doldur", "should_trigger": true },
+
+    { "query": "Akademik makale yaz", "should_trigger": false },
+    { "query": "ARDEB başvurusu hazırla", "should_trigger": false },
+    { "query": "Hibe başvurusu (AB Horizon)", "should_trigger": false },
+    { "query": "Ürün yol haritası oluştur", "should_trigger": false },
+    { "query": "İş planı hazırla", "should_trigger": false },
+    { "query": "Proje PRD'si yaz", "should_trigger": false },
+    { "query": "Teknik dokümantasyon oluştur (kullanıcı kılavuzu)", "should_trigger": false },
+    { "query": "ADR yaz", "should_trigger": false },
+    { "query": "KOSGEB başvurusu", "should_trigger": false },
+    { "query": "Patent başvurusu hazırlığı", "should_trigger": false }
+  ]
+}

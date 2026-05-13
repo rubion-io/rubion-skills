@@ -599,10 +599,10 @@ Bu, **kimse adına PR merge edilmeyecek** demek değil; sadece review request'i 
 4. ~~**Gün 1-2 (3 saat):** 5 yeni ADR yazma (madde 3.1-3.5)~~ ✓
 5. ~~**Gün 3 (1 saat):** Skill'lerde ADR referansları + tekrarlanan içeriği kaldırma~~ ✓
 
-### Hafta 3 — Eval Setup (Uzun Vadeli Yatırım)
+### Hafta 3 — Eval Setup (Uzun Vadeli Yatırım) ✓ TAMAMLANDI
 
-6. **Gün 1-2 (4 saat):** Eval format + 360 query yazma
-7. **Gün 3 (2 saat):** Runner script + CI integration
+6. ~~**Gün 1-2 (4 saat):** Eval format + 360 query yazma~~ ✓
+7. ~~**Gün 3 (2 saat):** Runner script + CI integration~~ ✓
 
 ### Hafta 4 — TÜBİTAK Özel
 
@@ -617,7 +617,7 @@ Bu plan tamamlandığında repo şu seviyeye gelmiş olur:
 - [x] **Examples coverage:** En az 4 kritik skill'de `examples/*.md` var (toplam 11/18 → en az 11/18 olmalı, ideali 15/18) — ✓ Hafta 1'de 4 example eklendi
 - [x] **Description quality:** Hiç bir description 250 karakteri geçmiyor — ✓ 5 description kısaltıldı
 - [x] **ADR coverage:** 8 ADR var (3 → 8) — ✓ Hafta 2'de 5 ADR eklendi (0004-0008)
-- [ ] **Eval coverage:** Her skill için en az 20 query, CI'da otomatik çalışıyor — Hafta 3'e ertelendi
+- [x] **Eval coverage:** Her skill için en az 20 query, CI'da otomatik çalışıyor — ✓ Hafta 3'de 18×20=360 query + runner.ts + eval.yml
 - [x] **PR discipline:** Template var, checklist zorunlu, CODEOWNERS atanmış — ✓ Hafta 1'de yapıldı
 - [ ] **Smoke test repo'su:** `rubion-skills-test/` var ve en az 3 skill orada test edilmiş
 

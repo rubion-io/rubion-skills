@@ -4,6 +4,14 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 3)
+- `evals/` klasörü: 18 skill için trigger accuracy eval suite.
+  - `evals/runner.ts`: Anthropic API tabanlı eval runner — her query için hangi skill trigger olduğunu kontrol eder, %80 accuracy eşiği, PASS/FAIL raporu.
+  - `evals/skills/*.json`: 18 skill × 20 query (10 pos + 10 neg) = 360 eval query. Confusable skill çiftleri özellikle negatif query'lere alındı.
+  - `evals/package.json`: tsx + @anthropic-ai/sdk bağımlılıkları.
+  - `evals/README.md`: Kurulum, kullanım, çıktı örnekleri.
+  - `.github/workflows/eval.yml`: PR'da değişen SKILL.md'ler için otomatik eval CI.
+
 ### Added (Hafta 2)
 - `docs/adr/0004-database-per-service.md`: Database-per-Service karar gerekçesi — Saga pattern, CDC raporlama, Shared DB neden reddedildi.
 - `docs/adr/0005-masstransit-rabbitmq.md`: MassTransit + RabbitMQ stack kararı — transport-agnostic abstraction, NServiceBus/CAP/raw RabbitMQ neden reddedildi.

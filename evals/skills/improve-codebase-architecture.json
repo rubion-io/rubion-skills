@@ -1,0 +1,27 @@
+{
+  "skill": "improve-codebase-architecture",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu codebase'in mimari sorunlarını analiz et", "should_trigger": true },
+    { "query": "OrderService çok büyük, refactor fırsatları bul", "should_trigger": true },
+    { "query": "VSA mı Clean Architecture mı kullanalım?", "should_trigger": true },
+    { "query": "Repository pattern kullanmaya devam edelim mi?", "should_trigger": true },
+    { "query": "Monolith'i mikroservise ayırmalı mıyız?", "should_trigger": true },
+    { "query": "Domain Event mi Integration Event mi kullanmalıyız?", "should_trigger": true },
+    { "query": "Mimari iyileştir, tightly coupled modülleri ayır", "should_trigger": true },
+    { "query": "Bu servis şemasında deep module fırsatı var mı?", "should_trigger": true },
+    { "query": "Bounded context'leri tespit edelim", "should_trigger": true },
+    { "query": "Shallow module'leri bul silme testi uygula", "should_trigger": true },
+
+    { "query": "Yeni feature için VSA slice oluştur", "should_trigger": false },
+    { "query": "Bu bug neden oluşuyor?", "should_trigger": false },
+    { "query": "OrderService'i adım adım VSA'ya taşı", "should_trigger": false },
+    { "query": "xUnit testi yaz", "should_trigger": false },
+    { "query": "Yeni mikroservis iskeleti kur", "should_trigger": false },
+    { "query": "PRD oluştur", "should_trigger": false },
+    { "query": "EF Core migration güvenli mi?", "should_trigger": false },
+    { "query": "OpenTelemetry ekle", "should_trigger": false },
+    { "query": "Issue'ları agent'lara dağıt", "should_trigger": false },
+    { "query": "Domain terminolojisini netleştir", "should_trigger": false }
+  ]
+}

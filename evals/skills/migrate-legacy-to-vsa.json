@@ -1,0 +1,27 @@
+{
+  "skill": "migrate-legacy-to-vsa",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "OrderService'i VSA'ya taşı", "should_trigger": true },
+    { "query": "Mevcut service + repository mimarisini Vertical Slice'a geçir", "should_trigger": true },
+    { "query": "Bu legacy servisi Strangler Fig ile refactor et", "should_trigger": true },
+    { "query": "CustomerService slice'a taşı, sıfır downtime", "should_trigger": true },
+    { "query": "Service katmanını kaldır, VSA'ya dönüştür", "should_trigger": true },
+    { "query": "Eski repository pattern'ini VSA ile değiştir", "should_trigger": true },
+    { "query": "Bu monolitik servis'i dilimleyerek refactor et", "should_trigger": true },
+    { "query": "ProductService'ten CreateProduct metodunu slice'a taşı", "should_trigger": true },
+    { "query": "Mevcut IOrderService'i MediatR handler'larla değiştir", "should_trigger": true },
+    { "query": "Legacy codebase'i modern VSA yapısına geçir", "should_trigger": true },
+
+    { "query": "Yeni feature için VSA slice oluştur", "should_trigger": false },
+    { "query": "Sıfırdan yeni mikroservis kur", "should_trigger": false },
+    { "query": "Mimari sorunları analiz et", "should_trigger": false },
+    { "query": "OrderService'te N+1 var debug et", "should_trigger": false },
+    { "query": "EF Core migration yaz", "should_trigger": false },
+    { "query": "TDD ile yeni handler implemente et", "should_trigger": false },
+    { "query": "Clean Architecture'a mı geçelim?", "should_trigger": false },
+    { "query": "VSA nedir nasıl çalışır?", "should_trigger": false },
+    { "query": "DDD aggregate root ekle", "should_trigger": false },
+    { "query": "Repository pattern kullanmaya devam edelim mi?", "should_trigger": false }
+  ]
+}

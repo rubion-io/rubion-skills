@@ -1,0 +1,43 @@
+name: Skill Evals
+
+on:
+  pull_request:
+    paths:
+      - 'adapted/**/SKILL.md'
+      - 'skills/**/SKILL.md'
+      - 'evals/skills/**.json'
+      - 'evals/runner.ts'
+
+jobs:
+  eval:
+    name: Trigger accuracy check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2   # HEAD~1 için gerekli (changed-only mod)
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: evals/package-lock.json
+
+      - name: Install eval dependencies
+        working-directory: evals
+        run: npm ci
+
+      - name: Run skill evals (changed skills only)
+        working-directory: evals
+        run: npx tsx runner.ts --changed-only
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Upload eval results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results
+          path: evals/results/
+          if-no-files-found: ignore

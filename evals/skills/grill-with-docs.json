@@ -1,0 +1,27 @@
+{
+  "skill": "grill-with-docs",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu planı mevcut domain modeli ile sorgula", "should_trigger": true },
+    { "query": "CONTEXT.md'yi güncelle, yeni terimler çıktı", "should_trigger": true },
+    { "query": "ADR öneri: bu kararı kaydet", "should_trigger": true },
+    { "query": "Domain terminolojisini netleştir", "should_trigger": true },
+    { "query": "Bu yaklaşımı kayıtlı kararlarla stress-test et", "should_trigger": true },
+    { "query": "Grill session: bu feature planı mantıklı mı?", "should_trigger": true },
+    { "query": "Ubiquitous language'ı dokümante et", "should_trigger": true },
+    { "query": "Yeni projenin domain'ini anla ve CONTEXT.md yaz", "should_trigger": true },
+    { "query": "Bu terimin ADR'deki karşılığı nedir?", "should_trigger": true },
+    { "query": "Domain model ile planı karşılaştır, çelişki var mı?", "should_trigger": true },
+
+    { "query": "Kod yaz: OrderService handler", "should_trigger": false },
+    { "query": "Mimari sorunları bul", "should_trigger": false },
+    { "query": "TDD yapalım", "should_trigger": false },
+    { "query": "PRD oluştur", "should_trigger": false },
+    { "query": "Issue tracker bağla", "should_trigger": false },
+    { "query": "ADR-004 yaz: database per service", "should_trigger": false },
+    { "query": "Proje dokümantasyonu oluştur (README)", "should_trigger": false },
+    { "query": "Codebase review yap", "should_trigger": false },
+    { "query": "Feature refactor et", "should_trigger": false },
+    { "query": "Yeni feature ekle", "should_trigger": false }
+  ]
+}

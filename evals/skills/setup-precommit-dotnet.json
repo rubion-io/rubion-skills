@@ -1,0 +1,27 @@
+{
+  "skill": "setup-precommit-dotnet",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Pre-commit hook ekle, dotnet format çalışsın", "should_trigger": true },
+    { "query": "Husky.Net kur", "should_trigger": true },
+    { "query": "Commit öncesi testlerin otomatik çalışmasını istiyorum", "should_trigger": true },
+    { "query": "dotnet format'ı pre-commit'e bağla", "should_trigger": true },
+    { "query": "Her commit'te format kontrolü ve test çalışsın", "should_trigger": true },
+    { "query": "Husky ekle: commit öncesi dotnet test", "should_trigger": true },
+    { "query": ".NET projesine pre-commit hook setup et", "should_trigger": true },
+    { "query": "Code format ve test'i commit öncesi zorunlu yap", "should_trigger": true },
+    { "query": "Husky.Net pre-commit disiplini kur", "should_trigger": true },
+    { "query": "Commit hook'u ile kalite kapısı ekle", "should_trigger": true },
+
+    { "query": "GitHub Actions CI pipeline kur", "should_trigger": false },
+    { "query": "dotnet format komutunu çalıştır", "should_trigger": false },
+    { "query": "Testleri çalıştır", "should_trigger": false },
+    { "query": "Git hook nedir?", "should_trigger": false },
+    { "query": "ESLint + Prettier kur", "should_trigger": false },
+    { "query": "React projesine lint ekle", "should_trigger": false },
+    { "query": "OpenTelemetry kurulumu", "should_trigger": false },
+    { "query": "Rubion skills bootstrap", "should_trigger": false },
+    { "query": "CODEOWNERS dosyası oluştur", "should_trigger": false },
+    { "query": "Branch protection rule ekle", "should_trigger": false }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "skill": "diagnose-dotnet",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu .NET endpoint neden yavaş?", "should_trigger": true },
+    { "query": "EF Core N+1 sorunu var, debug edelim", "should_trigger": true },
+    { "query": "Something is broken, ne oldu anlayamıyorum", "should_trigger": true },
+    { "query": "Production'da hata var, reproduce edelim", "should_trigger": true },
+    { "query": "RabbitMQ DLX kuyruğunda mesaj biriyor", "should_trigger": true },
+    { "query": "Jaeger trace'de kırmızı span var, ne anlama geliyor", "should_trigger": true },
+    { "query": "dotnet-trace ile CPU profili alalım", "should_trigger": true },
+    { "query": "Bu bug'ı hipotez üret test et", "should_trigger": true },
+    { "query": "API yanıt süresi aniden arttı, debug this", "should_trigger": true },
+    { "query": "Serilog'da correlation ID'si olmayan request var", "should_trigger": true },
+
+    { "query": "OrderService'i VSA'ya refactor et", "should_trigger": false },
+    { "query": "Yeni feature için TDD yapalım", "should_trigger": false },
+    { "query": "EF Core migration yaz", "should_trigger": false },
+    { "query": "OpenTelemetry kur", "should_trigger": false },
+    { "query": "React'te hata var nasıl debug ederim", "should_trigger": false },
+    { "query": "Mimari iyileştirme fırsatları neler", "should_trigger": false },
+    { "query": "Handler unit testi yaz", "should_trigger": false },
+    { "query": "Yeni mikroservis scaffold et", "should_trigger": false },
+    { "query": "MassTransit consumer ekle", "should_trigger": false },
+    { "query": "Pre-commit hook kuralım", "should_trigger": false }
+  ]
+}

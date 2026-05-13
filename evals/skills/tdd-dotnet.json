@@ -1,0 +1,27 @@
+{
+  "skill": "tdd-dotnet",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": ".NET Order handler için TDD yapalım", "should_trigger": true },
+    { "query": "MediatR command'ı için önce test yaz", "should_trigger": true },
+    { "query": "CreateOrder handler'ını red-green-refactor ile implemente et", "should_trigger": true },
+    { "query": "xUnit ile Testcontainers integration test yazalım", "should_trigger": true },
+    { "query": "Bu handler'ın testlerini önce yaz, sonra kodu", "should_trigger": true },
+    { "query": "NSubstitute ile IEmailService mock'layarak test et", "should_trigger": true },
+    { "query": "FluentAssertions ile assertion yaz", "should_trigger": true },
+    { "query": "Bu .NET feature için test-driven geliştirme yapalım", "should_trigger": true },
+    { "query": "CancelOrder command'ı için failing test yaz önce", "should_trigger": true },
+    { "query": "PostgreSQL ile Testcontainers integration test ekle", "should_trigger": true },
+
+    { "query": "React component için test yaz", "should_trigger": false },
+    { "query": "Sipariş feature'ı için VSA slice oluştur", "should_trigger": false },
+    { "query": "Bu kodda neden performans sorunu var?", "should_trigger": false },
+    { "query": "EF Core migration review yap", "should_trigger": false },
+    { "query": "Yeni mikroservis iskeleti oluştur", "should_trigger": false },
+    { "query": "Expo için Maestro E2E testi yaz", "should_trigger": false },
+    { "query": "OrderService'i VSA'ya taşı", "should_trigger": false },
+    { "query": "PRD'yi GitHub issue'larına böl", "should_trigger": false },
+    { "query": "OpenTelemetry kurulumu yap", "should_trigger": false },
+    { "query": "Pre-commit hook ekle", "should_trigger": false }
+  ]
+}
