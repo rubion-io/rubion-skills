@@ -619,7 +619,7 @@ Bu plan tamamlandığında repo şu seviyeye gelmiş olur:
 - [x] **ADR coverage:** 8 ADR var (3 → 8) — ✓ Hafta 2'de 5 ADR eklendi (0004-0008)
 - [x] **Eval coverage:** Her skill için en az 20 query, CI'da otomatik çalışıyor — ✓ Hafta 3'de 18×20=360 query + runner.ts + eval.yml
 - [x] **PR discipline:** Template var, checklist zorunlu, CODEOWNERS atanmış — ✓ Hafta 1'de yapıldı
-- [ ] **Smoke test repo'su:** `rubion-skills-test/` var ve en az 3 skill orada test edilmiş
+- [x] **Smoke test repo'su:** `rubion-skills-test/` var ve en az 3 skill orada test edilmiş — ✓ https://github.com/muratkizilelma/rubion-skills-test (scaffold-vsa-feature, tdd-dotnet, migrate-legacy-to-vsa; 14/14 test geçti)
 
 Bu duruma ulaşınca repo "internal asset" seviyesinden **"public showcase"** seviyesine taşınabilir — TÜBİTAK 1507 başvurusunda "AI-augmented development methodology" çıktısı olarak güçlü bir referans olur.
 
