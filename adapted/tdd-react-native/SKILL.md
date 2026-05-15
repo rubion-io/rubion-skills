@@ -142,52 +142,9 @@ test("kullanıcı email girip Devam'a basabilir", async () => {
 
 ## React Navigation Testi
 
-Navigation prop'u manuel mock'la:
+İki strateji: `NavigationContainer` ile integration (full flow) veya `useNavigation` mock ile izole test.
 
-```tsx
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { render, screen, fireEvent } from "@testing-library/react-native";
-
-const Stack = createNativeStackNavigator();
-
-function renderWithNavigation(initialRouteName = "OrderList") {
-  return render(
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={initialRouteName}>
-        <Stack.Screen name="OrderList" component={OrderListScreen} />
-        <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>,
-  );
-}
-
-test("sipariş kartına basınca detay ekranına gider", async () => {
-  renderWithNavigation();
-
-  fireEvent.press(screen.getByText("Sipariş #42"));
-
-  expect(await screen.findByText(/sipariş detayı/i)).toBeOnTheScreen();
-});
-```
-
-Tek ekranı izole test etmek için `useNavigation` hook'u mock'la:
-
-```tsx
-const mockNavigate = jest.fn();
-jest.mock("@react-navigation/native", () => ({
-  ...jest.requireActual("@react-navigation/native"),
-  useNavigation: () => ({ navigate: mockNavigate }),
-}));
-
-test("Detay butonuna basınca OrderDetail'e navigate eder", () => {
-  render(<OrderCard orderId="42" />);
-
-  fireEvent.press(screen.getByText(/detay/i));
-
-  expect(mockNavigate).toHaveBeenCalledWith("OrderDetail", { id: "42" });
-});
-```
+Tam örnek → **[examples/02-navigation-testing.md](examples/02-navigation-testing.md)**
 
 ---
 
@@ -209,32 +166,9 @@ jest.mock("@react-native-async-storage/async-storage", () =>
 
 ---
 
-## TanStack Query — Aynı Pattern
+## TanStack Query
 
-```tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-function wrap(ui: React.ReactElement) {
-  const client = new QueryClient({
-    defaultOptions: { queries: { retry: false } },
-  });
-  return render(
-    <QueryClientProvider client={client}>{ui}</QueryClientProvider>,
-  );
-}
-
-// fetch için MSW yerine direkt jest.spyOn(global, "fetch") — RN'de jsdom yok
-beforeEach(() => {
-  global.fetch = jest.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: async () => ({ id: "42", customer: "ACME" }),
-    }),
-  ) as jest.Mock;
-});
-```
-
-> **Not:** MSW v2 React Native'de native fetch interceptor yerine `msw/native` paketi gerektirir. Pratikte basit projelerde `jest.spyOn(global, "fetch")` yeterlidir.
+Web'deki pattern ile aynı (`renderWithQuery` + provider wrapper). Fark: RN'de jsdom yok, MSW yerine `jest.spyOn(global, "fetch")` kullan. MSW v2 gerekiyorsa `msw/native` paketi.
 
 ---
 

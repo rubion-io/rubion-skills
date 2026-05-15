@@ -1,6 +1,6 @@
 ---
 name: dispatch-agents
-description: Bağımsız `ready-for-agent` issue'larını paralel subagent'lara dağıtır — her biri git worktree'de scaffold-vsa-feature + tdd-dotnet zinciriyle implementasyonu yapar, PR açar. "Paralel implementasyon", "AFK batch" denildiğinde. Sıralı bağımlı işler için kullanma.
+description: Bağımsız `ready-for-agent` issue'larını paralel subagent'lara dağıtır — worktree'de scaffold-vsa-feature + tdd-dotnet zinciriyle PR'a götürür. "Paralel implementasyon", "AFK batch" denildiğinde. Sıralı bağımlı işler için kullanma.
 stack: []
 ---
 
@@ -286,11 +286,3 @@ Bazı durumlarda `dispatch-agents` overkill olur. Manuel yol:
 
 Bu daha düşük ceiling, daha yüksek kontrol. İlk birkaç sefer **manuel başla**, pattern'i öğren, sonra `dispatch-agents` kullan.
 
----
-
-## Yapım Aşamasında (Future Work)
-
-- [ ] Jira "subtask of" hierarchy desteği (parent kapatılınca tüm subtask'lar otomatik kapanmasın)
-- [ ] GitHub Projects v2 entegrasyonu — durum kolonu otomatik güncelleme
-- [ ] Token maliyeti raporu (Anthropic API console'dan çekme)
-- [ ] "Re-dispatch unblocked" tek komut — bir önceki run sonrası açılan blokeli issue'ları otomatik almak

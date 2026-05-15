@@ -1,6 +1,6 @@
 ---
 name: tubitak-1507-document
-description: TÜBİTAK 1507 KOBİ Ar-Ge Başlangıç Destek Programı başvurusu için teknik bölümleri üretir. Yenilikçilik analizi, Ar-Ge faaliyetleri tanımı, iş paketi planı ve teknolojik belirsizlik ifadesi. "1507 başvurusu yaz", "TÜBİTAK dokümanı üret", "Ar-Ge bölümü" denildiğinde kullan.
+description: TÜBİTAK 1507 KOBİ Ar-Ge başvurusu için teknik bölümler yazar — Ar-Ge faaliyetleri, iş paketleri, yenilikçilik analizi, teknolojik belirsizlik. "1507 başvurusu", "TÜBİTAK dokümanı", "Ar-Ge bölümü" denildiğinde.
 stack: []
 ---
 

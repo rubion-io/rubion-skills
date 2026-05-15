@@ -217,104 +217,23 @@ await _publisher.DidNotReceive().PublishAsync(Arg.Any<OrderCreatedEvent>(), defa
 
 ## Integration Testi (Testcontainers)
 
-```csharp
-public class CreateOrderIntegrationTests : IAsyncLifetime
-{
-    private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder()
-        .WithImage("postgres:16-alpine")
-        .Build();
-
-    private AppDbContext _db = null!;
-
-    public async Task InitializeAsync()
-    {
-        await _postgres.StartAsync();
-
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql(_postgres.GetConnectionString())
-            .Options;
-
-        _db = new AppDbContext(options);
-        await _db.Database.MigrateAsync();
-    }
-
-    public async Task DisposeAsync()
-    {
-        await _db.DisposeAsync();
-        await _postgres.DisposeAsync();
-    }
-
-    [Fact]
-    public async Task CreateOrder_PersistsToDatabase()
-    {
-        // Arrange
-        var repository = new OrderRepository(_db);
-        var publisher  = Substitute.For<IEventPublisher>();
-        var handler    = new CreateOrderHandler(repository, publisher);
-
-        var customerId = Guid.NewGuid();
-        var command = new CreateOrderCommand(customerId, Items: [
-            new OrderItemDto(ProductId: Guid.NewGuid(), Quantity: 1)
-        ]);
-
-        // Act
-        var result = await handler.Handle(command, CancellationToken.None);
-
-        // Assert
-        result.IsSuccess.Should().BeTrue();
-
-        var saved = await _db.Orders.FindAsync(result.Value);
-        saved.Should().NotBeNull();
-        saved!.CustomerId.Should().Be(customerId);
-    }
-}
-```
-
-### MSSQL Variasyonu (legacy/enterprise istemci)
+`IAsyncLifetime` implement et → `InitializeAsync`'te container başlat + migrate, `DisposeAsync`'te kapat. Handler'ı gerçek `Repository` + `Substitute` publisher ile kur.
 
 ```csharp
-private readonly MsSqlContainer _mssql = new MsSqlBuilder()
-    .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-    .WithPassword("Strong_Passw0rd!")
-    .Build();
-// Geri kalan aynı; sadece .UseSqlServer() kullan
+private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder()
+    .WithImage("postgres:16-alpine").Build();
+// MSSQL için: MsSqlBuilder().WithImage("mcr.microsoft.com/mssql/server:2022-latest")
 ```
+
+Tam örnek → **[examples/02-integration-test-with-testcontainers.md](examples/02-integration-test-with-testcontainers.md)**
 
 ---
 
 ## WebApplicationFactory ile Endpoint Testi
 
-```csharp
-public class OrdersEndpointTests : IClassFixture<WebApplicationFactory<Program>>
-{
-    private readonly HttpClient _client;
+`IClassFixture<WebApplicationFactory<Program>>` → `ConfigureServices`'te DB'yi in-memory ile swap et → `CreateClient()` ile HTTP testi.
 
-    public OrdersEndpointTests(WebApplicationFactory<Program> factory)
-    {
-        _client = factory.WithWebHostBuilder(builder =>
-            builder.ConfigureServices(services =>
-            {
-                // Test DB veya in-memory swap buraya
-                services.RemoveAll<AppDbContext>();
-                services.AddDbContext<AppDbContext>(o =>
-                    o.UseInMemoryDatabase("test"));
-            }))
-            .CreateClient();
-    }
-
-    [Fact]
-    public async Task POST_Orders_Returns201WithId()
-    {
-        var body = new { customerId = Guid.NewGuid(), items = Array.Empty<object>() };
-
-        var response = await _client.PostAsJsonAsync("/orders", body);
-
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
-        var result = await response.Content.ReadFromJsonAsync<CreateOrderResponse>();
-        result!.OrderId.Should().NotBeEmpty();
-    }
-}
-```
+Tam örnek → **[examples/03-when-not-to-tdd.md](examples/03-when-not-to-tdd.md)**
 
 ---
 

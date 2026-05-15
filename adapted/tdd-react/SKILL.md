@@ -150,126 +150,18 @@ Sync vs async:
 
 ## TanStack Query'li Component Testi
 
-**Yapma:** `useQuery`'yi mock'lama. Bu implementation detayını test eder.
+**Yapma:** `useQuery`'yi mock'lama — implementation detayını test eder.
+**Yap:** MSW ile gerçek `fetch` intercept et, gerçek `QueryClient` ile sar.
 
-**Yap:** MSW ile gerçek `fetch` çağrısını intercept et, gerçek `QueryClient` ile sar.
-
-### Test Yardımcısı
-
-```tsx
-// src/test/test-utils.tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render } from "@testing-library/react";
-import type { ReactElement } from "react";
-
-export function renderWithQuery(ui: ReactElement) {
-  const client = new QueryClient({
-    defaultOptions: {
-      queries: { retry: false, gcTime: 0 },
-      mutations: { retry: false },
-    },
-  });
-  return render(
-    <QueryClientProvider client={client}>{ui}</QueryClientProvider>,
-  );
-}
-```
-
-### MSW Setup
-
-```ts
-// src/test/msw-server.ts
-import { setupServer } from "msw/node";
-import { http, HttpResponse } from "msw";
-
-export const handlers = [
-  http.get("/api/orders/:id", ({ params }) => {
-    return HttpResponse.json({
-      id: params.id,
-      customer: "ACME A.Ş.",
-      status: "open",
-    });
-  }),
-];
-
-export const server = setupServer(...handlers);
-```
-
-```ts
-// src/test/setup.ts (genişletilmiş)
-import { server } from "./msw-server";
-
-beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-```
-
-### Component Testi
-
-```tsx
-test("açık sipariş detayını gösterir", async () => {
-  renderWithQuery(<OrderDetails orderId="42" />);
-
-  expect(await screen.findByText("ACME A.Ş.")).toBeInTheDocument();
-  expect(screen.getByText(/açık/i)).toBeInTheDocument();
-});
-
-test("API hatası verirse hata mesajı gösterir", async () => {
-  server.use(
-    http.get("/api/orders/:id", () => HttpResponse.json({}, { status: 500 })),
-  );
-
-  renderWithQuery(<OrderDetails orderId="42" />);
-
-  expect(await screen.findByRole("alert")).toHaveTextContent(/yüklenemedi/i);
-});
-```
+Tam setup + örnek testler → **[examples/02-tanstack-query-and-msw.md](examples/02-tanstack-query-and-msw.md)**
 
 ---
 
 ## Custom Hook Testi
 
-`renderHook` pattern — provider wrapper'ı ile.
+`renderHook` + provider `wrapper` pattern. `act` ile sync state güncellemeleri.
 
-```tsx
-// useOrderTotals.test.ts
-import { renderHook, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useOrderTotals } from "./useOrderTotals";
-
-function wrapper({ children }: { children: React.ReactNode }) {
-  const client = new QueryClient({
-    defaultOptions: { queries: { retry: false } },
-  });
-  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
-}
-
-test("açık sipariş kalemlerinin toplamını döner", async () => {
-  const { result } = renderHook(() => useOrderTotals("customer-42"), {
-    wrapper,
-  });
-
-  await waitFor(() => expect(result.current.isSuccess).toBe(true));
-  expect(result.current.data).toEqual({
-    openCount: 3,
-    totalAmount: 12_500,
-  });
-});
-```
-
-`act` ile state güncellemeleri:
-
-```tsx
-import { act } from "@testing-library/react";
-
-test("setCount artırır", () => {
-  const { result } = renderHook(() => useCounter());
-
-  act(() => result.current.increment());
-
-  expect(result.current.count).toBe(1);
-});
-```
+Tam örnek → **[examples/03-hook-testing.md](examples/03-hook-testing.md)**
 
 ---
 

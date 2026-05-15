@@ -1,6 +1,6 @@
 ---
 name: ef-core-migration-review
-description: EF Core ile üretilmiş bir migration'ı production-safety açısından inceler. Destructive operasyonları (DROP, veri kaybı riski), kilitleme tehlikelerini ve geri alma stratejisini raporlar. "Migration review yap", "migration güvenli mi", "migration kontrol et" denildiğinde kullan.
+description: EF Core migration'ını production-safety açısından inceler — DROP/veri kaybı riski, kilit tehlikeleri, rollback stratejisi. "Migration review", "migration güvenli mi", "migration kontrol et" denildiğinde.
 stack: [dotnet, csharp, ef-core, postgresql, mssql]
 ---
 
