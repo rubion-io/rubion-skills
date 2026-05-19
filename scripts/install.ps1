@@ -9,6 +9,7 @@
 #   .\scripts\install.ps1 -Target claude  -> Claude Code only
 #   .\scripts\install.ps1 -Target cursor  -> Cursor only
 #   .\scripts\install.ps1 -Force          -> overwrite existing links/folders
+#   .\scripts\install.ps1 -ExcludeNiche   -> skip niche skills (tubitak, dispatch-agents, prototype)
 #   .\scripts\install.ps1 -Uninstall      -> remove all Rubion skill junctions
 
 [CmdletBinding()]
@@ -16,6 +17,7 @@ param(
     [ValidateSet("claude", "cursor", "both")]
     [string]$Target = "both",
     [switch]$Force,
+    [switch]$ExcludeNiche,
     [switch]$Uninstall
 )
 
@@ -25,10 +27,24 @@ $RepoRoot   = (Get-Item $PSScriptRoot).Parent.FullName
 $ClaudeDir  = Join-Path $env:USERPROFILE ".claude\skills"
 $CursorDir  = Join-Path $env:USERPROFILE ".cursor\skills-cursor"
 
+# Nis skill'ler — T2/T3 tier'lerinde gereksiz token yuku.
+# -ExcludeNiche flag'i ile bunlar atlanir.
+$NicheSkills = @(
+    "tubitak-1507-document",  # yilda 1-2 kez grant basvurusu
+    "dispatch-agents",        # buyuk takimlarda paralel batch
+    "prototype"               # throwaway, sadece spike zamani
+)
+
 function Get-SkillSources {
     $adapted = Get-ChildItem -Directory "$RepoRoot\adapted" -ErrorAction SilentlyContinue
     $custom  = Get-ChildItem -Directory "$RepoRoot\skills"  -ErrorAction SilentlyContinue
-    return @($adapted) + @($custom)
+    $all = @($adapted) + @($custom)
+
+    if ($ExcludeNiche) {
+        $all = $all | Where-Object { $NicheSkills -notcontains $_.Name }
+    }
+
+    return $all
 }
 
 function Install-Skills {
@@ -112,6 +128,9 @@ if ($Uninstall) {
 Write-Host "Rubion Skills - Install"
 Write-Host "Source: $RepoRoot"
 Write-Host "Target: $Target"
+if ($ExcludeNiche) {
+    Write-Host "ExcludeNiche: ON (skipping: $($NicheSkills -join ', '))"
+}
 
 if ($Target -in @("claude", "both")) { Install-Skills -TargetDir $ClaudeDir -Label "Claude" }
 if ($Target -in @("cursor", "both")) { Install-Skills -TargetDir $CursorDir -Label "Cursor" }

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "_comment": "Rubion baseline hooks — Karpathy 4. prensibi 'Goal-Driven Execution' icin mekanik destek. .claude/settings.json olarak projeye kopyala.",
+  "_comment": "Rubion baseline hooks — Karpathy 4. prensibi 'Goal-Driven Execution' icin mekanik destek. .claude/settings.json olarak projeye kopyala. NOT: tum echo'lar stderr'e (>&2) gider — Claude'un prompt context'ine eklenmez, sadece tool result'ta gorunur.",
 
   "hooks": {
     "PostToolUse": [
@@ -10,7 +10,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '[rubion-baseline] Dosya degisti — Surgical Changes: sadece istenen yere dokun. Build/test calistirmayi unutma.'"
+            "command": "echo '[rubion-baseline] Dosya degisti — Surgical Changes: sadece istenen yere dokun. Build/test calistirmayi unutma.' >&2"
           }
         ]
       }
@@ -22,7 +22,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if git -C . diff --quiet HEAD -- '*.cs' 2>/dev/null; then exit 0; else echo '[rubion-baseline] .cs degisiklikleri var. dotnet build && dotnet test calistirildi mi?'; fi"
+            "command": "if git -C . diff --quiet HEAD -- '*.cs' 2>/dev/null; then exit 0; else echo '[rubion-baseline] .cs degisiklikleri var. dotnet build && dotnet test calistirildi mi?' >&2; fi"
           }
         ]
       }

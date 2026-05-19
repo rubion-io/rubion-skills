@@ -165,121 +165,19 @@ app.UseMiniProfiler();
 
 ## EF Core Sorunları
 
-### N+1 Tespiti
+EF Core log'larını `Information` seviyesine al → çıkan SQL'leri oku. Aynı pattern'de N kez tekrar = **N+1**. Çözüm: `Include + ThenInclude` (eager) veya `.Select(... dto)` (projection). `Seq Scan` görüyorsan migration ile index ekle.
 
-```csharp
-// EF Core log'larını debug seviyesine al (appsettings.Development.json):
-{
-  "Logging": {
-    "LogLevel": {
-      "Microsoft.EntityFrameworkCore.Database.Command": "Information"
-    }
-  }
-}
-// Bu ayarla çalıştırılan her SQL konsola/log'a düşer.
-// Aynı pattern'de çok sayıda SELECT görüyorsan → N+1
-```
-
-```csharp
-// Çözüm: eager load
-var orders = await _db.Orders
-    .Include(o => o.Items)
-    .ThenInclude(i => i.Product)
-    .ToListAsync();
-
-// Veya projection (sadece ihtiyaç duyulan kolonlar)
-var summaries = await _db.Orders
-    .Select(o => new OrderSummaryDto(o.Id, o.Items.Count, o.TotalAmount))
-    .ToListAsync();
-```
-
-### Query Plan Okuma (PostgreSQL)
-
-```sql
-EXPLAIN ANALYZE
-SELECT * FROM orders o
-JOIN order_items oi ON oi.order_id = o.id
-WHERE o.customer_id = '...'
-ORDER BY o.created_at DESC;
-```
-
-`Seq Scan` görüyorsan → index eksik. Büyük tablolarda `CreateIndex` migration'ı düşün.
+Tam akış + EXPLAIN ANALYZE → **[examples/02-ef-core-n-plus-one.md](examples/02-ef-core-n-plus-one.md)**
 
 ---
 
-## Dağıtık Debug (Mikroservis)
+## Dağıtık Debug + Mesaj Hataları
 
-### OpenTelemetry + Jaeger Trace Okuma
+**OTel + Jaeger:** `correlation_id` ile trace'i bul, kırmızı span'i tespit et, ilgili servise git. Outgoing HTTP'ye `X-Correlation-Id` header'ını ilet (OTel otomatik).
 
-```csharp
-// Program.cs — trace setup (zaten kuruluysa gözden geçir)
-builder.Services.AddOpenTelemetry()
-    .WithTracing(t => t
-        .AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation()
-        .AddEntityFrameworkCoreInstrumentation()
-        .AddOtlpExporter(o => o.Endpoint = new Uri("http://jaeger:4317")));
-```
+**RabbitMQ DLX:** Mesaj DLX kuyruğunda birikiyorsa `x-death` header'ında sebep var. Consumer idempotent mi, schema eski mi kontrol et.
 
-Jaeger UI'da trace açıldığında:
-1. `correlation_id` ile filtrele — birden fazla servisi kesen trace'i bul.
-2. Kırmızı/yavaş span'i tespit et.
-3. İlgili servise git, o span'in context'indeki log satırlarına bak.
-
-### Correlation ID Propagation
-
-```csharp
-// ASP.NET Core middleware — her request'te correlation ID üret veya ilet
-app.Use(async (context, next) =>
-{
-    var correlationId = context.Request.Headers["X-Correlation-Id"]
-                        .FirstOrDefault() ?? Guid.NewGuid().ToString();
-    context.Items["CorrelationId"] = correlationId;
-    context.Response.Headers["X-Correlation-Id"] = correlationId;
-
-    using (Serilog.Context.LogContext.PushProperty("CorrelationId", correlationId))
-    {
-        await next();
-    }
-});
-```
-
----
-
-## Async / Mesaj Hataları
-
-### RabbitMQ Dead Letter Exchange (DLX)
-
-```
-Normal flow:    Publisher → Exchange → Queue → Consumer
-DLX flow:       Consumer NACK → Dead Letter Exchange → DLX Queue
-```
-
-DLX kuyruğunu incele:
-
-```bash
-# RabbitMQ Management UI: http://localhost:15672
-# Queues → <dlx-queue-adı> → Get Messages
-
-# veya rabbitmqctl
-rabbitmqctl list_queues name messages
-```
-
-Mesajı replay et:
-
-```bash
-# Shovel plugin veya custom consumer ile DLX'ten orijinal queue'ya taşı
-# Veya: Management UI → Move Messages
-```
-
-### Message Debug Checklist
-
-```
-[ ] DLX kuyruğunda birikmekte olan mesaj var mı?
-[ ] Exception mesajı ne? (message.Properties["x-death"] header'ına bak)
-[ ] Consumer idempotent mi? Aynı mesaj ikinci kez gelirse ne olur?
-[ ] Message schema eski bir versiyona mı ait? (breaking schema change?)
-```
+Tam setup + checklist → **[examples/03-distributed-and-messaging.md](examples/03-distributed-and-messaging.md)**
 
 ---
 

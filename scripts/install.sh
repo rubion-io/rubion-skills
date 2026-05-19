@@ -10,13 +10,23 @@
 #   ./scripts/install.sh --target=claude -> Claude Code only
 #   ./scripts/install.sh --target=cursor -> Cursor only
 #   ./scripts/install.sh --force         -> overwrite existing links/folders
+#   ./scripts/install.sh --exclude-niche -> skip niche skills (tubitak, dispatch-agents, prototype)
 #   ./scripts/install.sh --uninstall     -> remove all Rubion skill symlinks
 
 set -euo pipefail
 
 TARGET="both"
 FORCE=false
+EXCLUDE_NICHE=false
 UNINSTALL=false
+
+# Niche skill'ler — T2/T3 tier'lerinde gereksiz token yuku.
+# --exclude-niche flag'i ile bunlar atlanir.
+NICHE_SKILLS=(
+    "tubitak-1507-document"   # yilda 1-2 kez grant basvurusu
+    "dispatch-agents"         # buyuk takimlarda paralel batch
+    "prototype"               # throwaway, sadece spike zamani
+)
 
 for arg in "$@"; do
     case "$arg" in
@@ -24,9 +34,10 @@ for arg in "$@"; do
         --target=cursor) TARGET="cursor" ;;
         --target=both)   TARGET="both" ;;
         --force)         FORCE=true ;;
+        --exclude-niche) EXCLUDE_NICHE=true ;;
         --uninstall)     UNINSTALL=true ;;
         -h|--help)
-            sed -n '2,15p' "$0"
+            sed -n '2,16p' "$0"
             exit 0
             ;;
         *)
@@ -40,9 +51,31 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CLAUDE_DIR="$HOME/.claude/skills"
 CURSOR_DIR="$HOME/.cursor/skills-cursor"
 
+is_niche() {
+    local name="$1"
+    for niche in "${NICHE_SKILLS[@]}"; do
+        if [ "$name" = "$niche" ]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
 list_sources() {
-    [ -d "$REPO_ROOT/adapted" ] && find "$REPO_ROOT/adapted" -mindepth 1 -maxdepth 1 -type d
-    [ -d "$REPO_ROOT/skills"  ] && find "$REPO_ROOT/skills"  -mindepth 1 -maxdepth 1 -type d
+    [ -d "$REPO_ROOT/adapted" ] && find "$REPO_ROOT/adapted" -mindepth 1 -maxdepth 1 -type d | while read -r d; do
+        name=$(basename "$d")
+        if [ "$EXCLUDE_NICHE" = true ] && is_niche "$name"; then
+            continue
+        fi
+        echo "$d"
+    done
+    [ -d "$REPO_ROOT/skills"  ] && find "$REPO_ROOT/skills"  -mindepth 1 -maxdepth 1 -type d | while read -r d; do
+        name=$(basename "$d")
+        if [ "$EXCLUDE_NICHE" = true ] && is_niche "$name"; then
+            continue
+        fi
+        echo "$d"
+    done
 }
 
 install_skills() {
@@ -127,6 +160,9 @@ fi
 echo "Rubion Skills - Install"
 echo "Source: $REPO_ROOT"
 echo "Target: $TARGET"
+if [ "$EXCLUDE_NICHE" = true ]; then
+    echo "ExcludeNiche: ON (skipping: ${NICHE_SKILLS[*]})"
+fi
 
 [[ "$TARGET" == "claude" || "$TARGET" == "both" ]] && install_skills "$CLAUDE_DIR" "Claude"
 [[ "$TARGET" == "cursor" || "$TARGET" == "both" ]] && install_skills "$CURSOR_DIR" "Cursor"

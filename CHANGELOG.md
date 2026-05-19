@@ -4,6 +4,20 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 9 — Token Maliyeti Optimizasyonu)
+- `docs/sizing-guide.md`: 4 tier'lı proje boyutu rehberi (T1 Stratejik / T2 Aktif / T3 Bakım / T4 Throwaway). Her tier için skill subset, memory politikası, otomasyon önerileri. Karar ağacı + token maliyeti karşılaştırması + migrasyon path'leri + 3 soruluk pratik test.
+- `templates/github-workflows/memory-review.yml`: Aylık otomatik memory denetimi CI template'i (consuming project'e kopyalanır). Bayatlık + broken link + git log cross-check. Critical bulunca otomatik GitHub issue açar.
+- `.github/workflows/eval.yml`: Haftalık (Pazartesi 06:00 UTC) full-suite eval schedule eklendi + manuel `workflow_dispatch` tetikleyici. Eval düşerse otomatik issue açılır (description bozulması erken yakalama).
+- `scripts/install.ps1` ve `install.sh`: `-ExcludeNiche` / `--exclude-niche` flag'i — niş skill'leri (`tubitak-1507-document`, `dispatch-agents`, `prototype`) T2/T3 tier'larında atlar. Always-on token tasarrufu.
+
+### Changed (Hafta 9 — Hook + Skill Body Optimizasyonu)
+- `templates/claude-settings.example.json`: Tüm hook `echo` komutları `>&2` (stderr) ile yeniden yazıldı. Hook çıktıları Claude'un prompt context'ine girmiyor artık — sadece tool result'ta görünür. **~30% hook overhead düşüşü** (uzun session'larda binlerce token).
+- 3 büyük skill body trim — toplam **224 satır azalma**:
+  - `adapted/diagnose-dotnet/SKILL.md`: 312 → 210 (-102). EF Core N+1 ve Distributed/RabbitMQ bölümleri yeni example dosyalarına taşındı.
+  - `adapted/tdd-react-native/SKILL.md`: 311 → 251 (-60). Bare RN bölümü `examples/03-bare-rn-setup.md`'ye taşındı.
+  - `skills/dispatch-agents/SKILL.md`: 288 → 226 (-62). Per-agent prompt template'i `examples/02-per-agent-prompt-template.md`'ye taşındı.
+- 3 yeni example dosyası: `diagnose-dotnet/examples/02-ef-core-n-plus-one.md`, `03-distributed-and-messaging.md`, `tdd-react-native/examples/03-bare-rn-setup.md`, `dispatch-agents/examples/02-per-agent-prompt-template.md`.
+
 ### Changed (Hafta 8 — setup-rubion-skills → Wizard)
 - `setup-rubion-skills` skill'i **4 fazlı wizard** olarak yeniden yapılandırıldı:
   - **Faz A — Foundation:** Issue tracker (GitHub/Jira), domain doc, baseline, hooks (mevcut içerik faz altına alındı)
