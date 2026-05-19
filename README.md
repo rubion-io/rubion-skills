@@ -6,11 +6,9 @@ Temel alınan kaynak: [mattpocock/skills](https://github.com/mattpocock/skills) 
 
 ## Buradan Başla
 
-Yeni veya mevcut bir projede bu kütüphaneyi nasıl kullanacağını öğren: **[docs/getting-started.md](docs/getting-started.md)**
-
-İki senaryo için adım adım path:
-- **Sıfırdan proje + GitHub** → hangi skill, hangi sırayla
-- **1 yıllık mevcut proje + Jira** → anlama, retrofit, iyileştirme
+- 🚀 **Yeni mi?** → [docs/getting-started.md](docs/getting-started.md) — iki senaryo için adım adım path
+- 📖 **21 skill'i tek bakışta gör** → [docs/skills-catalog.md](docs/skills-catalog.md) — kategori + örnek prompt + skill chain'leri
+- 🔧 **Mevcut projeye baseline + hook ekle** → [docs/project-setup.md](docs/project-setup.md)
 
 ## Kurulum
 
