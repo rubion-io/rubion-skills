@@ -6,6 +6,8 @@ stack: [dotnet, csharp, docker]
 
 # Scaffold Microservice — Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 ## Önce Sor
 
 1. **Servis adı** nedir? (PascalCase, tek kelime veya iki kelime — örn: `Inventory`, `NotificationWorker`, `PaymentGateway`)

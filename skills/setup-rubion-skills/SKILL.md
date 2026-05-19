@@ -103,7 +103,28 @@ API token şuradan alınır: https://id.atlassian.com/manage-profile/security/ap
 
 > **Güvenlik:** API token'ı asla repo'ya commit'leme. `.env` `.gitignore`'da olmalı.
 
-### 5. Bitir
+### 5. Karpathy/Rubion Baseline'ı Yerleştir (Opsiyonel ama Önerilen)
+
+> **Açıklama:** Rubion baseline = 4 davranış kuralı (Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution) + Rubion-specific somut tetikleyiciler. Skill'lerden bağımsız, her oturumda yüklenir.
+
+Kullanıcıya sor: "Karpathy/Rubion baseline'ı CLAUDE.md'ye yerleştireyim mi?"
+
+**Evet derse:**
+
+1. `<rubion-skills>/templates/CLAUDE.md.baseline.md` içeriğini al.
+2. Proje kökündeki `CLAUDE.md`'yi oku.
+3. `<!-- rubion:baseline-start v1 -->` marker'ı zaten var mı?
+   - **Varsa:** Marker'lar arasını yeni içerikle değiştir (regenerate).
+   - **Yoksa:** Dosyanın **sonuna** ekle (override section'ları üstte kalsın).
+4. `CLAUDE.md` yoksa: önce ana içerik için kullanıcıya sor, sonra baseline'ı ekle.
+
+**Hooks (Claude Code v2 kullanıcısı için):**
+
+`.claude/settings.json` dosyası proje kökünde yoksa, `<rubion-skills>/templates/claude-settings.example.json` içeriğini oraya kopyala. Varsa kullanıcıya birleştirme planı sun.
+
+> `.claude/settings.json` repo'ya commit edilebilir (takım paylaşımı için) **veya** `.claude/settings.local.json` (kişisel, .gitignore'da).
+
+### 6. Bitir
 
 Kullanıcıya kurulumun tamamlandığını söyle. Hangi skill'lerin bu dosyalardan okuyacağını listele:
 
@@ -111,5 +132,7 @@ Kullanıcıya kurulumun tamamlandığını söyle. Hangi skill'lerin bu dosyalar
 - `adapted/to-issues` — bir planı issue'lara böler ve tracker'a yazar
 - `adapted/diagnose-dotnet` — diagnose sırasında ADR ve CONTEXT.md'ye bakar
 - `adapted/tdd-dotnet` — test isimlendirme için CONTEXT.md sözlüğünü kullanır
+
+Baseline yerleştirildiyse şunu da söyle: "CLAUDE.md baseline (4 davranış kuralı) artık her oturumda aktif. Override gerekirse marker dışında yeni section aç."
 
 Daha sonra `docs/agents/*.md`'yi elle düzenleyebileceklerini, sadece tracker değişirse bu skill'i tekrar çalıştırmaları gerektiğini söyle.

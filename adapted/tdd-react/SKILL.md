@@ -10,6 +10,8 @@ stack: [react, typescript, vitest, react-testing-library, msw, tanstack-query]
 
 # TDD — React / Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 > **Stack seçimi gerekçesi** (Vitest vs Jest, MSW vs axios mock, RTL) → **[ADR-008](../../docs/adr/0008-test-stack.md)**
 
 ## Felsefe

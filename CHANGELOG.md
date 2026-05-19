@@ -4,6 +4,13 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 5 — Karpathy Davranış Baseline)
+- `templates/CLAUDE.md.baseline.md`: 4 davranış prensibi (Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution) + Rubion-specific somut tetikleyiciler (3+ dosya → onay, 200+ satır → "50 mümkün mü?", dokunulmayan dosyada formatting yasak vb.). Idempotent marker'lar (`<!-- rubion:baseline-start v1 -->`) ile regenere edilebilir.
+- `templates/claude-settings.example.json`: Claude Code v2 hook'ları — `PostToolUse` (Edit/Write sonrası Surgical Changes hatırlatıcı), `Stop` (.cs değişiklikleri varsa test çalıştırıldı mı kontrolü), `PreToolUse` (destructive bash komut uyarısı).
+- `setup-rubion-skills` skill'ine "Karpathy/Rubion Baseline Yerleştir" adımı eklendi — CLAUDE.md idempotent merge, marker'lar arasındaki içeriği regenerate eder.
+- 9 kod-yazan skill'in başına "Baseline" referans satırı eklendi: `improve-codebase-architecture`, `migrate-legacy-to-vsa`, `scaffold-vsa-feature`, `scaffold-microservice`, `tdd-dotnet/react/react-native`, `diagnose-dotnet`, `ef-core-migration-review`. Hiyerarşi: baseline → ADR → domain → skill operational.
+- `prototype` skill'i baseline'dan muaf — "throwaway, cila yok" prototype'ın doğasıyla çelişiyor (baseline'ın override bölümünde belgelendi).
+
 ### Added (Hafta 4 — Smoke Test + TÜBİTAK Örneği)
 - **Smoke test repo:** https://github.com/muratkizilelma/rubion-skills-test — 3 skill demo projesi (.NET 10, 14 xUnit testi, 0 failure). Tested: `scaffold-vsa-feature` (PlaceOrder/GetOrders/CancelOrder slice'ları), `tdd-dotnet` (14 test, FluentAssertions + NSubstitute), `migrate-legacy-to-vsa` (LegacyOrderService BEFORE state + VSA AFTER state Strangler Fig notasyonuyla).
 - `skills/tubitak-1507-document/examples/01-ai-production-planning-application.md`: Tam doldurulmuş TÜBİTAK 1507 başvurusu örneği — Milagro Yazılım A.Ş. hayali şirketi, plastik enjeksiyon sektörü için "AI-Destekli Üretim Planlama Sistemi". 6 bölüm: Amaç/Kapsam, Özgün Değer (5 makale + 5 ticari ürün analizi + 3 özgün katkı), 4 Ar-Ge Faaliyeti (teknik içerik + belirsizlik + başarı kriteri + risk), Gantt tablosu (18 ay), Ekip (5 kişi, 54 ay-kişi), Bütçe (5.176.000 TL). Adapte etme notları dahil.

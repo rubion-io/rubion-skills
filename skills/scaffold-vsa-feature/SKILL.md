@@ -6,6 +6,8 @@ stack: [dotnet, csharp, mediatr, fluentvalidation, xunit]
 
 # Scaffold VSA Feature — Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 ## Ne Üretir?
 
 Bir feature için tam dikey dilim:

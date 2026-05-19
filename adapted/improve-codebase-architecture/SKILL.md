@@ -10,6 +10,8 @@ stack: [dotnet, csharp, architecture]
 
 # Improve Codebase Architecture — Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 Mimari sürtüşmeyi yüzeye çıkar ve **derinleştirme fırsatları** öner — shallow module'ü deep module'e çevirecek refactor'lar. Hedef: test edilebilirlik ve AI-navigability.
 
 ---

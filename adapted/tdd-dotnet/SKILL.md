@@ -10,6 +10,8 @@ stack: [dotnet, csharp, xunit, mediatr, testcontainers]
 
 # TDD — .NET / Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 ## Felsefe
 
 **Temel ilke:** Testler davranışı public interface üzerinden doğrular; implementasyon detaylarını değil. Kod tamamen değişebilir, testler değişmemeli.

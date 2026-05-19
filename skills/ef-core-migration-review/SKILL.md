@@ -6,6 +6,8 @@ stack: [dotnet, csharp, ef-core, postgresql, mssql]
 
 # EF Core Migration Review — Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 ## Ne Zaman Kullanılır?
 
 Her `dotnet ef migrations add` komutundan sonra, migration `main` branch'e merge edilmeden önce.

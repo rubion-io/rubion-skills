@@ -10,6 +10,8 @@ stack: [dotnet, csharp, ef-core, opentelemetry, rabbitmq, serilog]
 
 # Diagnose — .NET / Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 Zor hataları çözmek için disiplin.
 
 > **Stack kararları:** EF Core vs Dapper seçimi → **[ADR-007](../../docs/adr/0007-ef-core-over-dapper.md)** | Observability (OTel + Serilog) → **[ADR-006](../../docs/adr/0006-observability-stack.md)** Aşamaları yalnızca açıkça gerekçelendirirsen atla.

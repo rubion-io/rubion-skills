@@ -10,6 +10,8 @@ stack: [react-native, expo, typescript, jest, react-testing-library, maestro]
 
 # TDD — React Native / Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 > **Stack seçimi gerekçesi** (Maestro vs Detox, jest-expo preset) → **[ADR-008](../../docs/adr/0008-test-stack.md)**
 
 ## Felsefe (Web ile Aynı)

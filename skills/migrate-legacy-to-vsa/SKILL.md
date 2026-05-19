@@ -6,6 +6,8 @@ stack: [dotnet, csharp, mediatr, vsa]
 
 # Migrate Legacy → VSA — Rubion
 
+> **Baseline:** Bu skill `CLAUDE.md` baseline'ı (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) ile birlikte çalışır. Çatışmada baseline öncelikli.
+
 ## Önce Anla
 
 Kör refactor yapma. Önce mevcut yapıyı incele:
