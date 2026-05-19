@@ -1,0 +1,27 @@
+{
+  "skill": "review-memory",
+  "description": "Description trigger dogrulugu icin 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Memory bayat mı kontrol et", "should_trigger": true },
+    { "query": "Wiki review yap", "should_trigger": true },
+    { "query": "docs/memory denetle", "should_trigger": true },
+    { "query": "Hangi modül doc'u eski?", "should_trigger": true },
+    { "query": "Memory vault staleness check", "should_trigger": true },
+    { "query": "Broken link var mı memory'de", "should_trigger": true },
+    { "query": "last_reviewed eski dosyaları listele", "should_trigger": true },
+    { "query": "Kod değişti ama doc güncellenmedi mi", "should_trigger": true },
+    { "query": "Memory coverage raporu üret", "should_trigger": true },
+    { "query": "Wiki sağlık denetimi", "should_trigger": true },
+
+    { "query": "Memory iskeleti kur", "should_trigger": false },
+    { "query": "Bir modülü memorize et", "should_trigger": false },
+    { "query": "Migration review yap", "should_trigger": false },
+    { "query": "Code review yap", "should_trigger": false },
+    { "query": "PR review et", "should_trigger": false },
+    { "query": "Test coverage raporu", "should_trigger": false },
+    { "query": "Bağımlılıkları güncelle", "should_trigger": false },
+    { "query": "Performance check", "should_trigger": false },
+    { "query": "ADR yaz", "should_trigger": false },
+    { "query": "Yeni mikroservis ekle", "should_trigger": false }
+  ]
+}

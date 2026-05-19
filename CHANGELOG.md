@@ -4,6 +4,13 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 6 — Memory Skill Üçlüsü)
+- `skills/setup-memory/SKILL.md`: Proje için memory iskeleti kurar — `docs/memory/` altına 6 klasör (10-architecture, 20-modules, 30-decisions, 40-runbooks, 50-glossary, 99-meta) + MOC.md + template'ler. Mevcut `docs/adr/`'yi link'ler veya taşır (kullanıcı seçer). `CLAUDE.md`'ye idempotent memory pointer marker'ı ekler. Sadece bir kez çalıştırılır.
+- `skills/memorize-module/SKILL.md`: Tek bir modülün TL;DR'ını üretir — kullanıcıya 5 soru (ne yapar, kritik convention, "dokunma" notları, ADR ilişkileri, modül bağımlılıkları), 3-5 anahtar dosyayla doğrulama, sonra `20-modules/<modul>.md` yazar ve MOC.md'yi günceller. Lazy adoption pattern — modül başına 5-10K token. Karpathy "Don't assume, ask" prensibi.
+- `skills/review-memory/SKILL.md`: Memory vault sağlığını denetler — last_reviewed > 60 gün, broken link, git log cross-check (kod son 30 günde değişti ama doc eski mi?), coverage raporu (en sık dokunulan ama doc'suz top 5). Otomatik düzeltme yapmaz — rapor üretir, kullanıcı önceliklendirir.
+- 3 yeni eval JSON: `setup-memory`, `memorize-module`, `review-memory` × 10 pos + 10 neg query.
+- Memory katmanı **skill execution memory'sinden bağımsız bir knowledge memory** olarak konumlandırıldı. Wiki = "ne doğru, neden bu kararı verdik" / Skill = "nasıl yapılır" — çakışmaz, beraber çalışır.
+
 ### Added (Hafta 5 — Karpathy Davranış Baseline)
 - `templates/CLAUDE.md.baseline.md`: 4 davranış prensibi (Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution) + Rubion-specific somut tetikleyiciler (3+ dosya → onay, 200+ satır → "50 mümkün mü?", dokunulmayan dosyada formatting yasak vb.). Idempotent marker'lar (`<!-- rubion:baseline-start v1 -->`) ile regenere edilebilir.
 - `templates/claude-settings.example.json`: Claude Code v2 hook'ları — `PostToolUse` (Edit/Write sonrası Surgical Changes hatırlatıcı), `Stop` (.cs değişiklikleri varsa test çalıştırıldı mı kontrolü), `PreToolUse` (destructive bash komut uyarısı).

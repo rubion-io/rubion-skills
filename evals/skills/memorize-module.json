@@ -1,0 +1,27 @@
+{
+  "skill": "memorize-module",
+  "description": "Description trigger dogrulugu icin 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Profile modülünü memorize et", "should_trigger": true },
+    { "query": "Auth için dokümantasyon üret memory'ye", "should_trigger": true },
+    { "query": "Billing modülünün TL;DR'ını yaz", "should_trigger": true },
+    { "query": "Inventory modülü için module.md oluştur", "should_trigger": true },
+    { "query": "Bu modülü 20-modules altına yaz", "should_trigger": true },
+    { "query": "Memorize this module", "should_trigger": true },
+    { "query": "Notifications module knowledge'ını üret", "should_trigger": true },
+    { "query": "Auth modülünün TL;DR'ı eksik, doldur", "should_trigger": true },
+    { "query": "Module documentation üret memory'de", "should_trigger": true },
+    { "query": "Profile module için doc yaz wiki'ye", "should_trigger": true },
+
+    { "query": "Memory iskeleti kur", "should_trigger": false },
+    { "query": "Memory bayat mı denetle", "should_trigger": false },
+    { "query": "ADR yaz", "should_trigger": false },
+    { "query": "Yeni feature scaffold et", "should_trigger": false },
+    { "query": "PRD üret", "should_trigger": false },
+    { "query": "TDD ile test yaz", "should_trigger": false },
+    { "query": "Mimari analiz", "should_trigger": false },
+    { "query": "Migration güvenli mi", "should_trigger": false },
+    { "query": "Tüm projeyi analiz et", "should_trigger": false },
+    { "query": "Issue tracker bootstrap", "should_trigger": false }
+  ]
+}

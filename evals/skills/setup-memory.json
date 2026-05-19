@@ -1,0 +1,27 @@
+{
+  "skill": "setup-memory",
+  "description": "Description trigger dogrulugu icin 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Memory iskeleti kur", "should_trigger": true },
+    { "query": "docs/memory yapısı oluştur", "should_trigger": true },
+    { "query": "LLM wiki kur projeye", "should_trigger": true },
+    { "query": "Atomik markdown notlar için klasör yapısı kur", "should_trigger": true },
+    { "query": "MOC.md ve memory templates oluştur", "should_trigger": true },
+    { "query": "Project knowledge base setup", "should_trigger": true },
+    { "query": "20-modules 30-decisions klasör iskeleti", "should_trigger": true },
+    { "query": "Bu projeye memory vault'u ekle", "should_trigger": true },
+    { "query": "Karpathy wiki yapısı kur", "should_trigger": true },
+    { "query": "docs memory setup yapalım", "should_trigger": true },
+
+    { "query": "Bir modülü memorize et", "should_trigger": false },
+    { "query": "Memory bayat mı kontrol et", "should_trigger": false },
+    { "query": "Yeni VSA feature ekle", "should_trigger": false },
+    { "query": "Rubion skills bootstrap", "should_trigger": false },
+    { "query": "ADR yaz", "should_trigger": false },
+    { "query": "CLAUDE.md güncelle", "should_trigger": false },
+    { "query": "TDD ile yaz", "should_trigger": false },
+    { "query": "OpenTelemetry kur", "should_trigger": false },
+    { "query": "Mimari iyileştir", "should_trigger": false },
+    { "query": "Issue'lara böl", "should_trigger": false }
+  ]
+}
