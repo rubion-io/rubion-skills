@@ -1,138 +1,212 @@
 ---
 name: setup-rubion-skills
-description: Rubion skill kütüphanesini bir projede bootstrap eder — issue tracker (GitHub/Jira) ve domain doc yerleşimini `docs/agents/` altına yazar. "skill setup", "rubion init" denildiğinde. Sadece bir kez, proje başlangıcında çalıştır.
+description: Wizard — projeyi keşfeder ve kişiselleştirilmiş skill yol haritası önerir. Önce foundation (issue tracker, baseline, hooks), sonra zero/legacy × stack matrisinde sıradaki skill'i önerir. "rubion init", "skill setup", "wizard başlat" denildiğinde. İlk kez veya re-entry — idempotent.
 stack: []
 ---
 
-# Setup Rubion Skills — Bootstrap
+# Setup Rubion Skills — Wizard
 
-Diğer skill'lerin "issue tracker'a yaz" veya "ADR'ye bak" dediği durumlarda nereye bakacaklarını bu skill tek bir kerelik kurar.
+Bu skill **wizard** gibi çalışır: 4 faz, her fazda kullanıcıya tek tek sorular sorar, cevaplara göre sıradaki skill'i önerir. Otomatik skill çalıştırmaz — sadece **yönlendirir**.
 
-> **Not:** Bu prompt'a göre yürüyen bir skill — deterministik script değil. Mevcut durumu keşfet, kullanıcıya göster, onay al, yaz.
+> **Karpathy uyumu:** Don't assume, ask. Her faz sonunda kullanıcı onayı zorunlu. Skill chain'i kullanıcının elinde.
+
+> **İdempotent.** Bir hafta sonra tekrar çalıştırıldığında filesystem'i okur, nerede kaldığını bulur, doğru adımdan devam eder.
 
 ---
 
-## Süreç
+## Faz A — Foundation (her zaman)
 
-### 1. Keşfet
+Bu fazda 3 şey kurulur: issue tracker, baseline, hooks.
 
-Repo'nun mevcut durumuna bak. Varsa oku, yoksa varsayma:
+### A.1 Keşfet
 
-- `git remote -v` → GitHub remote var mı?
-- `CLAUDE.md` veya `AGENTS.md` repo kökünde var mı? İçinde `## Agent skills` bloğu var mı?
-- `CONTEXT.md` ve `CONTEXT-MAP.md` repo kökünde var mı?
-- `docs/adr/` dizini var mı?
-- `docs/agents/` zaten oluşturulmuş mu? (varsa skill'i daha önce çalıştırılmış demektir)
-
-### 2. Bulguları göster ve sor
-
-Mevcut durumu özetle. Sonra **tek tek** iki kararı kullanıcıya götür — bir kerede hepsini dökme.
-
-Kullanıcı bu terimleri bilmiyor varsay. Her bölüm kısa bir açıklama ile başlasın.
-
-#### Bölüm A — Issue Tracker
-
-> Açıklama: Issue tracker, bu projenin task ve issue'larının nerede yaşadığıdır. `to-prd`, `to-issues`, `diagnose-dotnet` gibi skill'ler buradan okur ve buraya yazar. Hangi araç kullanılacağını bilmeleri gerekir.
-
-İki seçenek:
-
-- **GitHub** — issue'lar repo'nun GitHub Issues sekmesinde, `gh` CLI ile yönetilir
-- **Jira** — issue'lar Atlassian Jira Cloud'da, REST API + API token ile yönetilir
-
-`git remote -v` GitHub adresi gösteriyorsa **GitHub** öner. Müşteri projesinde Jira kullanılıyorsa **Jira** seçilir.
-
-#### Bölüm B — Domain Doc Yerleşimi
-
-> Açıklama: `tdd-dotnet`, `diagnose-dotnet`, `grill-with-docs` gibi skill'ler projenin domain dilini öğrenmek için `CONTEXT.md`, geçmiş kararları için `docs/adr/` okur. Bu dosyalar tek mi yoksa monorepo'da modüllere mi dağılmış belli olmalı.
-
-İki seçenek:
-
-- **Single-context** — `CONTEXT.md` + `docs/adr/` repo kökünde (çoğu Rubion projesi)
-- **Multi-context** — `CONTEXT-MAP.md` repo kökünde, her modülün kendi `CONTEXT.md`'si (monorepo / büyük mikroservis kümeleri)
-
-### 3. Onay al ve yaz
-
-Kullanıcıya iki dosyanın taslağını göster:
-
-- `CLAUDE.md` veya `AGENTS.md`'ye eklenecek `## Agent skills` bloğu
-- `docs/agents/issue-tracker.md` ve `docs/agents/domain.md` içerikleri
-
-Yazmadan önce kullanıcıya düzenleme şansı ver.
-
-### 4. Dosyaları yaz
-
-**Hangi dosyayı düzenle:**
-
-- `CLAUDE.md` varsa onu düzenle
-- Yoksa `AGENTS.md` varsa onu düzenle
-- Hiçbiri yoksa kullanıcıya sor — kendin seçme
-
-`## Agent skills` bloğu zaten varsa, üzerine ekleme — içeriğini yerinde güncelle.
-
-Eklenecek blok:
-
-```markdown
-## Agent skills
-
-### Issue tracker
-
-[Tek cümleyle: GitHub veya Jira]. Detay: `docs/agents/issue-tracker.md`.
-
-### Domain docs
-
-[Tek cümleyle: single-context veya multi-context]. Detay: `docs/agents/domain.md`.
-```
-
-Sonra şu dosyaları yaz (bu skill klasöründeki şablonları başlangıç olarak kullan):
-
-- [issue-tracker-github.md](./issue-tracker-github.md) — GitHub seçildi ise
-- [issue-tracker-jira.md](./issue-tracker-jira.md) — Jira seçildi ise
-- [domain.md](./domain.md) — her durumda
-
-Jira seçildiyse kullanıcıya **environment variable kurulumunu** hatırlat:
+Mevcut durumu kontrol et (varsa oku, yoksa varsayma):
 
 ```bash
-# .env veya ~/.bashrc / ~/.zshrc / ~/.config/powershell/profile.ps1
-export JIRA_BASE_URL="https://<your-domain>.atlassian.net"
-export JIRA_EMAIL="you@rubion.io"
-export JIRA_API_TOKEN="<api-token>"
-export JIRA_PROJECT_KEY="<PROJ>"   # Jira proje anahtarı, örn: RUB
+git remote -v                              # GitHub mu?
+ls CLAUDE.md AGENTS.md                     # entry point var mı?
+ls CONTEXT.md CONTEXT-MAP.md               # domain doc var mı?
+ls docs/adr/ docs/agents/                  # daha önce kurulmuş mu?
+ls .claude/settings.json                   # hook'lar kurulmuş mu?
 ```
 
-API token şuradan alınır: https://id.atlassian.com/manage-profile/security/api-tokens
+Bulguları kullanıcıya 3-4 cümlede özetle.
 
-> **Güvenlik:** API token'ı asla repo'ya commit'leme. `.env` `.gitignore`'da olmalı.
+### A.2 Soru 1 — Issue Tracker
 
-### 5. Karpathy/Rubion Baseline'ı Yerleştir (Opsiyonel ama Önerilen)
+> Açıklama: `to-prd`, `to-issues`, `diagnose-dotnet` gibi skill'ler buradan okur ve buraya yazar.
 
-> **Açıklama:** Rubion baseline = 4 davranış kuralı (Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution) + Rubion-specific somut tetikleyiciler. Skill'lerden bağımsız, her oturumda yüklenir.
+İki seçenek:
+- **GitHub** (`gh` CLI ile, açık kaynak/in-house projeler için varsayılan)
+- **Jira** (REST API + token, müşteri/enterprise projeler için)
 
-Kullanıcıya sor: "Karpathy/Rubion baseline'ı CLAUDE.md'ye yerleştireyim mi?"
+`git remote -v` GitHub gösteriyorsa **GitHub** öner.
 
-**Evet derse:**
+### A.3 Soru 2 — Domain Doc Yerleşimi
 
-1. `<rubion-skills>/templates/CLAUDE.md.baseline.md` içeriğini al.
-2. Proje kökündeki `CLAUDE.md`'yi oku.
-3. `<!-- rubion:baseline-start v1 -->` marker'ı zaten var mı?
-   - **Varsa:** Marker'lar arasını yeni içerikle değiştir (regenerate).
-   - **Yoksa:** Dosyanın **sonuna** ekle (override section'ları üstte kalsın).
-4. `CLAUDE.md` yoksa: önce ana içerik için kullanıcıya sor, sonra baseline'ı ekle.
+> Açıklama: Domain dilini ve geçmiş kararları nerede tutuyoruz?
 
-**Hooks (Claude Code v2 kullanıcısı için):**
+- **Single-context** — `CONTEXT.md` + `docs/adr/` repo kökünde (çoğu Rubion projesi)
+- **Multi-context** — `CONTEXT-MAP.md` + her modülün kendi `CONTEXT.md`'si (monorepo / büyük mikroservis)
 
-`.claude/settings.json` dosyası proje kökünde yoksa, `<rubion-skills>/templates/claude-settings.example.json` içeriğini oraya kopyala. Varsa kullanıcıya birleştirme planı sun.
+### A.4 Onay al ve yaz
 
-> `.claude/settings.json` repo'ya commit edilebilir (takım paylaşımı için) **veya** `.claude/settings.local.json` (kişisel, .gitignore'da).
+Taslağı göster, onay al, yaz:
 
-### 6. Bitir
+- `CLAUDE.md` veya `AGENTS.md`'ye `## Agent skills` bloğu (idempotent — varsa güncelle, ekleme)
+- `docs/agents/issue-tracker.md` ([github](./issue-tracker-github.md) veya [jira](./issue-tracker-jira.md) template'inden)
+- `docs/agents/domain.md` ([template](./domain.md))
 
-Kullanıcıya kurulumun tamamlandığını söyle. Hangi skill'lerin bu dosyalardan okuyacağını listele:
+Jira seçildiyse env var hatırlatması:
+```bash
+export JIRA_BASE_URL="https://<domain>.atlassian.net"
+export JIRA_EMAIL="you@rubion.io"
+export JIRA_API_TOKEN="<token>"  # https://id.atlassian.com/manage-profile/security/api-tokens
+export JIRA_PROJECT_KEY="<PROJ>"
+```
 
-- `adapted/to-prd` — PRD'yi issue tracker'a yayınlar
-- `adapted/to-issues` — bir planı issue'lara böler ve tracker'a yazar
-- `adapted/diagnose-dotnet` — diagnose sırasında ADR ve CONTEXT.md'ye bakar
-- `adapted/tdd-dotnet` — test isimlendirme için CONTEXT.md sözlüğünü kullanır
+### A.5 Soru 3 — Baseline Yerleştir
 
-Baseline yerleştirildiyse şunu da söyle: "CLAUDE.md baseline (4 davranış kuralı) artık her oturumda aktif. Override gerekirse marker dışında yeni section aç."
+> Açıklama: Karpathy 4 prensibi (Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven) her oturumda yüklenir. Skill'lerin üstünde davranış kuralı.
 
-Daha sonra `docs/agents/*.md`'yi elle düzenleyebileceklerini, sadece tracker değişirse bu skill'i tekrar çalıştırmaları gerektiğini söyle.
+Kullanıcı evet derse:
+1. `<rubion-skills>/templates/CLAUDE.md.baseline.md` içeriğini al
+2. Proje `CLAUDE.md`'sinde `<!-- rubion:baseline-start v1 -->` marker'ı var mı?
+   - **Varsa:** marker'lar arasını yeniden yaz (regenerate)
+   - **Yoksa:** dosya sonuna ekle
+
+### A.6 Soru 4 — Hooks
+
+> Açıklama: PostToolUse + Stop + PreToolUse hook'ları — Surgical Changes hatırlatma, Goal-Driven (test reminder), destructive komut uyarısı.
+
+Kullanıcı evet derse:
+- `.claude/settings.json` yoksa → `<rubion-skills>/templates/claude-settings.example.json` kopyala
+- Varsa → birleştirme planını sun (otomatik birleştirme yapma)
+
+---
+
+## Faz B — Diagnose (kişiselleştirme için)
+
+2 soru, kısa:
+
+### B.1 Soru 5 — Proje Yaşı
+
+> "Bu **sıfırdan** yeni bir proje mi, yoksa **mevcut/legacy** bir kod tabanı mı?"
+
+Tahmin et (kullanıcıya teyit ettir):
+- `src/` veya `app/` dizininde 0-10 dosya → muhtemelen **zero**
+- 50+ dosya, ADR'ler var, CHANGELOG dolu → muhtemelen **legacy**
+
+### B.2 Soru 6 — Stack
+
+> "Hangi stack? .NET / React / React Native / Mixed?"
+
+`*.csproj`, `package.json`, `app.json` dosyalarına bakarak tahmin et, kullanıcıya teyit ettir.
+
+---
+
+## Faz C — Recommend Path (asıl değer)
+
+Faz B'nin 2 cevabına göre **karar matrisinden** kişiselleştirilmiş yol üret.
+
+### Karar Matrisi
+
+| Senaryo | Sıralı path |
+|---------|-------------|
+| **Zero × .NET** | `setup-memory` → `scaffold-microservice`* → `setup-precommit-dotnet` → `scaffold-vsa-feature` → `tdd-dotnet` → `setup-otel-dotnet` |
+| **Zero × React** | `setup-memory` → `tdd-react` (gün 1 disiplin) |
+| **Zero × RN** | `setup-memory` → `tdd-react-native` |
+| **Zero × Mixed** | .NET path öncelikli + paralelde React/RN |
+| **Legacy × .NET** | `setup-memory` → `improve-codebase-architecture` → `scaffold-adr` (adayları belgele) → `memorize-module` (top 5) → `migrate-legacy-to-vsa` (gerekirse) → `setup-precommit-dotnet` |
+| **Legacy × React** | `setup-memory` → `memorize-module` (top 5) → `tdd-react` (test açığı kapatma) |
+| **Legacy × RN** | `setup-memory` → `memorize-module` (top 5) → `tdd-react-native` |
+| **Legacy × Mixed** | `setup-memory` → önce backend path, sonra frontend |
+
+\* `scaffold-microservice` sadece mikroservis projesi ise — kullanıcıya sor.
+
+### Yol Haritasını Sun
+
+Örnek çıktı (Legacy × .NET):
+
+```
+Önerilen sıra (kişiselleştirilmiş — Legacy × .NET):
+
+1. ✅ setup-rubion-skills           ← buradayız
+2. ⏭ setup-memory                   memory iskeleti — knowledge başlangıcı
+3. ⏭ improve-codebase-architecture  neyi düzeltmeliyiz? 3-4 aday üretir
+4. ⏭ scaffold-adr × N               (3) çıktısındaki her adayı ADR yap
+5. ⏭ memorize-module × 5            en sık dokunulan modüller (git log ile tespit)
+6. ⏭ migrate-legacy-to-vsa          (3) önerirse Strangler Fig
+7. ⏭ setup-precommit-dotnet         disiplin (son — refactor öncesi koymak gereksiz friction)
+
+Sıradaki: setup-memory.
+Şimdi çalıştırayım mı? [evet/hayır/atla]
+```
+
+### Önemli Davranış Kuralları
+
+- **Her adımı kullanıcı onaylayarak** geç. "Hepsini şimdi çalıştır" deme.
+- **Skill çağrısı yapma** — sadece *öner*. Kullanıcı "evet" derse, Claude Code skill'i bir sonraki turn'de tetikler (description match ile veya `/skill-name` ile).
+- Skill bitince **wizard'a geri dön** — sıradaki adımı öner.
+- Adım atlanırsa kayıt tut (faz D için):
+  ```
+  Atlanan: scaffold-microservice (kullanıcı: "tek monolith yeterli")
+  Sıradaki: setup-precommit-dotnet
+  ```
+
+---
+
+## Faz D — Re-Entry (idempotent durumu)
+
+Wizard daha önce çalıştırıldıysa **nerede kaldığını filesystem'den oku**:
+
+### Durum Tespit Matrisi
+
+| Tespit | Sonuç |
+|--------|-------|
+| `docs/agents/issue-tracker.md` var | A.2 tamam |
+| `docs/agents/domain.md` var | A.3 tamam |
+| `<!-- rubion:baseline-start` CLAUDE.md'de | A.5 tamam |
+| `.claude/settings.json` var ve `[rubion-baseline]` içeriyor | A.6 tamam |
+| `docs/memory/MOC.md` var | `setup-memory` tamam |
+| `docs/memory/20-modules/*.md` (template hariç) sayısı | Kaç modül memorize edildi |
+| `docs/adr/ADR-*.md` veya `docs/memory/30-decisions/ADR-*.md` sayısı | Kaç ADR var |
+| `.husky/` veya `.husky.json` | `setup-precommit-dotnet` tamam |
+| `Program.cs`'de `AddOpenTelemetry` | `setup-otel-dotnet` tamam |
+| `Dockerfile` + `docker-compose.yml` + `*.Api.csproj` | `scaffold-microservice` muhtemelen yapıldı |
+
+### Re-Entry Çıktısı
+
+Örnek (Collecsi gibi 1 hafta sonra):
+
+```
+Mevcut durum tespiti:
+
+✅ Foundation tamam (issue tracker: GitHub, baseline kurulu, hook'lar aktif)
+✅ Memory iskeleti var (3 modül memorize edilmiş: profile, auth, billing)
+✅ 8 ADR + 1 yeni ADR-009 (geçen hafta scaffold-adr ile)
+⏭ improve-codebase-architecture henüz çalıştırılmamış (önerilir)
+⏭ 32 modülden 3'ü memorize edilmiş — top 5 için 2 daha kaldı
+⏭ setup-precommit-dotnet kurulmamış
+
+Önerilen sıradaki: memorize-module (notifications) — git log son 90 günde en çok dokunulan.
+
+Hangisini yapalım?
+  1) memorize-module notifications
+  2) improve-codebase-architecture (yeni adaylar bulmak için)
+  3) setup-precommit-dotnet
+  4) Wizard'dan çık, başka bir şey yapacağım
+```
+
+---
+
+## Yapma
+
+- ✗ **Otomatik skill çalıştırma** — sadece öner, kullanıcı tetikle
+- ✗ **Bir kerede tüm yol haritasını çalıştır** — adım adım, her adımda doğrulama
+- ✗ Karar matrisini kullanıcıya **dökmek** — kişiselleştirilmiş çıktı sun, ham tablo gösterme
+- ✗ "Şu projede daha iyi olur" gibi **subjektif kararlar dayatma** — kullanıcı bilir, sor
+- ✗ Faz B'yi atlamak — kişiselleştirme bu fazda doğar
+- ✗ Faz D'yi unutmak — wizard'ın asıl değeri re-entry'de ortaya çıkar
+- ✗ `prototype` skill'ini öner — throwaway, wizard kapsamı dışı
+- ✗ Skill bitiminde "tamam, hadi sonraki" deyip atlamak — her skill sonrası **build/test/doğrulama** çağrısı yap (Goal-Driven)

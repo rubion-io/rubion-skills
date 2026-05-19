@@ -4,6 +4,17 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Changed (Hafta 8 — setup-rubion-skills → Wizard)
+- `setup-rubion-skills` skill'i **4 fazlı wizard** olarak yeniden yapılandırıldı:
+  - **Faz A — Foundation:** Issue tracker (GitHub/Jira), domain doc, baseline, hooks (mevcut içerik faz altına alındı)
+  - **Faz B — Diagnose:** 2 soru → "zero ya da legacy?" + "stack?" (.NET/React/RN/Mixed)
+  - **Faz C — Recommend Path:** 8 senaryolu karar matrisinden kişiselleştirilmiş yol haritası üretir (örn: Legacy × .NET → memory → improve-arch → scaffold-adr × N → memorize-module × 5 → migrate → precommit)
+  - **Faz D — Re-Entry:** İdempotent durum tespiti — filesystem'den (docs/agents/, docs/memory/, .husky/, OTel pattern'i vb.) nerede kaldığını anlar, doğru adımdan devam eder
+- Description güncellendi: "Wizard — projeyi keşfeder ve kişiselleştirilmiş skill yol haritası önerir... 'rubion init', 'skill setup', 'wizard başlat' denildiğinde. İlk kez veya re-entry — idempotent." (252 char)
+- Eval JSON 20 query yenilendi (wizard trigger'larına göre)
+- **Karpathy uyumu:** Don't assume, ask — otomatik skill çalıştırma yapmaz, sadece **öner**. Kullanıcı her adımı explicit onaylar.
+- 2 fazdan 4 faza geçiş: skill 115 satırdan ~210 satıra çıktı ama mantığı önemli ölçüde değiştirmedi — sadece yapılandırma + karar matrisi + re-entry eklendi.
+
 ### Added (Hafta 7 — scaffold-adr)
 - `skills/scaffold-adr/SKILL.md`: Yeni ADR yazımı için auto-numbering + çelişki kontrolü + supersede workflow + MOC.md/README.md güncelleme. 4-5 soru ile bağlam/karar/alternatif/sonuç doldurulur. `improve-codebase-architecture` çıktısından chain modu — "Aday 1'i ADR yap" denildiğinde aday içeriği otomatik map'lenir, sadece eksik alanlar (genelde alternatifler) sorulur.
 - `skills/scaffold-adr/examples/01-from-architecture-review.md`: Collecsi `ItemCreatedEvent` adayının ADR-009'a dönüşümü — tam akış (chain modu + çelişki kontrolü + supersede senaryosu).
