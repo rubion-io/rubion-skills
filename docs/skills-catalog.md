@@ -24,6 +24,7 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 |-------|----------|--------------|
 | **[scaffold-vsa-feature](../skills/scaffold-vsa-feature/SKILL.md)** | VSA feature slice — Command/Query + Handler + Validator + Endpoint + Test. Tek seferde 5 dosya. | "PlaceOrder için VSA feature ekle" |
 | **[scaffold-microservice](../skills/scaffold-microservice/SKILL.md)** | Yeni .NET mikroservis — ASP.NET Core API + Worker (opsiyonel) + Dockerfile + docker-compose entry. | "Inventory mikroservisi scaffold et" |
+| **[scaffold-adr](../skills/scaffold-adr/SKILL.md)** | Yeni ADR — auto-numbering, çelişki kontrolü, supersede workflow, MOC güncelleme. `improve-codebase-architecture` ile zincirleme. | "Aday 1'i ADR yap" · "PostgreSQL kararını dokümante et" |
 
 ---
 
@@ -127,6 +128,12 @@ to-prd → grill-with-docs → to-issues → dispatch-agents
 improve-codebase-architecture → migrate-legacy-to-vsa → tdd-dotnet (her slice için)
 ```
 
+### Mimari analiz → karar belgele → implementasyon
+
+```
+improve-codebase-architecture → scaffold-adr (adayları belgele) → scaffold-vsa-feature → tdd-dotnet
+```
+
 ### Memory bakımı (aylık)
 
 ```
@@ -151,11 +158,12 @@ Mevcut kodu değiştireceğim
 └─ Migration kontrolü    → ef-core-migration-review
 
 Doküman yazacağım
-├─ PRD              → to-prd
-├─ Issue'lar        → to-issues
-├─ Plan denetimi    → grill-with-docs
-├─ TÜBİTAK başvuru  → tubitak-1507-document
-└─ Modül doc        → memorize-module
+├─ PRD                → to-prd
+├─ Issue'lar          → to-issues
+├─ Plan denetimi      → grill-with-docs
+├─ TÜBİTAK başvuru    → tubitak-1507-document
+├─ Modül doc          → memorize-module
+└─ Mimari karar (ADR) → scaffold-adr
 
 Kurulum
 ├─ İlk kez                  → setup-rubion-skills

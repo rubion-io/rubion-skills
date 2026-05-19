@@ -4,6 +4,13 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 7 — scaffold-adr)
+- `skills/scaffold-adr/SKILL.md`: Yeni ADR yazımı için auto-numbering + çelişki kontrolü + supersede workflow + MOC.md/README.md güncelleme. 4-5 soru ile bağlam/karar/alternatif/sonuç doldurulur. `improve-codebase-architecture` çıktısından chain modu — "Aday 1'i ADR yap" denildiğinde aday içeriği otomatik map'lenir, sadece eksik alanlar (genelde alternatifler) sorulur.
+- `skills/scaffold-adr/examples/01-from-architecture-review.md`: Collecsi `ItemCreatedEvent` adayının ADR-009'a dönüşümü — tam akış (chain modu + çelişki kontrolü + supersede senaryosu).
+- `evals/skills/scaffold-adr.json`: 10 pos + 10 neg query (TÜBİTAK/migration/PRD gibi confusable skill'lere karşı).
+- Skills catalog güncellendi: `scaffold-adr` Scaffold kategorisine, yeni "mimari analiz → karar belgele → implementasyon" chain'i, karar ağacına "Mimari karar (ADR) → scaffold-adr" satırı.
+- `setup-memory` skill'inde "Yeni ADR eklerken `scaffold-adr` kullan" referansı.
+
 ### Added (Hafta 6 — Memory Skill Üçlüsü)
 - `skills/setup-memory/SKILL.md`: Proje için memory iskeleti kurar — `docs/memory/` altına 6 klasör (10-architecture, 20-modules, 30-decisions, 40-runbooks, 50-glossary, 99-meta) + MOC.md + template'ler. Mevcut `docs/adr/`'yi link'ler veya taşır (kullanıcı seçer). `CLAUDE.md`'ye idempotent memory pointer marker'ı ekler. Sadece bir kez çalıştırılır.
 - `skills/memorize-module/SKILL.md`: Tek bir modülün TL;DR'ını üretir — kullanıcıya 5 soru (ne yapar, kritik convention, "dokunma" notları, ADR ilişkileri, modül bağımlılıkları), 3-5 anahtar dosyayla doğrulama, sonra `20-modules/<modul>.md` yazar ve MOC.md'yi günceller. Lazy adoption pattern — modül başına 5-10K token. Karpathy "Don't assume, ask" prensibi.

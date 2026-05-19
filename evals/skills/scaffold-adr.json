@@ -1,0 +1,27 @@
+{
+  "skill": "scaffold-adr",
+  "description": "Description trigger dogrulugu icin 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Yeni ADR yaz", "should_trigger": true },
+    { "query": "Bu kararı dokümante et", "should_trigger": true },
+    { "query": "PostgreSQL kararını ADR olarak yaz", "should_trigger": true },
+    { "query": "Architecture decision record oluştur", "should_trigger": true },
+    { "query": "Aday 1'i ADR yap", "should_trigger": true },
+    { "query": "Bu mimari kararı ADR'ye dök", "should_trigger": true },
+    { "query": "ADR-009 yaz: MassTransit + RabbitMQ", "should_trigger": true },
+    { "query": "Karar dokümanı üret", "should_trigger": true },
+    { "query": "Bu seçimin gerekçesini ADR yap", "should_trigger": true },
+    { "query": "Decision record oluştur 30-decisions altına", "should_trigger": true },
+
+    { "query": "Modülü memorize et", "should_trigger": false },
+    { "query": "Memory iskeleti kur", "should_trigger": false },
+    { "query": "Mimari iyileştirme fırsatlarını bul", "should_trigger": false },
+    { "query": "Yeni feature scaffold et", "should_trigger": false },
+    { "query": "Migration güvenli mi", "should_trigger": false },
+    { "query": "TDD ile yaz", "should_trigger": false },
+    { "query": "PRD üret", "should_trigger": false },
+    { "query": "Issue'lara böl", "should_trigger": false },
+    { "query": "TÜBİTAK 1507 başvurusu", "should_trigger": false },
+    { "query": "Pre-commit hook kur", "should_trigger": false }
+  ]
+}

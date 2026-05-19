@@ -222,7 +222,7 @@ last_reviewed: <YYYY-MM-DD>
 
 ## Yeni ADR eklerken
 
-`30-decisions/ADR-XXX-<slug>.md` formatı. README.md tablosuna satır ekle.
+`scaffold-adr` skill'ini kullan — auto-numbering, çelişki kontrolü, README + MOC otomatik güncelleme.
 ```
 
 ### Proje `CLAUDE.md`'ye marker ekle (idempotent)
