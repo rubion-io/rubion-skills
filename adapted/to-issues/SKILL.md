@@ -62,13 +62,30 @@ Kurallar:
 - HITL issue'lara da etiket ekle — dispatch-agents görmez ama filtrelemek için kullanışlı
 - React Native + React aynı anda varsa da ikiye böl: `stack:react` ve `stack:react-native` ayrı issue
 
+### 3.6 Her dilim için paralellik ve başlangıç kriterini belirle
+
+Her issue taslağı için şu iki soruyu yanıtla:
+
+**A) Paralel çalışabilir mi?**
+Aynı anda başlanabilecek diğer issue'ları listele.
+Kural: aralarında `blocked by` ilişkisi olmayan VE aynı dosya/modülü değiştirmeyen issue'lar paralel çalışabilir.
+Kimseyle paralel değilse: "Yok" yaz.
+
+**B) Başlangıç kriteri nedir?** (`blocked by` varsa zorunlu)
+Blocker issue'nun hangi spesifik kabul kriterinin tamamlanması bu issue'yu başlatır?
+- Issue tamamen bitmesini bekleme — sadece gerekli kriter yeterli
+- Örnek: "MERP-12 → 'POST /orders 201 dönüyor' kriteri yeşil olunca"
+- Birden fazla blocker varsa her biri için ayrı kriter yaz
+
 ### 4. Kullanıcıya göster, sorgulat
 
 Önerilen kırılımı numaralı liste olarak sun. Her dilim için:
 - **Başlık:** kısa, açıklayıcı
 - **Tür:** HITL / AFK
-- **Stack:** tespit edilen etiket (`stack:dotnet` / `stack:react` / `stack:react-native` / `stack:mixed`)
+- **Stack:** tespit edilen etiket (`stack:dotnet` / `stack:react` / `stack:react-native`)
+- **Paralel çalışabilir:** hangi issue'larla eş zamanlı başlanabilir
 - **Blocked by:** hangi dilim önce bitmeli (varsa)
+- **Başlangıç kriteri:** blocker'ın hangi kriteri tamamlanınca bu başlar
 - **Karşılanan user story'ler:** kaynakta varsa hangi user story'leri kapsıyor
 
 Kullanıcıya sor:
@@ -77,6 +94,7 @@ Kullanıcıya sor:
 - Birleştirilmesi/bölünmesi gereken dilim var mı?
 - HITL/AFK işaretlemesi doğru mu?
 - Stack etiketleri doğru mu?
+- Paralel çalışabilirlik ve başlangıç kriterleri doğru mu?
 
 Kullanıcı onaylayana kadar tekrar et.
 
@@ -89,7 +107,7 @@ Her onaylanmış dilim için yeni issue oluştur. Dependency sırasıyla yayınl
 ```markdown
 ## Parent
 
-[Kaynak issue varsa referans — GitHub: #<num>, Jira: RUB-<num>. Yoksa bölümü atla.]
+[Kaynak issue varsa referans — GitHub: #<num>, Jira: MERP-<num>. Yoksa bölümü atla.]
 
 ## Ne inşa edilecek
 
@@ -103,11 +121,25 @@ Dosya yolu veya kod parçası yazma — eskir. Prototip kararı kodlayan snippet
 - [ ] Kriter 2
 - [ ] Kriter 3
 
+## Paralel çalışabilir
+
+- [Aynı anda başlanabilecek issue referansları]
+
+Veya: "Yok"
+
 ## Blocked by
 
 - [Bağımlı olduğu issue referansı]
 
 Veya: "Yok — hemen başlanabilir"
+
+## Başlangıç kriteri
+
+[Sadece "Blocked by" dolu ise yaz. Her blocker için hangi kabul kriteri tamamlanınca bu issue başlayabilir.]
+
+- <BLOCKER-ID> → "<spesifik kabul kriteri>"
+
+Veya: bölümü atla (blocked by yok ise)
 ```
 
 **Yayınlama komutu:**
@@ -214,7 +246,9 @@ Issue 1 (AFK, ready-for-agent) [stack:dotnet]:
     - [ ] POST /orders 201 dönüyor ve OrderId üretiyor
     - [ ] Geçersiz item miktarı 400 dönüyor
     - [ ] Handler test ve integration test (Testcontainers) yeşil
+  Paralel çalışabilir: Issue 3 ile
   Blocked by: yok
+  Başlangıç kriteri: —
 
 Issue 2 (AFK, ready-for-agent) [stack:react]:
   Başlık: "CreateOrder — Frontend: Sipariş formu UI + TanStack Query entegrasyonu"
@@ -223,20 +257,28 @@ Issue 2 (AFK, ready-for-agent) [stack:react]:
     - [ ] Başarılı siparişte onay ekranı açılıyor
     - [ ] Hata durumunda inline validation mesajı gösteriliyor
     - [ ] RTL testleri yeşil
-  Blocked by: Issue 1  ← API hazır olmadan UI yapılamaz
+  Paralel çalışabilir: yok
+  Blocked by: Issue 1
+  Başlangıç kriteri: Issue 1 → "POST /orders 201 dönüyor ve OrderId üretiyor" ✅ olunca
+                     (Issue 1 tamamen bitmesini beklemeye gerek yok)
 
 Issue 3 (HITL) [stack:dotnet]:
   Başlık: "Stok rezervasyonu — Inventory entegrasyonu kararı"
   Acceptance:
     - [ ] ADR: senkron HTTP vs RabbitMQ event kararı
+  Paralel çalışabilir: Issue 1 ile
   Blocked by: yok
+  Başlangıç kriteri: —
 
 Issue 4 (AFK, ready-for-agent) [stack:dotnet]:
   Başlık: "Order → Inventory event publish (OrderCreated)"
   Acceptance:
     - [ ] OrderCreatedEvent RabbitMQ'ya publish edilir
     - [ ] Sözleşme: payload örneği eklenmiştir
+  Paralel çalışabilir: yok
   Blocked by: Issue 1, Issue 3
+  Başlangıç kriteri: Issue 1 → "POST /orders 201 dönüyor" ✅ olunca
+                     Issue 3 → ADR kararı kapandıktan sonra (Issue 3 tamamen Done)
 ```
 
 ---

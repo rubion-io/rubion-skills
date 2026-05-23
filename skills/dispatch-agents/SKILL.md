@@ -104,14 +104,25 @@ curl -s -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
 
 ### 2. Bağımlılık Grafiğini Hesapla
 
-Her issue için `blockedBy` listesi var. **Çalışılabilir** olanları belirle:
+Her issue için `blockedBy`, `startCriteria` ve `canParallelWith` alanlarını oku.
+
+Issue body'den çıkarma:
+- `## Paralel çalışabilir` bölümü → `canParallelWith` listesi
+- `## Blocked by` bölümü → `blockedBy` listesi
+- `## Başlangıç kriteri` bölümü → `startCriteria` map'i (`{ "<BLOCKER-ID>": "<kriter metni>" }`)
+
+**Çalışılabilir** olanları belirle:
 
 ```
 Bir issue çalışılabilirse:
-  - Tüm blockedBy'ları kapanmış (closed / Done)
+  - Tüm blockedBy'ları için startCriteria karşılanmış
+      → Blocker issue'nun ilgili kabul kriteri checkbox'ı ✅ işaretli
+      → startCriteria yoksa: blocker tamamen kapanmış (closed / Done) olmalı
   - VE kendisi assigned değil
   - VE kendisi açık (open / not Done)
 ```
+
+Blocker'ın kriterini kontrol etmek için issue body'sini çek ve ilgili `- [x]` satırını ara.
 
 Devre tespiti: bağımlılık döngüsü varsa (`A blocked by B` AND `B blocked by A`) — durup kullanıcıya raporla.
 
@@ -120,10 +131,21 @@ Devre tespiti: bağımlılık döngüsü varsa (`A blocked by B` AND `B blocked 
 Önce **dağıtım planı** olarak göster, dispatch etme:
 
 ```
-Hazır (paralel başlanacak):                              Bloke (bekliyor):
-  #142 [stack:dotnet] — Müşteri kredi limiti kontrolü    #145 — Email bildirimi (blocked by #142)
-  #143 [stack:dotnet] — Sipariş PDF üretimi              #146 — Audit log (blocked by #143)
+Hazır — paralel başlanacak (3):
+  #142 [stack:dotnet] — Müşteri kredi limiti kontrolü
+        paralel: #143 ile
+  #143 [stack:dotnet] — Sipariş PDF üretimi
+        paralel: #142 ile
   #144 [stack:react]  — Sipariş özeti sayfası
+        paralel: yok
+
+Bloke — bekliyor (2):
+  #145 [stack:react]  — Email bildirimi
+        blocked by: #142
+        başlangıç kriteri: #142 → "POST /orders 201 dönüyor" ✅ olunca
+  #146 [stack:dotnet] — Audit log servisi
+        blocked by: #143
+        başlangıç kriteri: #143 tamamen kapanınca (kriter belirtilmemiş)
 
 Skill routing:
   #142 → scaffold-vsa-feature + tdd-dotnet
