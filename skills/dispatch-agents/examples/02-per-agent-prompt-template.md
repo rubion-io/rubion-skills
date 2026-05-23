@@ -2,9 +2,27 @@
 
 Her seçilen issue için kullanılan tam prompt. `<KÖŞELİ_PARANTEZ>` placeholder'ları issue verisinden doldurulur.
 
+Stack etiketi (`stack:dotnet` / `stack:react` / `stack:react-native`) `to-issues` tarafından Jira/GitHub etiketine yazılır.
+`to-issues` mixed issue'ları zaten backend + frontend olarak **ayrı iki issue'ya böler** — bu template'e `stack:mixed` gelmez.
+`dispatch-agents` etiketi okuyarak aşağıdaki **stack bloklarından** birini seçer.
+
 ---
 
-## Şablon
+## Stack Tespiti (dispatch-agents tarafından yapılır)
+
+Issue'nun label listesini oku:
+
+```
+stack:dotnet       → Blok A
+stack:react        → Blok B
+stack:react-native → Blok C
+etiket yok         → Issue başlığı/body'den sinyal ara (to-issues kuralları),
+                     bulamazsan kullanıcıya sor — varsayılan atama yapma
+```
+
+---
+
+## Blok A — .NET / Backend
 
 ```
 Sen <ISSUE-ID>: <TITLE> implementasyonunu yapacaksın.
@@ -16,21 +34,20 @@ ROL: Tek bir bağımsız issue üzerinde çalışan kıdemli .NET geliştirici.
 <ISSUE-BODY>
 ---
 
-ACCEPTANCE CRITERIA: (issue body'sinden çıkarıldı)
+ACCEPTANCE CRITERIA:
 - [ ] <KRİTER 1>
 - [ ] <KRİTER 2>
-...
 
 GÖREVİN — ADIM ADIM:
 
-1. Şu an git worktree'de izole çalışıyorsun. Branch açma komutu:
+1. Worktree'de izole çalışıyorsun. Branch aç:
      git checkout -b feature/<SLUG>
-   <SLUG> = issue-id'den türetilen kebab-case başlık (örn: rub-142-customer-credit-limit)
+   <SLUG> = kebab-case (örn: merp-142-create-order-handler)
 
-2. Eğer feature yeni bir VSA dilimi gerektiriyorsa: scaffold-vsa-feature skill'ini kullan.
+2. Feature yeni bir VSA dilimi gerektiriyorsa: scaffold-vsa-feature skill'ini kullan.
 
-3. Her handler/component için tdd-dotnet skill'i ile red-green-refactor:
-   - Önce başarısız test
+3. Her handler için tdd-dotnet skill'i ile red-green-refactor:
+   - Önce başarısız test (xUnit + FluentAssertions + NSubstitute)
    - Sonra minimum implementasyon
    - Sonra refactor
    - Bir seferde bir test
@@ -40,34 +57,141 @@ GÖREVİN — ADIM ADIM:
 5. Tüm testler yeşil mi? Doğrula:
      dotnet test --no-restore
 
-6. Commit'le ve push'la:
+6. Commit + push:
      git add -A
-     git commit -m "feat(<scope>): <kısa>\n\n<açıklama>\n\nCloses <ISSUE-REF>"
+     git commit -m "feat(<scope>): <kısa açıklama>\n\nCloses <ISSUE-REF>"
      git push -u origin feature/<SLUG>
 
 7. PR aç:
-   - GitHub:
-       gh pr create --title "<ISSUE-ID>: <TITLE>" \
-         --body "Closes #<NUMBER>\n\n<PR description>"
-   - Jira:
-       PR'ı GitHub'a aç (kod hala GitHub'da), Jira issue'ya yorum at:
-         curl -X POST -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-           -H "Content-Type: application/json" \
-           --data "$(jq -n --argjson body \"$(adf_from_markdown 'Branch: feature/<SLUG>, PR: <URL>')\" '{body: $body}')" \
-           "$JIRA_BASE_URL/rest/api/3/issue/<ISSUE-ID>/comment"
+     gh pr create --title "<ISSUE-ID>: <TITLE>" \
+       --body "Closes #<NUMBER>\n\n<PR açıklaması>"
+   Jira kullanıyorsan PR URL'ini issue'ya yorum olarak ekle.
 
-8. İssue'ya yorum at: "Branch hazır: feature/<SLUG>, PR: <URL>. Acceptance criteria şu an: X/Y"
+8. Issue'ya yorum: "Branch: feature/<SLUG> | PR: <URL> | Kriterler: X/Y tamamlandı"
 
-DOMAİN DİLİ İÇİN: Repo kökündeki CONTEXT.md kullan. Yeni terim ortaya çıkarsa not düş ama dosyayı değiştirme.
-MİMARİ KARARLAR: docs/adr/ — yeni karar gerektirirse uygulama, önce kullanıcıya sor.
+DOMAİN: CONTEXT.md ve docs/adr/ — yeni terim çıkarsa not düş, dosyayı değiştirme.
 
 KISITLAR:
-- Sadece bu issue'nun kapsamındaki dosyalara dokun
-- main veya başka bir branch'e dokunma
-- Başka issue'ya başlama
-- Tıkanırsan: yarım iş bırakma — branch'i push'la, PR'ı **Draft** olarak aç, kalan kısmı PR description'a yaz
+- Sadece bu issue kapsamındaki dosyalara dokun
+- main veya başka branch'e dokunma
+- Tıkanırsan: branch'i push'la, PR'ı Draft aç, bloğu PR description'a yaz
 
-ÇIKTI: Tek satırlık özet — "<ISSUE-ID> tamamlandı / blok oldu (neden)"
+ÇIKTI: "<ISSUE-ID> tamamlandı / blok oldu (neden)"
+```
+
+---
+
+## Blok B — React / Web Frontend
+
+```
+Sen <ISSUE-ID>: <TITLE> implementasyonunu yapacaksın.
+
+ROL: Tek bir bağımsız issue üzerinde çalışan kıdemli React geliştirici.
+
+İSSUE GÖVDESİ:
+---
+<ISSUE-BODY>
+---
+
+ACCEPTANCE CRITERIA:
+- [ ] <KRİTER 1>
+- [ ] <KRİTER 2>
+
+GÖREVİN — ADIM ADIM:
+
+1. Worktree'de izole çalışıyorsun. Branch aç:
+     git checkout -b feature/<SLUG>
+
+2. Her component / hook için tdd-react skill'i ile red-green-refactor:
+   - Önce başarısız test (Vitest + React Testing Library + MSW + user-event)
+   - Sonra minimum implementasyon
+   - Sonra refactor
+   - Bir seferde bir test
+
+3. TanStack Query kullanıyorsa: mock server (MSW) ile API katmanını izole et.
+
+4. Tüm testler yeşil mi? Doğrula:
+     pnpm test --run     # veya npm test -- --watchAll=false
+
+5. Commit + push:
+     git add -A
+     git commit -m "feat(<scope>): <kısa açıklama>\n\nCloses <ISSUE-REF>"
+     git push -u origin feature/<SLUG>
+
+6. PR aç:
+     gh pr create --title "<ISSUE-ID>: <TITLE>" \
+       --body "Closes #<NUMBER>\n\n<PR açıklaması>"
+   Jira kullanıyorsan PR URL'ini issue'ya yorum olarak ekle.
+
+7. Issue'ya yorum: "Branch: feature/<SLUG> | PR: <URL> | Kriterler: X/Y tamamlandı"
+
+DOMAİN: CONTEXT.md ve docs/adr/ — yeni terim çıkarsa not düş, dosyayı değiştirme.
+
+KISITLAR:
+- Sadece bu issue kapsamındaki dosyalara dokun
+- main veya başka branch'e dokunma
+- Tıkanırsan: branch'i push'la, PR'ı Draft aç, bloğu PR description'a yaz
+
+ÇIKTI: "<ISSUE-ID> tamamlandı / blok oldu (neden)"
+```
+
+---
+
+## Blok C — React Native / Mobile
+
+```
+Sen <ISSUE-ID>: <TITLE> implementasyonunu yapacaksın.
+
+ROL: Tek bir bağımsız issue üzerinde çalışan kıdemli React Native geliştirici.
+
+İSSUE GÖVDESİ:
+---
+<ISSUE-BODY>
+---
+
+ACCEPTANCE CRITERIA:
+- [ ] <KRİTER 1>
+- [ ] <KRİTER 2>
+
+GÖREVİN — ADIM ADIM:
+
+1. Worktree'de izole çalışıyorsun. Branch aç:
+     git checkout -b feature/<SLUG>
+
+2. Her screen / component / hook için tdd-react-native skill'i ile red-green-refactor:
+   - Önce başarısız test (Jest + React Testing Library for RN + native mock'lar)
+   - Sonra minimum implementasyon
+   - Sonra refactor
+   - Bir seferde bir test
+
+3. Navigation gerektiriyorsa: navigation mock'larını provider wrapper olarak ekle.
+   AsyncStorage gerektiriyorsa: `@react-native-async-storage/async-storage/jest/setup` mock'unu kullan.
+
+4. Tüm testler yeşil mi? Doğrula:
+     jest --watchAll=false
+
+5. E2E test varsa (Maestro): flow dosyasını yaz, çalıştırma adımlarını PR'a ekle (CI'da koşmak için).
+
+6. Commit + push:
+     git add -A
+     git commit -m "feat(<scope>): <kısa açıklama>\n\nCloses <ISSUE-REF>"
+     git push -u origin feature/<SLUG>
+
+7. PR aç:
+     gh pr create --title "<ISSUE-ID>: <TITLE>" \
+       --body "Closes #<NUMBER>\n\n<PR açıklaması>"
+   Jira kullanıyorsan PR URL'ini issue'ya yorum olarak ekle.
+
+8. Issue'ya yorum: "Branch: feature/<SLUG> | PR: <URL> | Kriterler: X/Y tamamlandı"
+
+DOMAİN: CONTEXT.md ve docs/adr/ — yeni terim çıkarsa not düş, dosyayı değiştirme.
+
+KISITLAR:
+- Sadece bu issue kapsamındaki dosyalara dokun
+- main veya başka branch'e dokunma
+- Tıkanırsan: branch'i push'la, PR'ı Draft aç, bloğu PR description'a yaz
+
+ÇIKTI: "<ISSUE-ID> tamamlandı / blok oldu (neden)"
 ```
 
 ---
@@ -80,7 +204,7 @@ Agent({
   subagent_type: "general-purpose",
   isolation: "worktree",
   run_in_background: true,
-  prompt: "<yukarıdaki şablon, doldurulmuş>"
+  prompt: "<yukarıdaki stack bloğu, doldurulmuş>"
 })
 ```
 
@@ -95,6 +219,6 @@ Agent({
 |---|---|
 | `#142 Müşteri kredi limiti kontrolü` | `rub-142-customer-credit-limit` |
 | `RUB-204 Sipariş PDF üretimi` | `rub-204-order-pdf-generation` |
-| `#88 OTel kurulumu` | `rub-88-otel-setup` |
+| `MERP-12 OTel kurulumu` | `merp-12-otel-setup` |
 
 Kural: `<proje-prefix>-<issue-num>-<kebab-case-başlık>`. Türkçe karakter normalize, max 50 char.

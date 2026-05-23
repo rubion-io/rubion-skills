@@ -60,12 +60,25 @@ gh issue list --state open --label "ready-for-agent" \
       title,
       body,
       assigned: (.assignees | length > 0),
+      stack: ([.labels[].name | select(startswith("stack:"))] | first // "unknown"),
       blockedBy: [.body | scan("(?i)blocked by #([0-9]+)") | .[0] | tonumber]
     }
   ]'
 ```
 
-**Jira:**
+**Jira (Atlassian MCP bağlıysa — tercih edilen):**
+
+```
+searchJiraIssuesUsingJql({
+  cloudId: "<CLOUD_ID>",
+  jql: "project=<KEY> AND labels=\"ready-for-agent\" AND statusCategory!=Done AND assignee is EMPTY",
+  fields: ["summary", "status", "labels", "issuelinks", "description"]
+})
+```
+
+`stack` alanı için: her issue'nun `labels` dizisinde `stack:` ile başlayan etiketi bul.
+
+**Jira (curl fallback):**
 
 ```bash
 JQL="project=$JIRA_PROJECT_KEY AND labels=\"ready-for-agent\" AND statusCategory!=Done AND assignee is EMPTY"
@@ -79,6 +92,7 @@ curl -s -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
       key,
       title: .fields.summary,
       body: .fields.description,
+      stack: ([.fields.labels[] | select(startswith("stack:"))] | first // "unknown"),
       blockedBy: [
         .fields.issuelinks[]
         | select(.type.name == "Blocks" and .inwardIssue != null)
@@ -106,10 +120,15 @@ Devre tespiti: bağımlılık döngüsü varsa (`A blocked by B` AND `B blocked 
 Önce **dağıtım planı** olarak göster, dispatch etme:
 
 ```
-Hazır (paralel başlanacak):                Bloke (bekliyor):
-  #142 — Müşteri kredi limiti kontrolü      #145 — Email bildirimi (blocked by #142)
-  #143 — Sipariş PDF üretimi                #146 — Audit log (blocked by #143)
-  #144 — Stok rezervasyon servisi
+Hazır (paralel başlanacak):                              Bloke (bekliyor):
+  #142 [stack:dotnet] — Müşteri kredi limiti kontrolü    #145 — Email bildirimi (blocked by #142)
+  #143 [stack:dotnet] — Sipariş PDF üretimi              #146 — Audit log (blocked by #143)
+  #144 [stack:react]  — Sipariş özeti sayfası
+
+Skill routing:
+  #142 → scaffold-vsa-feature + tdd-dotnet
+  #143 → scaffold-vsa-feature + tdd-dotnet
+  #144 → tdd-react
 
 Eşzamanlı limit: 3 (varsayılan)
 Tahmini token kullanımı: ~150K × 3 = ~450K total

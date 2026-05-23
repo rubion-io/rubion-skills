@@ -1,10 +1,10 @@
 ---
 adapted_from: mattpocock/skills/skills/engineering/to-issues
 upstream_commit: f304057d61d3df3c9fd992ac2b6e3833cb9325fb
-last_reviewed: 2026-05-13
-adaptation_level: light
+last_reviewed: 2026-05-23
+adaptation_level: medium
 name: to-issues
-description: Bir planı, spec'i veya PRD'yi tracer-bullet dikey dilimlere bölerek issue tracker'a (GitHub Issues veya Jira) yazar. Her issue bağımsız alınabilir. "Plan'ı issue'lara böl", "implementation ticket'ları üret", "iş paketle" denildiğinde kullan.
+description: Bir planı, spec'i veya PRD'yi tracer-bullet dikey dilimlere bölerek issue tracker'a (GitHub Issues veya Jira) yazar. Her issue bağımsız alınabilir. Stack etiketi (stack:dotnet / stack:react / stack:react-native) otomatik çıkarılır — dispatch-agents bu etiketi skill routing için kullanır. "Plan'ı issue'lara böl", "implementation ticket'ları üret", "iş paketle" denildiğinde kullan.
 stack: []
 ---
 
@@ -42,19 +42,41 @@ Dilim türleri:
 
 Mümkün oldukça AFK tercih et.
 
+### 3.5 Her dilim için stack etiketini çıkar
+
+Her issue taslağı için aşağıdaki kurala göre **tek bir stack etiketi** belirle.
+Etiket `dispatch-agents` tarafından skill routing için kullanılır.
+
+| Etiket | Sinyal kelimeler (başlık + body içinde ara) |
+|---|---|
+| `stack:dotnet` | Handler, Controller, Command, Query, MediatR, xUnit, EF Core, migration, Endpoint, Middleware, Worker, Repository, NSubstitute, FluentAssertions, Testcontainers, .NET, API (backend bağlamında) |
+| `stack:react` | component, hook, React, Vitest, RTL, MSW, TanStack Query, form, page, UI, web frontend |
+| `stack:react-native` | React Native, RN, Expo, screen, navigation, AsyncStorage, Maestro, mobile |
+
+Kurallar:
+- **`stack:mixed` etiketi kullanılmaz.** Hem backend hem frontend sinyali aynı anda tespit edilirse dilimi otomatik olarak **ayrı iki issue'ya böl**:
+  - `<Başlık> — Backend` → `stack:dotnet`
+  - `<Başlık> — Frontend` → `stack:react` veya `stack:react-native`
+  - Frontend issue, backend issue'ya `blocked by` olarak bağlanır (API hazır olmadan UI yapılamaz)
+- Tespit edilemezse kullanıcıya sor — varsayılan atama yapma
+- HITL issue'lara da etiket ekle — dispatch-agents görmez ama filtrelemek için kullanışlı
+- React Native + React aynı anda varsa da ikiye böl: `stack:react` ve `stack:react-native` ayrı issue
+
 ### 4. Kullanıcıya göster, sorgulat
 
 Önerilen kırılımı numaralı liste olarak sun. Her dilim için:
 - **Başlık:** kısa, açıklayıcı
 - **Tür:** HITL / AFK
+- **Stack:** tespit edilen etiket (`stack:dotnet` / `stack:react` / `stack:react-native` / `stack:mixed`)
 - **Blocked by:** hangi dilim önce bitmeli (varsa)
 - **Karşılanan user story'ler:** kaynakta varsa hangi user story'leri kapsıyor
 
 Kullanıcıya sor:
 - Granülerlik doğru mu? (çok kaba / çok ince)
-- Bağımlılık ilişkileri doğru mu?
+- Bağımlılık ilişkileri doğru mu? (özellikle otomatik bölünen backend→frontend çiftleri)
 - Birleştirilmesi/bölünmesi gereken dilim var mı?
 - HITL/AFK işaretlemesi doğru mu?
+- Stack etiketleri doğru mu?
 
 Kullanıcı onaylayana kadar tekrar et.
 
@@ -93,9 +115,11 @@ Veya: "Yok — hemen başlanabilir"
 **GitHub:**
 
 ```bash
+# STACK_LABEL = "stack:dotnet" | "stack:react" | "stack:react-native" | "stack:mixed"
 gh issue create \
   --title "<dilim başlığı>" \
   --label "ready-for-agent" \
+  --label "<STACK_LABEL>" \
   --body "$(cat <<'EOF'
 <issue body>
 EOF
@@ -105,12 +129,28 @@ EOF
 
 **Jira:**
 
+Atlassian MCP bağlıysa (tercih edilen):
+
+```
+createJiraIssue({
+  cloudId: "<CLOUD_ID>",
+  projectKey: "<JIRA_PROJECT_KEY>",
+  summary: "<dilim başlığı>",
+  issueType: "Task",          // parent varsa "Subtask"
+  description: "<issue body>",
+  labels: ["ready-for-agent", "<STACK_LABEL>"]
+})
+```
+
+Atlassian MCP yoksa curl ile:
+
 ```bash
 BODY=$(cat <<'EOF'
 <issue body>
 EOF
 )
 
+# STACK_LABEL = "stack:dotnet" | "stack:react" | "stack:react-native" | "stack:mixed"
 # Parent linki varsa Subtask, yoksa Task
 ISSUE_TYPE="Task"   # veya "Subtask" — parent verilirse
 
@@ -119,13 +159,14 @@ PAYLOAD=$(jq -n \
   --arg summary "<dilim başlığı>" \
   --argjson description "$(adf_from_markdown "$BODY")" \
   --arg type "$ISSUE_TYPE" \
+  --arg stack "<STACK_LABEL>" \
   '{
     fields: {
       project: { key: $key },
       summary: $summary,
       description: $description,
       issuetype: { name: $type },
-      labels: ["ready-for-agent"]
+      labels: ["ready-for-agent", $stack]
     }
   }')
 
@@ -161,31 +202,41 @@ Parent issue'u **kapatma veya değiştirme**. Yalnızca yeni issue'lar oluştur 
 
 ## Tracer Bullet Örneği — VSA Bağlamında
 
-Rubion projelerinde tipik bir tracer bullet, bir Vertical Slice'ın tamamı olur:
+Rubion projelerinde tipik bir tracer bullet, bir Vertical Slice'ın tamamı olur.
+Backend + Frontend sinyali aynı anda tespit edilince **otomatik bölünür**:
 
 ```
 PRD: "Müşteri sipariş oluşturma"
   ↓
-Issue 1 (AFK, ready-for-agent):
-  Başlık: "CreateOrder feature — Command + Handler + Endpoint + Test"
+Issue 1 (AFK, ready-for-agent) [stack:dotnet]:
+  Başlık: "CreateOrder — Backend: Command + Handler + Endpoint + Test"
   Acceptance:
     - [ ] POST /orders 201 dönüyor ve OrderId üretiyor
     - [ ] Geçersiz item miktarı 400 dönüyor
     - [ ] Handler test ve integration test (Testcontainers) yeşil
   Blocked by: yok
 
-Issue 2 (HITL):
+Issue 2 (AFK, ready-for-agent) [stack:react]:
+  Başlık: "CreateOrder — Frontend: Sipariş formu UI + TanStack Query entegrasyonu"
+  Acceptance:
+    - [ ] Form POST /orders endpoint'ini çağırıyor
+    - [ ] Başarılı siparişte onay ekranı açılıyor
+    - [ ] Hata durumunda inline validation mesajı gösteriliyor
+    - [ ] RTL testleri yeşil
+  Blocked by: Issue 1  ← API hazır olmadan UI yapılamaz
+
+Issue 3 (HITL) [stack:dotnet]:
   Başlık: "Stok rezervasyonu — Inventory entegrasyonu kararı"
   Acceptance:
     - [ ] ADR: senkron HTTP vs RabbitMQ event kararı
   Blocked by: yok
 
-Issue 3 (AFK, ready-for-agent):
+Issue 4 (AFK, ready-for-agent) [stack:dotnet]:
   Başlık: "Order → Inventory event publish (OrderCreated)"
   Acceptance:
     - [ ] OrderCreatedEvent RabbitMQ'ya publish edilir
     - [ ] Sözleşme: payload örneği eklenmiştir
-  Blocked by: Issue 1, Issue 2
+  Blocked by: Issue 1, Issue 3
 ```
 
 ---
