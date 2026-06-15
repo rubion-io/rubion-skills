@@ -29,7 +29,7 @@
 **Kurulum:**
 
 ```
-✅ Tüm 26 skill (junction)
+✅ Tüm 28 skill (junction)
 ✅ CLAUDE.md baseline + Karpathy 4 prensip
 ✅ .claude/settings.json (3 hook aktif)
 ✅ docs/memory/ + aktif memorize-module disiplini

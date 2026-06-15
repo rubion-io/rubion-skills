@@ -156,6 +156,8 @@ Para/kimlik akışı — düzeltme uygulandıysa bile merge öncesi insan onayı
 
 ---
 
+> **Tam örnek** (Lemon Squeezy webhook — sorunlu handler + düzeltmeler) → [examples/01-lemonsqueezy-webhook.md](examples/01-lemonsqueezy-webhook.md)
+
 ## Hızlı Kontrol Listesi
 
 ```

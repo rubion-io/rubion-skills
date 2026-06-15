@@ -7,7 +7,7 @@ Temel alınan kaynak: [mattpocock/skills](https://github.com/mattpocock/skills) 
 ## Buradan Başla
 
 - 🚀 **Yeni mi?** → [docs/getting-started.md](docs/getting-started.md) — iki senaryo için adım adım path
-- 📖 **25 skill'i tek bakışta gör** → [docs/skills-catalog.md](docs/skills-catalog.md) — kategori + örnek prompt + skill chain'leri
+- 📖 **28 skill'i tek bakışta gör** → [docs/skills-catalog.md](docs/skills-catalog.md) — kategori + örnek prompt + skill chain'leri
 - 🔧 **Mevcut projeye baseline + hook ekle** → [docs/project-setup.md](docs/project-setup.md)
 
 ## Kurulum

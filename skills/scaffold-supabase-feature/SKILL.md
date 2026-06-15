@@ -193,6 +193,8 @@ Edge Function varsa testi `tdd-edge-function` ile yaz (RLS testi pgTAP, handler 
 
 ---
 
+> **Tam örnek** (portfolio-publish — migration + edge function + frontend) → [examples/01-portfolio-feature.md](examples/01-portfolio-feature.md)
+
 ## Kontrol Listesi (Üretim Sonrası)
 
 ```

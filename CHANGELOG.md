@@ -12,13 +12,18 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
   - `tdd-edge-function`: Edge Function handler (Deno test / Vitest @ lokal supabase) + **RLS policy testi (pgTAP)** + webhook idempotency testi. `tdd-dotnet`'in sunucu-tarafı Supabase karşılığı; `tdd-react` yalnızca UI'ı kapsıyordu.
   - `harden-webhook`: Dışa açık webhook/OAuth callback güvenlik denetimi — imza doğrulama (raw body), idempotency, replay, secret yönetimi, OAuth `state`. Lemon Squeezy / Paddle / Resend / Instagram / TikTok kapsamı. Kritik-path → insan review zorunlu.
 - Frontend not: Vite + React 19 SPA tarafı mevcut `tdd-react` + `stack-conventions.md` React bölümüyle örtüşüyor — yeni skill gerekmedi.
+- 2 ek skill (ikinci dalga):
+  - `setup-precommit-node` (skills/): Husky + lint-staged pre-commit — `src/` için ESLint/Prettier/tsc, `supabase/functions/` için deno fmt/lint, migration için supabase db lint (path'e göre araç ayrımı). `setup-precommit-dotnet`'in JS/Deno karşılığı.
+  - `diagnose-supabase` (adapted/, heavy): RLS denial (sessiz boş sonuç/403), edge cold start, TanStack stale cache, Postgres yavaş sorgu odaklı 6-fazlı debug. `diagnose-dotnet` ile aynı iskelet, Supabase araçları (`supabase logs`, pgTAP, `pg_policies`, `EXPLAIN ANALYZE`). ADAPTATION.md dahil.
+- 5 örnek dosyası (`examples/`): supabase-migration-review (RLS açığı migration), scaffold-supabase-feature (portfolio-publish uçtan uca), tdd-edge-function (Lemon Squeezy webhook TDD + RLS pgTAP), harden-webhook (sorunlu webhook + düzeltmeler), diagnose-supabase (boş-liste RLS teşhisi). 4 Supabase skill'ine örnek referansı eklendi.
+- 2 ek eval JSON: `setup-precommit-node`, `diagnose-supabase` (her biri 10 pos + 10 neg).
 
 ### Changed (Hafta 10 — Bağlayıcı Doku: stack:supabase Routing)
 - `adapted/to-issues/SKILL.md`: Stack etiketi tablosuna `stack:supabase` satırı + backend etiketinin repo'ya göre çözüldüğü kural (`*.csproj` → dotnet, `supabase/config.toml` → supabase) + auto-split ve `STACK_LABEL` listesi güncellendi.
 - `skills/dispatch-agents/SKILL.md`: Stack → skill zinciri routing tablosu eklendi (`stack:supabase → scaffold-supabase-feature → tdd-edge-function`; migration → `supabase-migration-review`; webhook → `harden-webhook`). Critical-path heuristic'ine `webhook`, `lemon squeezy`, `paddle`, `rls` eklendi.
 - `skills/setup-rubion-skills/SKILL.md`: Faz B stack tespiti config-dosyası tablosuna dönüştü (README'ye güvenme uyarısı dahil); karar matrisine Zero × Supabase ve Legacy × Supabase satırları; Mixed tanımı backend'in .NET veya Supabase olabileceğini içeriyor; Faz D re-entry tespitine `supabase/config.toml` + migration/function sayımı.
 - `docs/stack-conventions.md`: Supabase naming + klasör yapısı + backend paket tercihleri tabloları; Veritabanı Kuralları'nda migration naming (EF PascalCase ≠ Supabase snake_case.sql) ve RLS zorunluluğu.
-- `docs/skills-catalog.md`, `README.md`, `docs/sizing-guide.md`: skill sayısı 21→25 (junction 22→26), yeni satırlar + Supabase skill chain'i + karar ağacı güncellendi.
+- `docs/skills-catalog.md`, `README.md`, `docs/sizing-guide.md`: skill sayısı 21→28 (6 yeni skill + önceki header'daki 1 birimlik eksik sayım düzeltmesi; junction 22→28, evals 22→28 ile birebir), yeni satırlar (Setup/Scaffold/TDD/Diagnose kategorileri) + Supabase skill chain'i + karar ağacı (stack ayrımlı bug/migration/pre-commit) güncellendi.
 
 ### Added (Hafta 9 — Token Maliyeti Optimizasyonu)
 - `docs/sizing-guide.md`: 4 tier'lı proje boyutu rehberi (T1 Stratejik / T2 Aktif / T3 Bakım / T4 Throwaway). Her tier için skill subset, memory politikası, otomasyon önerileri. Karar ağacı + token maliyeti karşılaştırması + migrasyon path'leri + 3 soruluk pratik test.

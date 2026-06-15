@@ -1,0 +1,27 @@
+{
+  "skill": "setup-precommit-node",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu projeye pre-commit hook kur", "should_trigger": true },
+    { "query": "Husky ekle, commit öncesi lint çalışsın", "should_trigger": true },
+    { "query": "Commit öncesi ESLint + Prettier otomatik çalışsın", "should_trigger": true },
+    { "query": "lint-staged kur", "should_trigger": true },
+    { "query": "Edge function'lar için deno fmt commit'te çalışsın", "should_trigger": true },
+    { "query": "Pre-commit'te tsc tip kontrolü ekle", "should_trigger": true },
+    { "query": "git commit öncesi format ve lint garantile", "should_trigger": true },
+    { "query": "Husky pre-commit hook'u node projesine kur", "should_trigger": true },
+    { "query": "Commit öncesi supabase db lint çalışsın", "should_trigger": true },
+    { "query": "Frontend için pre-commit format/lint kurulumu yap", "should_trigger": true },
+
+    { "query": ".NET projesine pre-commit kur", "should_trigger": false },
+    { "query": "ESLint kuralları nasıl yapılandırılır?", "should_trigger": false },
+    { "query": "Prettier ile dosyayı formatla", "should_trigger": false },
+    { "query": "CI pipeline'ı kur", "should_trigger": false },
+    { "query": "Vitest ile test yaz", "should_trigger": false },
+    { "query": "GitHub Actions workflow ekle", "should_trigger": false },
+    { "query": "Edge function için TDD yaz", "should_trigger": false },
+    { "query": "Husky.Net dotnet format hook'u kur", "should_trigger": false },
+    { "query": "TypeScript tsconfig ayarla", "should_trigger": false },
+    { "query": "Bu lint hatasını düzelt", "should_trigger": false }
+  ]
+}

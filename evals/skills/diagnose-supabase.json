@@ -1,0 +1,27 @@
+{
+  "skill": "diagnose-supabase",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu sorgu neden boş dönüyor?", "should_trigger": true },
+    { "query": "RLS denial debug et, veri gelmiyor", "should_trigger": true },
+    { "query": "Edge function neden timeout veriyor?", "should_trigger": true },
+    { "query": "Kullanıcı kendi verisini göremiyor, debug this", "should_trigger": true },
+    { "query": "TanStack Query eski veri gösteriyor, neden?", "should_trigger": true },
+    { "query": "Supabase sorgusu yavaş, performance issue", "should_trigger": true },
+    { "query": "Insert 0 satır etkiliyor ama hata yok, something is broken", "should_trigger": true },
+    { "query": "Auth token var ama 403 alıyorum, neden?", "should_trigger": true },
+    { "query": "Bu edge function'da bug var, çöz", "should_trigger": true },
+    { "query": "Policy doğru ama yine de boş liste dönüyor", "should_trigger": true },
+
+    { "query": "Yeni supabase feature scaffold et", "should_trigger": false },
+    { "query": "RLS policy nasıl yazılır?", "should_trigger": false },
+    { "query": "Bu supabase migration güvenli mi?", "should_trigger": false },
+    { "query": ".NET endpoint neden yavaş, debug et", "should_trigger": false },
+    { "query": "Edge function için TDD yaz", "should_trigger": false },
+    { "query": "Webhook'u güvenli hale getir", "should_trigger": false },
+    { "query": "Supabase auth nasıl kurulur?", "should_trigger": false },
+    { "query": "Yeni bir index ekle", "should_trigger": false },
+    { "query": "TanStack Query hook'u oluştur", "should_trigger": false },
+    { "query": "Pre-commit hook kur", "should_trigger": false }
+  ]
+}

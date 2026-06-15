@@ -199,6 +199,8 @@ Ters migration mümkün / PITR gerekli: <hangisi + gerekçe>
 
 ---
 
+> **Tam örnek** (RLS açığı olan migration, baştan sona inceleme) → [examples/01-rls-gap-migration.md](examples/01-rls-gap-migration.md)
+
 ## Hızlı Kontrol Listesi
 
 ```

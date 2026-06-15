@@ -196,6 +196,8 @@ Deno.test("aynı event iki kez → tek kayıt (idempotency)", async () => { /* .
 
 ---
 
+> **Tam örnek** (Lemon Squeezy webhook TDD + RLS pgTAP) → [examples/01-webhook-tdd.md](examples/01-webhook-tdd.md)
+
 ## Döngü Başına Checklist
 
 ```

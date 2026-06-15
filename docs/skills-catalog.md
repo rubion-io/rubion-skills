@@ -1,6 +1,6 @@
 # Skill Kataloğu
 
-> 25 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
+> 28 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
 > Detaylar için ilgili `SKILL.md` dosyasını aç.
 
 Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — senaryo bazlı path.
@@ -15,6 +15,7 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 | **[setup-memory](../skills/setup-memory/SKILL.md)** | `docs/memory/` iskeleti — 6 klasör + MOC.md + template'ler. ADR'leri link'ler veya taşır. | "memory iskeleti kur" · "wiki kur" |
 | **[setup-otel-dotnet](../skills/setup-otel-dotnet/SKILL.md)** | .NET projesine OpenTelemetry — trace/metric/log → Jaeger veya Tempo. EF Core enstrümantasyonu dahil. | "OTel kur" · "Jaeger kurulumu" |
 | **[setup-precommit-dotnet](../skills/setup-precommit-dotnet/SKILL.md)** | Husky.Net pre-commit hook — `dotnet format` + `dotnet test`. | "pre-commit kur" · "Husky ekle" |
+| **[setup-precommit-node](../skills/setup-precommit-node/SKILL.md)** | Husky + lint-staged pre-commit — ESLint/Prettier/tsc (frontend) + deno fmt/lint (edge fn) + supabase db lint. | "node pre-commit kur" · "JS husky ekle" |
 
 ---
 
@@ -56,6 +57,7 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 | Skill | Ne yapar | Örnek prompt |
 |-------|----------|--------------|
 | **[diagnose-dotnet](../adapted/diagnose-dotnet/SKILL.md)** | Disiplinli debugging: reproduce → minimize → hypothesize → instrument → fix. EF Core N+1, OTel trace, RabbitMQ DLX. | "Bu endpoint neden yavaş?" · "Debug this" |
+| **[diagnose-supabase](../adapted/diagnose-supabase/SKILL.md)** | Disiplinli debugging (Supabase/Deno): RLS denial (boş sonuç/403), edge cold start, TanStack stale cache, Postgres yavaş sorgu. | "Neden boş dönüyor?" · "RLS debug" |
 | **[improve-codebase-architecture](../adapted/improve-codebase-architecture/SKILL.md)** | Mimari sürtüşme tespiti — shallow repository, God Service, monolith → mikroservis fırsatları, Domain vs Integration Event. | "Mimari iyileştirme fırsatlarını bul" |
 | **[ef-core-migration-review](../skills/ef-core-migration-review/SKILL.md)** | EF Core migration'ı production-safety açısından inceler — DROP/veri kaybı, kilit tehlikeleri, rollback. | "Bu migration güvenli mi?" |
 | **[supabase-migration-review](../skills/supabase-migration-review/SKILL.md)** | Supabase SQL migration'ı production-safety + RLS açısından inceler — DROP/veri kaybı, kilit, RLS açığı, rollback. | "Bu supabase migration güvenli mi?" |
@@ -165,7 +167,8 @@ Yeni kod yazacağım
 └─ Test ile                 → tdd-dotnet / tdd-react / tdd-react-native / tdd-edge-function
 
 Mevcut kodu değiştireceğim
-├─ Bug var                       → diagnose-dotnet
+├─ Bug var (.NET)                → diagnose-dotnet
+├─ Bug var (Supabase)            → diagnose-supabase
 ├─ Mimari sorunu                 → improve-codebase-architecture
 ├─ Legacy → VSA                  → migrate-legacy-to-vsa
 ├─ Migration kontrolü (.NET)     → ef-core-migration-review
@@ -184,7 +187,7 @@ Kurulum
 ├─ İlk kez                  → setup-rubion-skills
 ├─ Memory                   → setup-memory
 ├─ Observability            → setup-otel-dotnet
-└─ Pre-commit               → setup-precommit-dotnet
+└─ Pre-commit               → setup-precommit-dotnet (.NET) / setup-precommit-node (JS+Supabase)
 
 Çoklu iş
 ├─ Paralel implementasyon   → dispatch-agents
