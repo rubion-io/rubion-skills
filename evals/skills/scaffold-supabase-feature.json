@@ -1,0 +1,27 @@
+{
+  "skill": "scaffold-supabase-feature",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "portfolio-publish için supabase feature ekle", "should_trigger": true },
+    { "query": "Yeni bir Supabase feature iskeleti üret", "should_trigger": true },
+    { "query": "course-enroll feature'ı scaffold et (supabase)", "should_trigger": true },
+    { "query": "Tablo + RLS + edge function + frontend hook iskeleti kur", "should_trigger": true },
+    { "query": "Bu özelliği supabase dikey dilim olarak başlat", "should_trigger": true },
+    { "query": "Yeni contract-sign feature için boilerplate üret", "should_trigger": true },
+    { "query": "Edge function + migration + TanStack hook scaffold", "should_trigger": true },
+    { "query": "supabase tarafında yeni feature başlangıç iskeleti", "should_trigger": true },
+    { "query": "Marketplace listing feature'ını scaffold et", "should_trigger": true },
+    { "query": "Yeni feature: tablo, RLS policy ve frontend hook üret", "should_trigger": true },
+
+    { "query": "Bu supabase migration güvenli mi?", "should_trigger": false },
+    { "query": "Edge function için TDD yaz", "should_trigger": false },
+    { "query": "VSA feature ekle (.NET)", "should_trigger": false },
+    { "query": "Webhook handler'ı güvenli mi kontrol et", "should_trigger": false },
+    { "query": "RLS policy nasıl yazılır anlat", "should_trigger": false },
+    { "query": "Yeni mikroservis scaffold et", "should_trigger": false },
+    { "query": "React component için test yaz", "should_trigger": false },
+    { "query": "Supabase auth akışını debug et", "should_trigger": false },
+    { "query": "Mevcut edge function'ı refactor et", "should_trigger": false },
+    { "query": "Hızlı bir POC prototip yap", "should_trigger": false }
+  ]
+}

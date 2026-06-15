@@ -163,7 +163,18 @@ Kullanıcı onayı **zorunlu**. Otomatik dispatch yapma.
 
 ### 4. Per-Agent Prompt Hazırla
 
-Her seçilen issue için **standart şablon** doldurulur — issue body + acceptance criteria + ortak kısıtlar (sadece scope, main'e dokunma, draft PR fallback, vb.).
+Önce her issue'nun `stack` etiketine göre **skill zincirini** belirle:
+
+| Stack etiketi | Skill zinciri | Ek tetik |
+|---|---|---|
+| `stack:dotnet` | `scaffold-vsa-feature` → `tdd-dotnet` | migration dilimi → `ef-core-migration-review` |
+| `stack:supabase` | `scaffold-supabase-feature` → `tdd-edge-function` | SQL migration dilimi → `supabase-migration-review`; webhook dilimi → `harden-webhook` |
+| `stack:react` | `tdd-react` | — |
+| `stack:react-native` | `tdd-react-native` | — |
+
+> Backend etiketi (`stack:dotnet` vs `stack:supabase`) projeye göre gelir; `to-issues` repo'yu okuyup doğru olanı atar. Aynı batch'te ikisi karışık olmaz.
+
+Her seçilen issue için **standart şablon** doldurulur — issue body + acceptance criteria + ortak kısıtlar (sadece scope, main'e dokunma, draft PR fallback, vb.). Şablonun skill-zinciri satırı yukarıdaki tablodan gelir.
 
 Tam şablon + slug türetme kuralları → **[examples/02-per-agent-prompt-template.md](examples/02-per-agent-prompt-template.md)**
 
@@ -226,7 +237,7 @@ Sonraki adım:
 | Critical-path tespiti | Otomatik | `auth/`, `payment/`, `billing/` klasörleri içeren issue'lar manuel onay ister |
 | Aynı modülde paralel agent | Engelle | Aynı `<Module>/<Feature>/` altında değişiklik yapacak iki agent serileştir |
 
-Critical-path tespiti basit heuristic: issue body'sinde veya değişeceği tahmin edilen modül adlarında şu kelimeler var mı: `auth`, `authn`, `authz`, `payment`, `billing`, `pricing`, `gdpr`, `kvkk`, `security`. Varsa kullanıcıdan açık onay iste.
+Critical-path tespiti basit heuristic: issue body'sinde veya değişeceği tahmin edilen modül adlarında şu kelimeler var mı: `auth`, `authn`, `authz`, `payment`, `billing`, `pricing`, `gdpr`, `kvkk`, `security`, `webhook`, `lemon squeezy`, `paddle`, `rls`. Varsa kullanıcıdan açık onay iste (webhook dilimi için `harden-webhook`, RLS/migration dilimi için `supabase-migration-review` öner).
 
 ---
 

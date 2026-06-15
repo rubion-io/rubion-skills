@@ -33,6 +33,17 @@ Rubion projelerinde tutarlılık için sabit kurallar. Yeni bir proje veya servi
 | CSS module | kebab-case | `order-summary-card.module.css` |
 | API route | kebab-case | `/api/order-items` |
 
+### Supabase (Edge Functions / SQL)
+
+| Yapı | Kural | Örnek |
+|---|---|---|
+| Edge Function | kebab-case klasör | `supabase/functions/marketplace-sync/` |
+| SQL migration | `<timestamp>_snake_case.sql` (Supabase CLI üretir) | `20260513120000_add_portfolio_table.sql` |
+| Tablo | `snake_case` çoğul | `portfolios`, `contract_signatures` |
+| Kolon | `snake_case` | `user_id`, `created_at` |
+| RLS policy | `<tablo>_<aksiyon>_<rol>` açıklayıcı | `portfolios_select_owner` |
+| Webhook fonksiyonu | `<sağlayıcı>-webhook` | `lemonsqueezy-webhook`, `paddle-webhook` |
+
 ---
 
 ## Klasör Yapısı
@@ -73,6 +84,19 @@ src/
 └── app/
     ├── router.tsx
     └── providers.tsx
+```
+
+### Supabase (backend)
+
+```
+supabase/
+├── config.toml
+├── migrations/
+│   └── <timestamp>_<feature>.sql   ← tablo + index + RLS policy
+└── functions/
+    ├── <feature>/
+    │   └── index.ts                ← Deno handler: CORS + JWT guard + Zod + RLS-aware client
+    └── _shared/                    ← ortak: cors.ts, supabase client, imza doğrulama
 ```
 
 ---
@@ -120,6 +144,22 @@ src/
 | State | Zustand + TanStack Query |
 | E2E | Maestro |
 
+### Backend (Supabase)
+
+| Kategori | Tercih | Not |
+|---|---|---|
+| BaaS | Supabase (Postgres + Auth + Storage) | — |
+| Edge runtime | Deno / TypeScript | `supabase functions` |
+| DB erişimi | `@supabase/supabase-js` + RLS | RLS = birincil yetki sınırı; app katmanındaki auth check'e tek başına güvenme |
+| Input validation | Zod | Edge function girişinde zorunlu |
+| Test | Deno test / Vitest (lokal `supabase start`) + RLS için pgTAP | — |
+| Migration | Supabase CLI (`supabase migration new`) | Her migration'da `supabase-migration-review` |
+| Webhook güvenliği | HMAC imza (raw body) + idempotency | `harden-webhook` ile denetle |
+| Secret | `supabase secrets` | Asla kodda hardcoded değil |
+| Email | Resend | — |
+| Ödeme | Lemon Squeezy / Paddle | webhook = kritik-path, insan review zorunlu |
+| Analytics | PostHog | frontend + event capture |
+
 ---
 
 ## Mimari Karar Ağacı
@@ -159,10 +199,12 @@ Repository KULLAN:
 
 ## Veritabanı Kuralları
 
-- **Migration naming:** `<YYYYMMDDHHMMSS>_<PascalCaseAçıklama>`
-  - Doğru: `20260513120000_AddEmailToCustomers`
-  - Yanlış: `migration1`, `fix`, `update`
-- **Her migration'da:** `ef-core-migration-review` skill'i çalıştır
+- **Migration naming:**
+  - .NET / EF Core: `<YYYYMMDDHHMMSS>_<PascalCaseAçıklama>` → `20260513120000_AddEmailToCustomers`
+  - Supabase CLI: `<timestamp>_<snake_case>.sql` → `20260513120000_add_email_to_users.sql`
+  - Yanlış (ikisinde de): `migration1`, `fix`, `update`
+- **Her migration'da review:** .NET → `ef-core-migration-review`; Supabase → `supabase-migration-review`
+- **RLS (Supabase):** Her yeni tabloda `ENABLE ROW LEVEL SECURITY` + en az bir policy zorunlu. `USING (true)` veya policy'siz tablo = açık erişim. RLS birincil yetki sınırıdır.
 - **Index adı:** `IX_<Table>_<Column(s)>`
 - **FK adı:** `FK_<Table>_<RefTable>_<Column>`
 - **Soft delete:** `DeletedAt datetime NULL` + global query filter (hard delete yerine)

@@ -1,13 +1,13 @@
 # Rubion Skills
 
-Claude Code / agent skill kütüphanesi — Rubion'un .NET + React/RN + monolith/mikroservis stack'ine adapte edilmiş.
+Claude Code / agent skill kütüphanesi — Rubion'un .NET + Supabase + React/RN + monolith/mikroservis stack'ine adapte edilmiş.
 
 Temel alınan kaynak: [mattpocock/skills](https://github.com/mattpocock/skills) (MIT).
 
 ## Buradan Başla
 
 - 🚀 **Yeni mi?** → [docs/getting-started.md](docs/getting-started.md) — iki senaryo için adım adım path
-- 📖 **21 skill'i tek bakışta gör** → [docs/skills-catalog.md](docs/skills-catalog.md) — kategori + örnek prompt + skill chain'leri
+- 📖 **25 skill'i tek bakışta gör** → [docs/skills-catalog.md](docs/skills-catalog.md) — kategori + örnek prompt + skill chain'leri
 - 🔧 **Mevcut projeye baseline + hook ekle** → [docs/project-setup.md](docs/project-setup.md)
 
 ## Kurulum

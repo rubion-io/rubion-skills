@@ -52,10 +52,13 @@ Etiket `dispatch-agents` tarafından skill routing için kullanılır.
 | `stack:dotnet` | Handler, Controller, Command, Query, MediatR, xUnit, EF Core, migration, Endpoint, Middleware, Worker, Repository, NSubstitute, FluentAssertions, Testcontainers, .NET, API (backend bağlamında) |
 | `stack:react` | component, hook, React, Vitest, RTL, MSW, TanStack Query, form, page, UI, web frontend |
 | `stack:react-native` | React Native, RN, Expo, screen, navigation, AsyncStorage, Maestro, mobile |
+| `stack:supabase` | Supabase, Edge Function, Deno, RLS, policy, SQL migration, Postgres, webhook, Lemon Squeezy, Paddle, Resend, OAuth callback, pgTAP, `auth.uid()`, Storage |
+
+> **Backend etiketi projeye göre belirlenir:** `*.csproj` olan repo → `stack:dotnet`; `supabase/config.toml` olan repo → `stack:supabase`. İkisi aynı projede olmaz. "migration" / "API" gibi ortak sinyaller repo'nun gerçek backend'ine göre çözülür.
 
 Kurallar:
 - **`stack:mixed` etiketi kullanılmaz.** Hem backend hem frontend sinyali aynı anda tespit edilirse dilimi otomatik olarak **ayrı iki issue'ya böl**:
-  - `<Başlık> — Backend` → `stack:dotnet`
+  - `<Başlık> — Backend` → `stack:dotnet` veya `stack:supabase` (repo'nun backend'ine göre)
   - `<Başlık> — Frontend` → `stack:react` veya `stack:react-native`
   - Frontend issue, backend issue'ya `blocked by` olarak bağlanır (API hazır olmadan UI yapılamaz)
 - Tespit edilemezse kullanıcıya sor — varsayılan atama yapma
@@ -147,7 +150,7 @@ Veya: bölümü atla (blocked by yok ise)
 **GitHub:**
 
 ```bash
-# STACK_LABEL = "stack:dotnet" | "stack:react" | "stack:react-native" | "stack:mixed"
+# STACK_LABEL = "stack:dotnet" | "stack:supabase" | "stack:react" | "stack:react-native"
 gh issue create \
   --title "<dilim başlığı>" \
   --label "ready-for-agent" \
@@ -182,7 +185,7 @@ BODY=$(cat <<'EOF'
 EOF
 )
 
-# STACK_LABEL = "stack:dotnet" | "stack:react" | "stack:react-native" | "stack:mixed"
+# STACK_LABEL = "stack:dotnet" | "stack:supabase" | "stack:react" | "stack:react-native"
 # Parent linki varsa Subtask, yoksa Task
 ISSUE_TYPE="Task"   # veya "Subtask" — parent verilirse
 

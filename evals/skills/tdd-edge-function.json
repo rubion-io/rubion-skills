@@ -1,0 +1,27 @@
+{
+  "skill": "tdd-edge-function",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "lemonsqueezy-webhook için TDD yaz", "should_trigger": true },
+    { "query": "Edge function'ı test-driven yaz", "should_trigger": true },
+    { "query": "Bu edge function için önce test yazalım", "should_trigger": true },
+    { "query": "RLS policy'sini pgTAP ile test et", "should_trigger": true },
+    { "query": "Edge function handler'ına red-green-refactor uygula", "should_trigger": true },
+    { "query": "Bu Deno fonksiyonu için unit test yaz", "should_trigger": true },
+    { "query": "RLS testi: sahip görür, yabancı görmez", "should_trigger": true },
+    { "query": "OAuth callback handler'ı için test yaz", "should_trigger": true },
+    { "query": "supabase functions için TDD döngüsü kur", "should_trigger": true },
+    { "query": "Webhook idempotency davranışını test et", "should_trigger": true },
+
+    { "query": "Yeni supabase feature scaffold et", "should_trigger": false },
+    { "query": "React component için test yaz", "should_trigger": false },
+    { "query": "MediatR handler için TDD yaz (.NET)", "should_trigger": false },
+    { "query": "Bu supabase migration güvenli mi?", "should_trigger": false },
+    { "query": "Edge function nasıl deploy edilir?", "should_trigger": false },
+    { "query": "Webhook imzasını sertleştir", "should_trigger": false },
+    { "query": "RLS policy nasıl yazılır?", "should_trigger": false },
+    { "query": "React Native ekran testi yaz", "should_trigger": false },
+    { "query": "Deno edge function'ı debug et", "should_trigger": false },
+    { "query": "TanStack Query hook'u oluştur", "should_trigger": false }
+  ]
+}

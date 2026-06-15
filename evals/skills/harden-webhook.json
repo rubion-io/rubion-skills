@@ -1,0 +1,27 @@
+{
+  "skill": "harden-webhook",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "lemonsqueezy webhook'u güvenli mi?", "should_trigger": true },
+    { "query": "Ödeme entegrasyonunu kontrol et", "should_trigger": true },
+    { "query": "Bu webhook handler'ını sertleştir", "should_trigger": true },
+    { "query": "Paddle webhook imza doğrulaması doğru mu?", "should_trigger": true },
+    { "query": "Webhook idempotent mi, çift event çift ödeme yapar mı?", "should_trigger": true },
+    { "query": "OAuth callback'te state kontrolü var mı?", "should_trigger": true },
+    { "query": "Resend webhook güvenlik denetimi yap", "should_trigger": true },
+    { "query": "Bu webhook replay saldırısına açık mı?", "should_trigger": true },
+    { "query": "Webhook secret'ı kodda hardcoded mı kontrol et", "should_trigger": true },
+    { "query": "Instagram OAuth callback güvenli mi?", "should_trigger": true },
+
+    { "query": "Yeni bir webhook handler scaffold et", "should_trigger": false },
+    { "query": "Webhook handler için TDD yaz", "should_trigger": false },
+    { "query": "Lemon Squeezy entegrasyonunu nasıl kurarım?", "should_trigger": false },
+    { "query": "Bu supabase migration güvenli mi?", "should_trigger": false },
+    { "query": "Edge function nasıl deploy edilir?", "should_trigger": false },
+    { "query": "RLS policy nasıl yazılır?", "should_trigger": false },
+    { "query": "Ödeme akışı için yeni feature ekle", "should_trigger": false },
+    { "query": "HMAC imzası nasıl hesaplanır anlat", "should_trigger": false },
+    { "query": "OAuth login akışını baştan kur", "should_trigger": false },
+    { "query": "API güvenlik review yap (genel)", "should_trigger": false }
+  ]
+}

@@ -99,9 +99,18 @@ Tahmin et (kullanıcıya teyit ettir):
 
 ### B.2 Soru 6 — Stack
 
-> "Hangi stack? .NET / React / React Native / Mixed?"
+> "Hangi stack? .NET / Supabase / React / React Native / Mixed?"
 
-`*.csproj`, `package.json`, `app.json` dosyalarına bakarak tahmin et, kullanıcıya teyit ettir.
+Dosyalara bakarak tahmin et, kullanıcıya teyit ettir. **README'ye güvenme** — eski boilerplate yanıltıcı olabilir (örn. "Next.js" yazıp aslında Vite olması), gerçek config dosyalarına bak:
+
+| Sinyal | Stack |
+|---|---|
+| `*.csproj` | .NET backend |
+| `supabase/config.toml`, `supabase/migrations/`, `supabase/functions/` | Supabase backend |
+| `package.json` + `vite.config.*` | React SPA frontend |
+| `app.json` + Expo | React Native |
+
+Supabase backend + React SPA aynı repo'da sık birlikte gelir (BaaS + SPA) — bu bir **Mixed** projedir, ikisinin de path'i önerilir.
 
 ---
 
@@ -114,13 +123,15 @@ Faz B'nin 2 cevabına göre **karar matrisinden** kişiselleştirilmiş yol üre
 | Senaryo | Sıralı path |
 |---------|-------------|
 | **Zero × .NET** | `setup-memory` → `scaffold-microservice`* → `setup-precommit-dotnet` → `scaffold-vsa-feature` → `tdd-dotnet` → `setup-otel-dotnet` |
+| **Zero × Supabase** | `setup-memory` → `scaffold-supabase-feature` → `tdd-edge-function` → `supabase-migration-review` (her migration'da) → `harden-webhook` (webhook varsa) → `setup-precommit-node` |
 | **Zero × React** | `setup-memory` → `tdd-react` (gün 1 disiplin) |
 | **Zero × RN** | `setup-memory` → `tdd-react-native` |
-| **Zero × Mixed** | .NET path öncelikli + paralelde React/RN |
+| **Zero × Mixed** | Backend path (.NET veya Supabase) öncelikli + paralelde React/RN |
 | **Legacy × .NET** | `setup-memory` → `improve-codebase-architecture` → `scaffold-adr` (adayları belgele) → `memorize-module` (top 5) → `migrate-legacy-to-vsa` (gerekirse) → `setup-precommit-dotnet` |
+| **Legacy × Supabase** | `setup-memory` → `improve-codebase-architecture` → `scaffold-adr` → `memorize-module` (top 5) → `supabase-migration-review` (mevcut migration'lara) → `harden-webhook` (webhook'lara) → `setup-precommit-node` |
 | **Legacy × React** | `setup-memory` → `memorize-module` (top 5) → `tdd-react` (test açığı kapatma) |
 | **Legacy × RN** | `setup-memory` → `memorize-module` (top 5) → `tdd-react-native` |
-| **Legacy × Mixed** | `setup-memory` → önce backend path, sonra frontend |
+| **Legacy × Mixed** | `setup-memory` → önce backend path (.NET veya Supabase), sonra frontend |
 
 \* `scaffold-microservice` sadece mikroservis projesi ise — kullanıcıya sor.
 
@@ -171,9 +182,12 @@ Wizard daha önce çalıştırıldıysa **nerede kaldığını filesystem'den ok
 | `docs/memory/MOC.md` var | `setup-memory` tamam |
 | `docs/memory/20-modules/*.md` (template hariç) sayısı | Kaç modül memorize edildi |
 | `docs/adr/ADR-*.md` veya `docs/memory/30-decisions/ADR-*.md` sayısı | Kaç ADR var |
-| `.husky/` veya `.husky.json` | `setup-precommit-dotnet` tamam |
+| `.husky/` veya `.husky.json` | `setup-precommit-dotnet` / `setup-precommit-node` tamam |
 | `Program.cs`'de `AddOpenTelemetry` | `setup-otel-dotnet` tamam |
 | `Dockerfile` + `docker-compose.yml` + `*.Api.csproj` | `scaffold-microservice` muhtemelen yapıldı |
+| `supabase/config.toml` var | Supabase backend projesi |
+| `supabase/migrations/*.sql` sayısı | Kaç migration var (`supabase-migration-review` hedefi) |
+| `supabase/functions/*/index.ts` sayısı | Kaç edge function var |
 
 ### Re-Entry Çıktısı
 

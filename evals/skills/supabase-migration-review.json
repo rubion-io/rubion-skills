@@ -1,0 +1,27 @@
+{
+  "skill": "supabase-migration-review",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Bu Supabase migration güvenli mi?", "should_trigger": true },
+    { "query": "supabase migration kontrol et", "should_trigger": true },
+    { "query": "Bu SQL migration'da veri kaybı riski var mı?", "should_trigger": true },
+    { "query": "RLS policy'lerini kontrol et, açık var mı?", "should_trigger": true },
+    { "query": "Migration'ı db push etmeden önce incele", "should_trigger": true },
+    { "query": "DROP TABLE var production'da sorun olur mu?", "should_trigger": true },
+    { "query": "Bu migration kilitleme yapıyor mu, CONCURRENTLY gerekir mi?", "should_trigger": true },
+    { "query": "Yeni tabloda RLS açık mı, policy var mı kontrol et", "should_trigger": true },
+    { "query": "supabase/migrations altındaki son dosyayı review et", "should_trigger": true },
+    { "query": "Bu migration production-safety açısından güvenli mi?", "should_trigger": true },
+
+    { "query": "Yeni bir Supabase tablosu ve migration oluştur", "should_trigger": false },
+    { "query": "RLS policy nasıl yazılır?", "should_trigger": false },
+    { "query": "Edge function için TDD yaz", "should_trigger": false },
+    { "query": "Webhook imza doğrulaması güvenli mi?", "should_trigger": false },
+    { "query": "EF Core migration güvenli mi?", "should_trigger": false },
+    { "query": "supabase feature scaffold et", "should_trigger": false },
+    { "query": "Postgres index nasıl eklenir?", "should_trigger": false },
+    { "query": "Supabase auth nasıl kurulur?", "should_trigger": false },
+    { "query": "TanStack Query hook'u yaz", "should_trigger": false },
+    { "query": "pgTAP ile RLS testi yaz", "should_trigger": false }
+  ]
+}

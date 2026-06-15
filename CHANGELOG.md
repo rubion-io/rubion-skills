@@ -4,6 +4,22 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 10 — Supabase Stack Desteği)
+- Yeni `stack:supabase` şeridi: Supabase (Postgres + Auth + Storage + Deno Edge Functions) backend'i artık birinci sınıf stack. Daha önce katalog yalnızca .NET / React / RN varsayıyordu; Vite + React SPA + Supabase projeleri (örn. çok dilli portfolio/marketplace uygulaması) için backend tarafı tamamen açıktaydı.
+- 4 yeni yerli skill (`skills/`):
+  - `supabase-migration-review`: Ham SQL migration'ı production-safety + **RLS** açısından inceler — destructive op, kilit (CONCURRENTLY transaction tuzağı dahil), RLS açığı (`using(true)`, policy'siz tablo, `with check` eksikliği), SECURITY DEFINER, ileri-only rollback. `ef-core-migration-review`'in SQL/RLS karşılığı.
+  - `scaffold-supabase-feature`: Dikey dilim iskeleti — migration (tablo + RLS owner policy) + Edge Function (Deno + JWT guard + Zod) + frontend TanStack Query hook + test. Edge Function gerekliliği için karar kapısı. `scaffold-vsa-feature`'in karşılığı.
+  - `tdd-edge-function`: Edge Function handler (Deno test / Vitest @ lokal supabase) + **RLS policy testi (pgTAP)** + webhook idempotency testi. `tdd-dotnet`'in sunucu-tarafı Supabase karşılığı; `tdd-react` yalnızca UI'ı kapsıyordu.
+  - `harden-webhook`: Dışa açık webhook/OAuth callback güvenlik denetimi — imza doğrulama (raw body), idempotency, replay, secret yönetimi, OAuth `state`. Lemon Squeezy / Paddle / Resend / Instagram / TikTok kapsamı. Kritik-path → insan review zorunlu.
+- Frontend not: Vite + React 19 SPA tarafı mevcut `tdd-react` + `stack-conventions.md` React bölümüyle örtüşüyor — yeni skill gerekmedi.
+
+### Changed (Hafta 10 — Bağlayıcı Doku: stack:supabase Routing)
+- `adapted/to-issues/SKILL.md`: Stack etiketi tablosuna `stack:supabase` satırı + backend etiketinin repo'ya göre çözüldüğü kural (`*.csproj` → dotnet, `supabase/config.toml` → supabase) + auto-split ve `STACK_LABEL` listesi güncellendi.
+- `skills/dispatch-agents/SKILL.md`: Stack → skill zinciri routing tablosu eklendi (`stack:supabase → scaffold-supabase-feature → tdd-edge-function`; migration → `supabase-migration-review`; webhook → `harden-webhook`). Critical-path heuristic'ine `webhook`, `lemon squeezy`, `paddle`, `rls` eklendi.
+- `skills/setup-rubion-skills/SKILL.md`: Faz B stack tespiti config-dosyası tablosuna dönüştü (README'ye güvenme uyarısı dahil); karar matrisine Zero × Supabase ve Legacy × Supabase satırları; Mixed tanımı backend'in .NET veya Supabase olabileceğini içeriyor; Faz D re-entry tespitine `supabase/config.toml` + migration/function sayımı.
+- `docs/stack-conventions.md`: Supabase naming + klasör yapısı + backend paket tercihleri tabloları; Veritabanı Kuralları'nda migration naming (EF PascalCase ≠ Supabase snake_case.sql) ve RLS zorunluluğu.
+- `docs/skills-catalog.md`, `README.md`, `docs/sizing-guide.md`: skill sayısı 21→25 (junction 22→26), yeni satırlar + Supabase skill chain'i + karar ağacı güncellendi.
+
 ### Added (Hafta 9 — Token Maliyeti Optimizasyonu)
 - `docs/sizing-guide.md`: 4 tier'lı proje boyutu rehberi (T1 Stratejik / T2 Aktif / T3 Bakım / T4 Throwaway). Her tier için skill subset, memory politikası, otomasyon önerileri. Karar ağacı + token maliyeti karşılaştırması + migrasyon path'leri + 3 soruluk pratik test.
 - `templates/github-workflows/memory-review.yml`: Aylık otomatik memory denetimi CI template'i (consuming project'e kopyalanır). Bayatlık + broken link + git log cross-check. Critical bulunca otomatik GitHub issue açar.

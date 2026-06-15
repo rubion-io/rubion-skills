@@ -1,6 +1,6 @@
 # Skill Kataloğu
 
-> 21 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
+> 25 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
 > Detaylar için ilgili `SKILL.md` dosyasını aç.
 
 Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — senaryo bazlı path.
@@ -23,6 +23,7 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 | Skill | Ne yapar | Örnek prompt |
 |-------|----------|--------------|
 | **[scaffold-vsa-feature](../skills/scaffold-vsa-feature/SKILL.md)** | VSA feature slice — Command/Query + Handler + Validator + Endpoint + Test. Tek seferde 5 dosya. | "PlaceOrder için VSA feature ekle" |
+| **[scaffold-supabase-feature](../skills/scaffold-supabase-feature/SKILL.md)** | Supabase dikey dilim — SQL migration (tablo + RLS) + Edge Function (Deno + JWT guard + Zod) + frontend TanStack hook + test. | "portfolio-publish için supabase feature ekle" |
 | **[scaffold-microservice](../skills/scaffold-microservice/SKILL.md)** | Yeni .NET mikroservis — ASP.NET Core API + Worker (opsiyonel) + Dockerfile + docker-compose entry. | "Inventory mikroservisi scaffold et" |
 | **[scaffold-adr](../skills/scaffold-adr/SKILL.md)** | Yeni ADR — auto-numbering, çelişki kontrolü, supersede workflow, MOC güncelleme. `improve-codebase-architecture` ile zincirleme. | "Aday 1'i ADR yap" · "PostgreSQL kararını dokümante et" |
 
@@ -35,6 +36,7 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 | **[tdd-dotnet](../adapted/tdd-dotnet/SKILL.md)** | xUnit + FluentAssertions + NSubstitute + Testcontainers. MediatR handler'lar + VSA bağlamı. | "PlaceOrderHandler için TDD yaz" |
 | **[tdd-react](../adapted/tdd-react/SKILL.md)** | Vitest + React Testing Library + MSW + user-event. TanStack Query, hook, form test stratejileri. | "OrderDetails component için test yaz" |
 | **[tdd-react-native](../adapted/tdd-react-native/SKILL.md)** | Jest + RTL-RN + Maestro. Navigation, AsyncStorage, native mock'lar. Bare RN desteği. | "LoginScreen için RN TDD" |
+| **[tdd-edge-function](../skills/tdd-edge-function/SKILL.md)** | Deno test / Vitest (lokal supabase) + pgTAP. Edge Function handler + RLS policy + webhook testi. | "lemonsqueezy-webhook için TDD yaz" |
 
 ---
 
@@ -56,6 +58,8 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 | **[diagnose-dotnet](../adapted/diagnose-dotnet/SKILL.md)** | Disiplinli debugging: reproduce → minimize → hypothesize → instrument → fix. EF Core N+1, OTel trace, RabbitMQ DLX. | "Bu endpoint neden yavaş?" · "Debug this" |
 | **[improve-codebase-architecture](../adapted/improve-codebase-architecture/SKILL.md)** | Mimari sürtüşme tespiti — shallow repository, God Service, monolith → mikroservis fırsatları, Domain vs Integration Event. | "Mimari iyileştirme fırsatlarını bul" |
 | **[ef-core-migration-review](../skills/ef-core-migration-review/SKILL.md)** | EF Core migration'ı production-safety açısından inceler — DROP/veri kaybı, kilit tehlikeleri, rollback. | "Bu migration güvenli mi?" |
+| **[supabase-migration-review](../skills/supabase-migration-review/SKILL.md)** | Supabase SQL migration'ı production-safety + RLS açısından inceler — DROP/veri kaybı, kilit, RLS açığı, rollback. | "Bu supabase migration güvenli mi?" |
+| **[harden-webhook](../skills/harden-webhook/SKILL.md)** | Webhook/OAuth callback'leri güvenlik açısından sertleştirir — imza (raw body), idempotency, replay, secret, OAuth state. | "lemonsqueezy webhook'u güvenli mi?" |
 
 ---
 
@@ -104,6 +108,14 @@ scaffold-vsa-feature → tdd-dotnet → setup-otel-dotnet (varsa atla) → migra
 
 Tek prompt: "PlaceOrder feature'ı VSA + TDD ile ekle"
 
+### Yeni feature implementasyonu (Supabase)
+
+```
+scaffold-supabase-feature → tdd-edge-function → migration için: supabase-migration-review → webhook varsa: harden-webhook
+```
+
+Tek prompt: "portfolio-publish feature'ı supabase + TDD ile ekle"
+
 ### Yeni mikroservis (sıfırdan)
 
 ```
@@ -146,16 +158,19 @@ review-memory → memorize-module (bayat olanları yenile)
 
 ```
 Yeni kod yazacağım
-├─ Yeni feature  → scaffold-vsa-feature
-├─ Yeni servis   → scaffold-microservice
-├─ Hızlı POC     → prototype
-└─ Test ile      → tdd-dotnet / tdd-react / tdd-react-native
+├─ Yeni feature (.NET)      → scaffold-vsa-feature
+├─ Yeni feature (Supabase)  → scaffold-supabase-feature
+├─ Yeni servis              → scaffold-microservice
+├─ Hızlı POC                → prototype
+└─ Test ile                 → tdd-dotnet / tdd-react / tdd-react-native / tdd-edge-function
 
 Mevcut kodu değiştireceğim
-├─ Bug var               → diagnose-dotnet
-├─ Mimari sorunu         → improve-codebase-architecture
-├─ Legacy → VSA          → migrate-legacy-to-vsa
-└─ Migration kontrolü    → ef-core-migration-review
+├─ Bug var                       → diagnose-dotnet
+├─ Mimari sorunu                 → improve-codebase-architecture
+├─ Legacy → VSA                  → migrate-legacy-to-vsa
+├─ Migration kontrolü (.NET)     → ef-core-migration-review
+├─ Migration kontrolü (Supabase) → supabase-migration-review
+└─ Webhook güvenliği             → harden-webhook
 
 Doküman yazacağım
 ├─ PRD                → to-prd
