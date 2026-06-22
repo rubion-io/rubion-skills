@@ -23,6 +23,12 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 
 (Senaryo + tracker dik kombinasyonu da geçerli. Aşağıdaki path'ler bunları temsil ediyor ama tracker kısmı `setup-rubion-skills` ile her ikisi için aynı şekilde çalışır.)
 
+> **`grill-with-docs`'un iki rolü** — aynı skill, iki farklı anda, iki farklı girdiyle:
+> - **Rol 1 — Domain temeli (init'te, bir kez):** Ham analiz dökümanları (`.md`) → `CONTEXT.md` + ADR. Domain glossary + mimari kararları çıkarır. (Senaryo 1 adım 1, Senaryo 2 adım 2)
+> - **Rol 2 — Plan denetimi (her feature'da):** Bir PRD/Story → domain'e karşı stress-test → terminoloji/ADR ihlali yakalanmış plan. `to-prd` ile `to-issues` **arasında** çalışır. (adım 8b)
+>
+> Feature döngüsü: `to-prd → grill-with-docs → to-issues → dispatch-agents`
+
 ---
 
 ## SENARYO 1 — Sıfır Proje, Fikir Muğlak, GitHub
@@ -32,7 +38,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | # | Aşama | Skill | Çıktı |
 |---|---|---|---|
 | 0 | Repo başlat | _(manuel)_ | `git init`, boş repo, GitHub remote |
-| 1 | **Domain anla** | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | İlk `CONTEXT.md` (terimler, sınırlar, tech kararlar) |
+| 1 | **Domain anla** (Rol 1 — analiz dökümanları varsa onları besle) | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | İlk `CONTEXT.md` (terimler, sınırlar, tech kararlar) + ADR'ler |
 | 2 | **Mimari kararı netleştir** | [`adapted/improve-codebase-architecture`](../adapted/improve-codebase-architecture/SKILL.md) — Monolith → Mikroservis karar ağacı bölümü | Bounded context checklist sonucu, monolith/mikroservis kararı, ilk ADR'ler |
 | 3 | (Belirsizse) Kritik logic'i dene | [`adapted/prototype`](../adapted/prototype/SKILL.md) — Backend CLI veya API mode | Throwaway POC + kararın commit/ADR'sı, sonra silinir |
 | 4 | **Issue tracker bağla** | [`skills/setup-rubion-skills`](../skills/setup-rubion-skills/SKILL.md) → **GitHub seç** | `docs/agents/issue-tracker.md` (GitHub), `docs/agents/domain.md` |
@@ -41,6 +47,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | 6 | **Pre-commit disiplini** | [`skills/setup-precommit-dotnet`](../skills/setup-precommit-dotnet/SKILL.md) | Husky.Net + dotnet format + dotnet test |
 | 7 | **Observability** | [`skills/setup-otel-dotnet`](../skills/setup-otel-dotnet/SKILL.md) | OpenTelemetry + Jaeger ayakta |
 | 8 | İlk feature için PRD | [`adapted/to-prd`](../adapted/to-prd/SKILL.md) → GitHub'a yayınla | GitHub'da `#1: PRD: <feature>` issue |
+| 8b | **PRD'yi domain'e karşı grille koy** (Rol 2) | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | Terminoloji/ADR ihlali yakalanmış PRD + gerekirse CONTEXT.md/ADR güncellemesi |
 | 9 | PRD'yi tracer-bullet dilimlere böl | [`adapted/to-issues`](../adapted/to-issues/SKILL.md) | Bağımlılık linkli 3-5 issue (`#2, #3, #4`) |
 | 10 | Her issue için inner döngü | [`skills/scaffold-vsa-feature`](../skills/scaffold-vsa-feature/SKILL.md) → [`adapted/tdd-dotnet`](../adapted/tdd-dotnet/SKILL.md) | Çalışan feature + test'ler |
 | 10b | 3+ bağımsız issue varsa, paralel batch | [`skills/dispatch-agents`](../skills/dispatch-agents/SKILL.md) | Her biri kendi worktree'sinde çalışan subagent'lar, açılmış PR'lar, dispatch raporu |
@@ -61,13 +68,14 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 |---|---|---|---|
 | 0 | **Skill kütüphanesini bağla** | [`skills/setup-rubion-skills`](../skills/setup-rubion-skills/SKILL.md) → **Jira seç** | `docs/agents/issue-tracker.md` (Jira), `JIRA_*` env vars kurulumu |
 | 1 | **Mevcut durumu kavra** | [`adapted/improve-codebase-architecture`](../adapted/improve-codebase-architecture/SKILL.md) — Keşfet fazı | Shallow modüller, eksik seam'ler, sürtünme noktaları listesi |
-| 2 | **Domain'i dokümante et** | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | Retrofit `CONTEXT.md` — 1 yıllık projede sözlük muhtemelen kafalardadır, dışarı çıkar |
+| 2 | **Domain'i dokümante et** (Rol 1) | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | Retrofit `CONTEXT.md` — 1 yıllık projede sözlük muhtemelen kafalardadır, dışarı çıkar |
 | 3 | **Kritik kararları ADR'le** | (grill-with-docs ADR teklif eder) | `docs/adr/000X-*.md` — geçmişte alınmış sözsüz kararlar yazılı hale |
 | 4 | Pre-commit eksik mi? | [`skills/setup-precommit-dotnet`](../skills/setup-precommit-dotnet/SKILL.md) (kurulu değilse) | Husky.Net retrofit |
 | 5 | Observability eksik mi? | [`skills/setup-otel-dotnet`](../skills/setup-otel-dotnet/SKILL.md) (kurulu değilse) | OTel retrofit — büyük projede 1-2 günlük iş |
 | 6 | Legacy "service + repository" kalmış mı? | [`skills/migrate-legacy-to-vsa`](../skills/migrate-legacy-to-vsa/SKILL.md) | Strangler Fig ile feature feature VSA'ya geçiş |
 | 7 | Test coverage düşük mü? | [`adapted/tdd-dotnet`](../adapted/tdd-dotnet/SKILL.md) / [`adapted/tdd-react`](../adapted/tdd-react/SKILL.md) | Kritik path'lere geri dönük test |
 | 8 | Yeni feature için PRD | [`adapted/to-prd`](../adapted/to-prd/SKILL.md) → Jira'ya Story | Jira'da yeni Story (`RUB-N`) |
+| 8b | **PRD'yi domain'e karşı grille koy** (Rol 2) | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | Terminoloji/ADR ihlali yakalanmış Story + gerekirse CONTEXT.md/ADR güncellemesi |
 | 9 | Story'yi sub-task'lara böl | [`adapted/to-issues`](../adapted/to-issues/SKILL.md) | Jira Subtask'lar + "Blocks" link'leri |
 | 10 | Feature implementasyonu | [`skills/scaffold-vsa-feature`](../skills/scaffold-vsa-feature/SKILL.md) → [`adapted/tdd-dotnet`](../adapted/tdd-dotnet/SKILL.md) | Yeni VSA dilim + testler |
 | 10b | 3+ bağımsız issue varsa, paralel batch | [`skills/dispatch-agents`](../skills/dispatch-agents/SKILL.md) | Subagent başına PR, dispatch raporu |

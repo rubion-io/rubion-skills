@@ -8,9 +8,20 @@ description: Planı mevcut domain modeli ile sorgulayan, terminolojiyi netleşti
 stack: [dotnet, csharp, react, react-native]
 ---
 
+<iki-kullanım>
+
+Bu skill iki anda çalışır — girdi farklı, mekanik aynı:
+
+- **Rol 1 — Domain temeli (init'te, bir kez):** Girdi = elde duran ham analiz dökümanları (`.md` notlar, gereksinim/toplantı çıktıları). Bunları birbirine ve Rubion diline karşı sorgula, terminolojiyi netleştir, `CONTEXT.md` + (gerekirse) ADR üret. Henüz `CONTEXT.md` yoksa tipik başlangıç budur.
+- **Rol 2 — Plan denetimi (her feature'da):** Girdi = bir PRD/Story/plan. Mevcut `CONTEXT.md` + ADR'lere karşı stress-test et. `to-prd → grill-with-docs → to-issues` zincirinin ortasında çalışır; terminoloji/ADR ihlallerini issue'lara bölünmeden önce yakalar.
+
+Her iki rolde de aşağıdaki sorgulama disiplini ve CONTEXT.md/ADR çıktı formatları geçerlidir.
+
+</iki-kullanım>
+
 <ne-yapılacak>
 
-Bu planın her boyutunu ortak bir anlayışa ulaşana kadar amansızca sorgula. Tasarım ağacının her dalını inerek kararlar arası bağımlılıkları birer birer çöz. Her soru için kendi önerilen cevabını ver.
+Bu planın (veya analiz dökümanının) her boyutunu ortak bir anlayışa ulaşana kadar amansızca sorgula. Tasarım ağacının her dalını inerek kararlar arası bağımlılıkları birer birer çöz. Her soru için kendi önerilen cevabını ver.
 
 Soruları tek tek sor; her soruya yanıt geldikten sonra bir sonrakine geç.
 

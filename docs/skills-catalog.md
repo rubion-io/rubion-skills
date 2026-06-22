@@ -96,7 +96,7 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 |-------|----------|--------------|
 | **[to-prd](../adapted/to-prd/SKILL.md)** | Konuşma bağlamını PRD'ye dönüştürür ve issue tracker'a yayınlar. Kullanıcıyı sorgulamaz — sentezler. | "Bunu PRD yap" |
 | **[to-issues](../adapted/to-issues/SKILL.md)** | Plan/PRD'yi tracer-bullet dikey dilimlere bölerek issue tracker'a yazar. | "Bu PRD'yi issue'lara böl" |
-| **[grill-with-docs](../adapted/grill-with-docs/SKILL.md)** | Planı mevcut domain modeli + ADR'lerle stress-test eder. CONTEXT.md/ADR güncellemesi. | "Bu planı domain'le grillere koy" |
+| **[grill-with-docs](../adapted/grill-with-docs/SKILL.md)** | İki rol: **(1) init'te** ham analiz dökümanlarını → CONTEXT.md + ADR'ye çevirir; **(2) her feature'da** PRD'yi domain modeli + ADR'lerle stress-test eder (`to-prd` ↔ `to-issues` arası). | "Analiz dökümanlarını grille koy" · "Bu PRD'yi domain'le grille koy" |
 | **[tubitak-1507-document](../skills/tubitak-1507-document/SKILL.md)** | TÜBİTAK 1507 başvurusu teknik bölümleri — Ar-Ge faaliyetleri, iş paketleri, yenilikçilik. | "1507 başvurusu için Ar-Ge bölümü yaz" |
 
 ---
@@ -152,6 +152,8 @@ setup-rubion-skills → setup-memory → memorize-module (en sık dokunulan mod�
 ```
 to-prd → grill-with-docs → to-issues → dispatch-agents
 ```
+
+> Buradaki `grill-with-docs` **Rol 2** (PRD denetimi): to-prd taslağı domain glossary + ADR'lere karşı stress-test edilir, sonra to-issues böler. Init'teki **Rol 1** (analiz dökümanı → CONTEXT.md) ayrı andır — bkz. getting-started.
 
 ### Mevcut legacy kod refactor
 

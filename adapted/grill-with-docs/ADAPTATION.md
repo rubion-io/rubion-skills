@@ -20,6 +20,7 @@
    - Domain örnekleri Rubion iş alanına göre somutlaştırıldı (sevkiyat, fason üretim)
 3. **ADR formatı:** Türkçe başlıklar, "Durum" field'ına "Değiştirildi" seçeneği eklendi
 4. **Dosya yapısı:** Rubion'un `src/Sales/`, `src/Inventory/` tarzı module yapısı örnek olarak eklendi
+5. **`<iki-kullanım>` bloğu (2026-06):** Upstream skill yalnızca "planı grille koy" (Rol 2) anlatıyordu. Rubion akışında grill iki anda kullanılıyor: init'te ham analiz dökümanlarını `CONTEXT.md`'ye çevirme (Rol 1) ve feature döngüsünde `to-prd → grill → to-issues` PRD denetimi (Rol 2). İki rol açıkça tanımlandı; `setup-rubion-skills` A.7 + getting-started + skills-catalog ile hizalı.
 
 ## Neden Light?
 
