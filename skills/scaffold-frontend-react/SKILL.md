@@ -14,6 +14,16 @@ Bir React frontend'in **sıfırdan iskeletini** kurar: Vite projesi, klasör dü
 
 > **Paket yöneticisi:** pnpm (varsayılan). Repo'da `package-lock.json` varsa npm'e, `yarn.lock` varsa yarn'a düş.
 
+### Mono-repo Yerleşimi
+
+Aynı repo'da backend de varsa (full-stack — bkz. [stack-conventions](../../docs/stack-conventions.md) Mono-repo Kök Düzeni), frontend `src/frontend/` altına kurulur; backend `src/backend/` altındadır.
+
+- Tek frontend → `src/frontend/` doğrudan Vite kökü (`package.json` burada)
+- Birden fazla app → `src/frontend/<app-kebab>/` (örn: `src/frontend/erp-web/`, `src/frontend/admin-web/`)
+- **Frontend-only** repo (backend ayrı) → Vite projesi repo kökünde, ön ek yok
+
+Vite oluşturma komutunu doğru dizinde çalıştır: full-stack'te `cd src/frontend` (veya `src/frontend/<app>`), sonra `pnpm create vite . ...`.
+
 ---
 
 ## Önce Sor

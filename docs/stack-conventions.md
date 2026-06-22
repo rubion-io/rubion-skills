@@ -48,6 +48,49 @@ Rubion projelerinde tutarlılık için sabit kurallar. Yeni bir proje veya servi
 
 ## Klasör Yapısı
 
+### Mono-repo Kök Düzeni (backend + frontend birlikte)
+
+Backend ve frontend **aynı repo'da** ise kök `src/` altında ikiye ayrılır: `backend/` ve `frontend/`.
+Repo adı kebab-case. `scaffold-backend` + `scaffold-frontend-react` bu düzene yazar.
+
+**Monolith + React:**
+
+```
+<repo-kebab>/                     ← örn: rubion-erp
+├── docker-compose.yml            ← api + postgres + jaeger + (ops.) web
+└── src/
+    ├── backend/
+    │   ├── <Project>.sln          ← örn: Rubion.Erp.sln
+    │   ├── Directory.Build.props
+    │   ├── Directory.Packages.props
+    │   ├── <Project>.Api/         ← modüller içeride (aşağıdaki .NET düzeni)
+    │   └── <Project>.Tests/
+    └── frontend/                  ← Vite kökü; package.json burada
+        ├── package.json
+        └── src/                   ← aşağıdaki React düzeni
+```
+
+**Mikroservis + React:**
+
+```
+<repo-kebab>/                     ← örn: rubion-platform
+└── src/
+    ├── backend/
+    │   └── services/
+    │       ├── <service-kebab>/   ← örn: inventory
+    │       │   ├── <Service>.Api/
+    │       │   ├── <Service>.Worker/   (opsiyonel)
+    │       │   └── <Service>.Tests/
+    │       └── payment-gateway/...
+    └── frontend/
+        └── <app-kebab>/           ← örn: erp-web; tek frontend ise src/frontend doğrudan Vite kökü olabilir
+```
+
+Kurallar:
+- **Çift `src/` yok** — backend projeleri doğrudan `src/backend/` altında (`src/backend/src/...` değil). Frontend'in iç `src/`'i Vite'ın kendisidir, dokunma.
+- **Sadece full-stack repo'da** bu ayrım. Backend-only repo → `.sln` repo kökünde, `src/` + `tests/` klasik düzen. Frontend-only repo → Vite projesi repo kökünde.
+- `.NET` tarafı PascalCase, `React`/klasör tarafı kebab-case (bkz. Naming Conventions).
+
 ### .NET (Vertical Slice Architecture)
 
 ```

@@ -30,6 +30,18 @@ Tek mesajda hepsini sor:
 
 Tür cevabına göre **Dal A (Monolith)** veya **Dal B (Mikroservis)** uygulanır. Ortak adımlar her ikisinde de geçerlidir.
 
+### Mono-repo Yerleşimi
+
+Aynı repo'da frontend de olacaksa (full-stack — bkz. [stack-conventions](../../docs/stack-conventions.md) Mono-repo Kök Düzeni), backend `src/backend/` altına kök salar:
+
+- Monolith: `src/backend/<Project>.sln` + `src/backend/<Project>.Api/` + `src/backend/<Project>.Tests/`
+- Mikroservis: `src/backend/services/<service-kebab>/...`
+- Frontend `src/frontend/` altına gelir (`scaffold-frontend-react`).
+
+**Backend-only** repo ise (frontend ayrı repo) `src/backend/` ön eki yok — `.sln` repo kökünde, aşağıdaki komutlardaki yollar aynen geçerli.
+
+Kullanıcıya sor: "Frontend de bu repo'da mı olacak?" Evet ise aşağıdaki tüm yollara `src/backend/` ön ekini uygula.
+
 ---
 
 ## Dal A — Monolith
