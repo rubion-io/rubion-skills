@@ -36,7 +36,8 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | 2 | **Mimari kararı netleştir** | [`adapted/improve-codebase-architecture`](../adapted/improve-codebase-architecture/SKILL.md) — Monolith → Mikroservis karar ağacı bölümü | Bounded context checklist sonucu, monolith/mikroservis kararı, ilk ADR'ler |
 | 3 | (Belirsizse) Kritik logic'i dene | [`adapted/prototype`](../adapted/prototype/SKILL.md) — Backend CLI veya API mode | Throwaway POC + kararın commit/ADR'sı, sonra silinir |
 | 4 | **Issue tracker bağla** | [`skills/setup-rubion-skills`](../skills/setup-rubion-skills/SKILL.md) → **GitHub seç** | `docs/agents/issue-tracker.md` (GitHub), `docs/agents/domain.md` |
-| 5 | İskelet | Monolith ise: `dotnet new webapi` manuel<br>Mikroservis ise: [`skills/scaffold-microservice`](../skills/scaffold-microservice/SKILL.md) | İlk servis veya monolith iskeleti |
+| 5 | Backend iskelet | [`skills/scaffold-backend`](../skills/scaffold-backend/SKILL.md) — monolith mi mikroservis mi diye sorar | Solution + VSA düzeni + Docker (net10.0) |
+| 5b | Frontend iskelet (varsa) | [`skills/scaffold-frontend-react`](../skills/scaffold-frontend-react/SKILL.md) | Vite + Router + TanStack Query + test çekirdeği |
 | 6 | **Pre-commit disiplini** | [`skills/setup-precommit-dotnet`](../skills/setup-precommit-dotnet/SKILL.md) | Husky.Net + dotnet format + dotnet test |
 | 7 | **Observability** | [`skills/setup-otel-dotnet`](../skills/setup-otel-dotnet/SKILL.md) | OpenTelemetry + Jaeger ayakta |
 | 8 | İlk feature için PRD | [`adapted/to-prd`](../adapted/to-prd/SKILL.md) → GitHub'a yayınla | GitHub'da `#1: PRD: <feature>` issue |
@@ -105,7 +106,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 **Senaryo 2'de erken kullanılmaz:**
 
 - `prototype` — mevcut sistemde POC nadiren gerekir; UI iyileştirme aşamasında değer kazanır
-- `scaffold-microservice` — mimari kararı zaten verilmiş
+- `scaffold-backend` — iskelet zaten mevcut (yeni servis eklenmiyorsa)
 - `to-prd` ilk hafta — önce mevcut sistemi anla, sonra yeni feature ekle
 
 ---
@@ -119,7 +120,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 [ ] grill-with-docs ile ilk 5-10 domain terimi tartışıldı → CONTEXT.md
 [ ] Monolith vs mikroservis kararı verildi → ADR-001 yazıldı
 [ ] setup-rubion-skills çalıştırıldı → docs/agents/ kuruldu (GitHub adapter)
-[ ] scaffold-microservice veya manuel dotnet new webapi ile iskelet
+[ ] scaffold-backend ile iskelet (monolith/mikroservis) + gerekirse scaffold-frontend-react
 [ ] setup-precommit-dotnet → ilk commit'ten önce pre-commit hook
 [ ] setup-otel-dotnet → Jaeger local'de ayakta
 ```

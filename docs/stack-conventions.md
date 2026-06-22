@@ -103,14 +103,16 @@ supabase/
 
 ## Paket Tercihleri
 
-### Backend (.NET 8+)
+### Backend (.NET — güncel LTS: net10.0)
+
+> Yeni projeler **net10.0** hedefler (`scaffold-backend` varsayılanı). Paket major versiyonu TFM ile hizalanır (EF Core 10, Npgsql 10). OpenAPI: .NET 9+ yerleşik `Microsoft.AspNetCore.OpenApi` (Swashbuckle değil). Paket versiyonları Central Package Management ile `Directory.Packages.props`'ta merkezi.
 
 | Kategori | Tercih | Alternatif / Not |
 |---|---|---|
 | CQRS / Mediator | MediatR | — |
 | Validation | FluentValidation | — |
 | Result pattern | FluentResults | — |
-| ORM | EF Core 8 | Dapper: sadece perf-critical path |
+| ORM | EF Core (TFM ile aynı major) | Dapper: sadece perf-critical path |
 | DB (primary) | PostgreSQL + Npgsql | MSSQL: sadece legacy/enterprise istemci |
 | Background job | Hangfire (persistent) / `IHostedService` (basit) | — |
 | Messaging | MassTransit + RabbitMQ | MassTransit + Azure Service Bus |

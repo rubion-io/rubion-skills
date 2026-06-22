@@ -4,6 +4,16 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 11 — Sıfırdan Backend + Frontend İskelet)
+- `skills/scaffold-frontend-react/` (yeni yerli skill): Sıfırdan React frontend iskeleti. Vite + React Router v6 + TanStack Query v5 + Vitest/RTL/MSW **çekirdek her zaman**; shadcn/ui + Tailwind, Zustand, React Hook Form + Zod, Playwright, `openapi-typescript` ile backend tip üretimi **opsiyonel sor**. `features/ shared/ app/ test/` klasör düzeni, MSW server `onUnhandledRequest: error`. pnpm varsayılan. Örnek: `examples/01-erp-web.md` (backend OpenAPI'ye bağlı, shadcn + RHF/Zod).
+- Daha önce sıfır React projesi için iskelet kuran skill yoktu — `tdd-react` test yazıyordu ama Vite kurulumu/provider/router/MSW bağlama elle yapılıyordu. Bu boşluk kapandı.
+
+### Changed (Hafta 11 — scaffold-microservice → scaffold-backend)
+- `skills/scaffold-microservice/` → `skills/scaffold-backend/` olarak yeniden adlandırıldı ve **monolith dalı** eklendi. Artık ilk soru "monolith mi mikroservis mi"; monolith → tek modüler API + **in-process MediatR `INotification`** (RabbitMQ yok) + tek PostgreSQL, mikroservis → DB-per-service + MassTransit (önceki davranış korunmuş). İsim artık her iki türü kapsadığı için "microservice" yanıltıcılığı giderildi.
+- TFM tüm şablonlarda **net8.0 → net10.0** (güncel LTS): Docker base image `10.0`, EF Core/Npgsql 10, .NET 9+ yerleşik `Microsoft.AspNetCore.OpenApi` (Swashbuckle değil), `--use-controllers` notu. Central Package Management (`Directory.Packages.props` + `Directory.Build.props`) eklendi.
+- `scripts/install.ps1` + `scripts/install.sh`: `$StaleSkills` / `STALE_SKILLS` listesi + `Remove-StaleSkills` / `remove_stale_skills` — yeniden adlandırılan/kaldırılan skill'lerin öksüz (orphan) junction/symlink'leri her install ve uninstall'da otomatik temizlenir (`scaffold-microservice` ilk giriş).
+- Routing + doküman: `docs/skills-catalog.md` (28→29 skill, scaffold tablosu + chain'ler + karar ağacı), `docs/getting-started.md` (Senaryo 1 aşama 5/5b), `skills/setup-rubion-skills/SKILL.md` (Zero × .NET / React / Mixed karar matrisi + Faz D re-entry tespiti), `docs/sizing-guide.md` (Core 13 skill). Eval: `scaffold-microservice.json` → `scaffold-backend.json` (monolith+mikroservis query'leri) + yeni `scaffold-frontend-react.json`.
+
 ### Added (Hafta 10 — Supabase Stack Desteği)
 - Yeni `stack:supabase` şeridi: Supabase (Postgres + Auth + Storage + Deno Edge Functions) backend'i artık birinci sınıf stack. Daha önce katalog yalnızca .NET / React / RN varsayıyordu; Vite + React SPA + Supabase projeleri (örn. çok dilli portfolio/marketplace uygulaması) için backend tarafı tamamen açıktaydı.
 - 4 yeni yerli skill (`skills/`):

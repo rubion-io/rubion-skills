@@ -1,0 +1,27 @@
+{
+  "skill": "scaffold-frontend-react",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "erp-web adında React frontend kur", "should_trigger": true },
+    { "query": "Sıfırdan Vite + React + TypeScript projesi oluştur", "should_trigger": true },
+    { "query": "React frontend iskeleti istiyorum", "should_trigger": true },
+    { "query": "TanStack Query + React Router ile yeni frontend kur", "should_trigger": true },
+    { "query": "Vite app scaffold et, shadcn ile", "should_trigger": true },
+    { "query": "Web frontend kur, backend OpenAPI'ye bağlanacak", "should_trigger": true },
+    { "query": "React + Vitest + MSW test altyapılı frontend kur", "should_trigger": true },
+    { "query": "Yeni React SPA iskeleti oluştur", "should_trigger": true },
+    { "query": "Frontend projesi başlat: Vite react-ts", "should_trigger": true },
+    { "query": "portfolio-app için React iskelet kur", "should_trigger": true },
+
+    { "query": "OrderList component için test yaz", "should_trigger": false },
+    { "query": "useOrderById hook'unu yaz", "should_trigger": false },
+    { "query": "Mevcut React projesine yeni sayfa ekle", "should_trigger": false },
+    { "query": "React Native Expo uygulaması kur", "should_trigger": false },
+    { "query": ".NET backend iskeleti oluştur", "should_trigger": false },
+    { "query": "shadcn button component ekle (mevcut projede)", "should_trigger": false },
+    { "query": "Zustand store ekle mevcut app'e", "should_trigger": false },
+    { "query": "Playwright E2E testi yaz", "should_trigger": false },
+    { "query": "TanStack Query mutation'ı debug et", "should_trigger": false },
+    { "query": "Vite build hatasını çöz", "should_trigger": false }
+  ]
+}

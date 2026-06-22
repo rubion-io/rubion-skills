@@ -1,6 +1,6 @@
 # Skill Kataloğu
 
-> 28 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
+> 29 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
 > Detaylar için ilgili `SKILL.md` dosyasını aç.
 
 Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — senaryo bazlı path.
@@ -23,9 +23,10 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 
 | Skill | Ne yapar | Örnek prompt |
 |-------|----------|--------------|
+| **[scaffold-backend](../skills/scaffold-backend/SKILL.md)** | Sıfırdan .NET backend iskeleti — monolith (tek modüler API + in-process MediatR) veya mikroservis (DB-per-service + MassTransit). Solution + VSA düzeni + Docker. net10.0. | "Rubion.Erp monolith kur" · "Inventory mikroservisi scaffold et" |
+| **[scaffold-frontend-react](../skills/scaffold-frontend-react/SKILL.md)** | Sıfırdan React frontend — Vite + Router + TanStack Query + Vitest/RTL/MSW çekirdek; shadcn/Zustand/RHF+Zod/Playwright/OpenAPI tip üretimi opsiyonel. | "erp-web React frontend kur" |
 | **[scaffold-vsa-feature](../skills/scaffold-vsa-feature/SKILL.md)** | VSA feature slice — Command/Query + Handler + Validator + Endpoint + Test. Tek seferde 5 dosya. | "PlaceOrder için VSA feature ekle" |
 | **[scaffold-supabase-feature](../skills/scaffold-supabase-feature/SKILL.md)** | Supabase dikey dilim — SQL migration (tablo + RLS) + Edge Function (Deno + JWT guard + Zod) + frontend TanStack hook + test. | "portfolio-publish için supabase feature ekle" |
-| **[scaffold-microservice](../skills/scaffold-microservice/SKILL.md)** | Yeni .NET mikroservis — ASP.NET Core API + Worker (opsiyonel) + Dockerfile + docker-compose entry. | "Inventory mikroservisi scaffold et" |
 | **[scaffold-adr](../skills/scaffold-adr/SKILL.md)** | Yeni ADR — auto-numbering, çelişki kontrolü, supersede workflow, MOC güncelleme. `improve-codebase-architecture` ile zincirleme. | "Aday 1'i ADR yap" · "PostgreSQL kararını dokümante et" |
 
 ---
@@ -118,10 +119,26 @@ scaffold-supabase-feature → tdd-edge-function → migration için: supabase-mi
 
 Tek prompt: "portfolio-publish feature'ı supabase + TDD ile ekle"
 
-### Yeni mikroservis (sıfırdan)
+### Yeni backend (sıfırdan — monolith veya mikroservis)
 
 ```
-scaffold-microservice → scaffold-vsa-feature → tdd-dotnet → setup-otel-dotnet
+scaffold-backend → scaffold-vsa-feature → tdd-dotnet → setup-otel-dotnet
+```
+
+Tek prompt: "Rubion.Erp monolith backend kur" veya "Inventory mikroservisi kur"
+
+### Yeni frontend (sıfırdan — React)
+
+```
+scaffold-frontend-react → tdd-react (her component/hook/form için)
+```
+
+Tek prompt: "erp-web React frontend iskeleti kur"
+
+### Yeni full-stack proje (.NET + React, sıfırdan)
+
+```
+scaffold-backend → scaffold-frontend-react → scaffold-vsa-feature → tdd-dotnet + tdd-react
 ```
 
 ### Mevcut projeyi anlama (Collecsi gibi)
@@ -160,9 +177,10 @@ review-memory → memorize-module (bayat olanları yenile)
 
 ```
 Yeni kod yazacağım
+├─ Yeni backend (.NET)      → scaffold-backend (monolith / mikroservis sorar)
+├─ Yeni frontend (React)    → scaffold-frontend-react
 ├─ Yeni feature (.NET)      → scaffold-vsa-feature
 ├─ Yeni feature (Supabase)  → scaffold-supabase-feature
-├─ Yeni servis              → scaffold-microservice
 ├─ Hızlı POC                → prototype
 └─ Test ile                 → tdd-dotnet / tdd-react / tdd-react-native / tdd-edge-function
 

@@ -122,18 +122,18 @@ Faz B'nin 2 cevabına göre **karar matrisinden** kişiselleştirilmiş yol üre
 
 | Senaryo | Sıralı path |
 |---------|-------------|
-| **Zero × .NET** | `setup-memory` → `scaffold-microservice`* → `setup-precommit-dotnet` → `scaffold-vsa-feature` → `tdd-dotnet` → `setup-otel-dotnet` |
+| **Zero × .NET** | `setup-memory` → `scaffold-backend` (monolith/mikroservis sorar) → `setup-precommit-dotnet` → `scaffold-vsa-feature` → `tdd-dotnet` → `setup-otel-dotnet` |
 | **Zero × Supabase** | `setup-memory` → `scaffold-supabase-feature` → `tdd-edge-function` → `supabase-migration-review` (her migration'da) → `harden-webhook` (webhook varsa) → `setup-precommit-node` |
-| **Zero × React** | `setup-memory` → `tdd-react` (gün 1 disiplin) |
+| **Zero × React** | `setup-memory` → `scaffold-frontend-react` → `tdd-react` (gün 1 disiplin) |
 | **Zero × RN** | `setup-memory` → `tdd-react-native` |
-| **Zero × Mixed** | Backend path (.NET veya Supabase) öncelikli + paralelde React/RN |
+| **Zero × Mixed (.NET + React)** | `setup-memory` → `scaffold-backend` → `scaffold-frontend-react` → `setup-precommit-dotnet` + `setup-precommit-node` → `scaffold-vsa-feature` → `tdd-dotnet` + `tdd-react` → `setup-otel-dotnet` |
 | **Legacy × .NET** | `setup-memory` → `improve-codebase-architecture` → `scaffold-adr` (adayları belgele) → `memorize-module` (top 5) → `migrate-legacy-to-vsa` (gerekirse) → `setup-precommit-dotnet` |
 | **Legacy × Supabase** | `setup-memory` → `improve-codebase-architecture` → `scaffold-adr` → `memorize-module` (top 5) → `supabase-migration-review` (mevcut migration'lara) → `harden-webhook` (webhook'lara) → `setup-precommit-node` |
 | **Legacy × React** | `setup-memory` → `memorize-module` (top 5) → `tdd-react` (test açığı kapatma) |
 | **Legacy × RN** | `setup-memory` → `memorize-module` (top 5) → `tdd-react-native` |
 | **Legacy × Mixed** | `setup-memory` → önce backend path (.NET veya Supabase), sonra frontend |
 
-\* `scaffold-microservice` sadece mikroservis projesi ise — kullanıcıya sor.
+> `scaffold-backend` türü (monolith/mikroservis) kullanıcıya sorar. `scaffold-frontend-react` çekirdeği kurar, opsiyonelleri (shadcn/Zustand/Playwright) sorar — her ikisi de sadece **sıfır** projede; legacy'de iskelet zaten var.
 
 ### Yol Haritasını Sun
 
@@ -161,7 +161,7 @@ Sıradaki: setup-memory.
 - Skill bitince **wizard'a geri dön** — sıradaki adımı öner.
 - Adım atlanırsa kayıt tut (faz D için):
   ```
-  Atlanan: scaffold-microservice (kullanıcı: "tek monolith yeterli")
+  Atlanan: scaffold-frontend-react (kullanıcı: "frontend ayrı repo")
   Sıradaki: setup-precommit-dotnet
   ```
 
@@ -184,7 +184,9 @@ Wizard daha önce çalıştırıldıysa **nerede kaldığını filesystem'den ok
 | `docs/adr/ADR-*.md` veya `docs/memory/30-decisions/ADR-*.md` sayısı | Kaç ADR var |
 | `.husky/` veya `.husky.json` | `setup-precommit-dotnet` / `setup-precommit-node` tamam |
 | `Program.cs`'de `AddOpenTelemetry` | `setup-otel-dotnet` tamam |
-| `Dockerfile` + `docker-compose.yml` + `*.Api.csproj` | `scaffold-microservice` muhtemelen yapıldı |
+| `*.sln` + `src/*.Api/*.csproj` + `Directory.Packages.props` | `scaffold-backend` yapıldı |
+| `services/*/src/*.Api.csproj` (çoğul servis) | `scaffold-backend` mikroservis modunda yapıldı |
+| `vite.config.*` + `src/app/providers.tsx` | `scaffold-frontend-react` yapıldı |
 | `supabase/config.toml` var | Supabase backend projesi |
 | `supabase/migrations/*.sql` sayısı | Kaç migration var (`supabase-migration-review` hedefi) |
 | `supabase/functions/*/index.ts` sayısı | Kaç edge function var |

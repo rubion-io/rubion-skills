@@ -59,12 +59,13 @@
 **Kurulum:**
 
 ```
-✅ Core 12 skill:
+✅ Core 13 skill:
    - setup-rubion-skills (wizard)
    - setup-memory
    - setup-precommit-dotnet
    - scaffold-vsa-feature
-   - scaffold-microservice
+   - scaffold-backend
+   - scaffold-frontend-react
    - scaffold-adr
    - tdd-dotnet / tdd-react / tdd-react-native
    - diagnose-dotnet

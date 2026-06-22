@@ -35,6 +35,12 @@ $NicheSkills = @(
     "prototype"               # throwaway, sadece spike zamani
 )
 
+# Yeniden adlandirilmis veya kaldirilmis skill'ler — repo'da artik klasoru yok.
+# Eski junction'lar global klasorde oksuz (orphan) kalir; her install/uninstall'da temizlenir.
+$StaleSkills = @(
+    "scaffold-microservice"   # -> scaffold-backend olarak birlestirildi
+)
+
 function Get-SkillSources {
     $adapted = Get-ChildItem -Directory "$RepoRoot\adapted" -ErrorAction SilentlyContinue
     $custom  = Get-ChildItem -Directory "$RepoRoot\skills"  -ErrorAction SilentlyContinue
@@ -47,6 +53,27 @@ function Get-SkillSources {
     return $all
 }
 
+# Repo'dan kaldirilmis/yeniden adlandirilmis skill'lerin oksuz junction'larini sil.
+function Remove-StaleSkills {
+    param([string]$TargetDir, [string]$Label)
+
+    if (-not (Test-Path $TargetDir)) { return }
+
+    $cleaned = 0
+    foreach ($name in $StaleSkills) {
+        $dest = Join-Path $TargetDir $name
+        if (-not (Test-Path $dest)) { continue }
+
+        $item = Get-Item $dest -Force
+        if ($item.LinkType -eq "Junction" -or $item.LinkType -eq "SymbolicLink") {
+            Remove-Item $dest -Recurse -Force
+            Write-Host "  [STALE] $name (kaldirildi/yeniden adlandirildi)"
+            $cleaned++
+        }
+    }
+    if ($cleaned -gt 0) { Write-Host "  Stale temizlendi: $cleaned" }
+}
+
 function Install-Skills {
     param([string]$TargetDir, [string]$Label)
 
@@ -56,6 +83,8 @@ function Install-Skills {
 
     Write-Host ""
     Write-Host "[$Label] $TargetDir"
+
+    Remove-StaleSkills -TargetDir $TargetDir -Label $Label
 
     $sources = Get-SkillSources
     $linked  = 0
@@ -118,8 +147,14 @@ function Uninstall-Skills {
 
 if ($Uninstall) {
     Write-Host "Rubion Skills - Uninstall"
-    if ($Target -in @("claude", "both")) { Uninstall-Skills -TargetDir $ClaudeDir -Label "Claude" }
-    if ($Target -in @("cursor", "both")) { Uninstall-Skills -TargetDir $CursorDir -Label "Cursor" }
+    if ($Target -in @("claude", "both")) {
+        Uninstall-Skills    -TargetDir $ClaudeDir -Label "Claude"
+        Remove-StaleSkills  -TargetDir $ClaudeDir -Label "Claude"
+    }
+    if ($Target -in @("cursor", "both")) {
+        Uninstall-Skills    -TargetDir $CursorDir -Label "Cursor"
+        Remove-StaleSkills  -TargetDir $CursorDir -Label "Cursor"
+    }
     Write-Host ""
     Write-Host "Done."
     return

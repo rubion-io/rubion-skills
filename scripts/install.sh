@@ -28,6 +28,11 @@ NICHE_SKILLS=(
     "prototype"               # throwaway, sadece spike zamani
 )
 
+# Yeniden adlandirilmis/kaldirilmis skill'ler — repo'da klasoru yok, oksuz junction temizlenir.
+STALE_SKILLS=(
+    "scaffold-microservice"   # -> scaffold-backend olarak birlestirildi
+)
+
 for arg in "$@"; do
     case "$arg" in
         --target=claude) TARGET="claude" ;;
@@ -78,6 +83,24 @@ list_sources() {
     done
 }
 
+# Repo'dan kaldirilmis/yeniden adlandirilmis skill'lerin oksuz symlink'lerini sil.
+remove_stale_skills() {
+    local target_dir="$1"
+    [ -d "$target_dir" ] || return 0
+
+    local cleaned=0
+    for name in "${STALE_SKILLS[@]}"; do
+        local dest="$target_dir/$name"
+        if [ -L "$dest" ]; then
+            rm "$dest"
+            echo "  [STALE] $name (kaldirildi/yeniden adlandirildi)"
+            cleaned=$((cleaned + 1))
+        fi
+    done
+    [ "$cleaned" -gt 0 ] && echo "  Stale temizlendi: $cleaned"
+    return 0
+}
+
 install_skills() {
     local target_dir="$1"
     local label="$2"
@@ -85,6 +108,8 @@ install_skills() {
     mkdir -p "$target_dir"
     echo
     echo "[$label] $target_dir"
+
+    remove_stale_skills "$target_dir"
 
     local linked=0
     local skipped=0
@@ -150,8 +175,14 @@ uninstall_skills() {
 
 if [ "$UNINSTALL" = true ]; then
     echo "Rubion Skills - Uninstall"
-    [[ "$TARGET" == "claude" || "$TARGET" == "both" ]] && uninstall_skills "$CLAUDE_DIR" "Claude"
-    [[ "$TARGET" == "cursor" || "$TARGET" == "both" ]] && uninstall_skills "$CURSOR_DIR" "Cursor"
+    if [[ "$TARGET" == "claude" || "$TARGET" == "both" ]]; then
+        uninstall_skills "$CLAUDE_DIR" "Claude"
+        remove_stale_skills "$CLAUDE_DIR"
+    fi
+    if [[ "$TARGET" == "cursor" || "$TARGET" == "both" ]]; then
+        uninstall_skills "$CURSOR_DIR" "Cursor"
+        remove_stale_skills "$CURSOR_DIR"
+    fi
     echo
     echo "Done."
     exit 0

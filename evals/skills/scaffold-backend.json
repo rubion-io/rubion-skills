@@ -1,0 +1,27 @@
+{
+  "skill": "scaffold-backend",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Rubion.Erp adında monolith backend kur", "should_trigger": true },
+    { "query": "Sıfırdan .NET solution oluştur", "should_trigger": true },
+    { "query": "Yeni Inventory mikroservisi scaffold et", "should_trigger": true },
+    { "query": "Monolith backend iskeleti istiyorum, ilk modül Orders", "should_trigger": true },
+    { "query": "ASP.NET Core API + Worker + RabbitMQ servis iskeleti kur", "should_trigger": true },
+    { "query": "PostgreSQL + MediatR ile yeni backend kur", "should_trigger": true },
+    { "query": "Payment.Api servisini sıfırdan oluştur", "should_trigger": true },
+    { "query": "Docker + docker-compose ile yeni .NET backend", "should_trigger": true },
+    { "query": "Backend solution + VSA düzeni kur", "should_trigger": true },
+    { "query": "net10 monolith API iskeleti oluştur", "should_trigger": true },
+
+    { "query": "Mevcut servise yeni feature ekle", "should_trigger": false },
+    { "query": "Mikroservis mimarisine geçmeli miyiz?", "should_trigger": false },
+    { "query": "Legacy monolith'i parçalara ayır", "should_trigger": false },
+    { "query": "EF Core migration üret", "should_trigger": false },
+    { "query": "VSA slice oluştur (mevcut projede)", "should_trigger": false },
+    { "query": "OpenTelemetry kurulumu", "should_trigger": false },
+    { "query": "React frontend iskeleti kur", "should_trigger": false },
+    { "query": "Docker Compose dosyası oluştur (mevcut servis için)", "should_trigger": false },
+    { "query": "MassTransit consumer ekle mevcut projeye", "should_trigger": false },
+    { "query": "Supabase Edge Function oluştur", "should_trigger": false }
+  ]
+}
