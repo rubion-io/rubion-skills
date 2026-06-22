@@ -83,6 +83,23 @@ Kullanıcı evet derse:
 - `.claude/settings.json` yoksa → `<rubion-skills>/templates/claude-settings.example.json` kopyala
 - Varsa → birleştirme planını sun (otomatik birleştirme yapma)
 
+### A.7 Soru 5 — Domain / Analiz Dökümanı Var mı?
+
+> Açıklama: Elde hazır analiz/domain dökümanı (`.md` analiz notları, gereksinim dökümanları, toplantı çıktıları) varsa, bunlar koda dökülmeden önce `grill-with-docs` ile sorgulanıp `CONTEXT.md` + ADR'lere dönüştürülmeli. Domain glossary tüm sonraki skill'lerin referansıdır.
+
+Önce filesystem'i tara, sonra sor:
+
+```bash
+ls *.md docs/*.md analiz/ analysis/ 2>/dev/null   # serbest analiz dökümanları
+ls CONTEXT.md CONTEXT-MAP.md                        # zaten grill edilmiş mi?
+```
+
+- **Analiz dökümanı var, CONTEXT.md yok** → `grill-with-docs`'u **path'in ilk build adımı** olarak işaretle (Faz C). Kullanıcıya: "Şu klasörde N analiz dökümanı buldum; `grill-with-docs` ile bunları domain'e karşı grilleyip CONTEXT.md + ADR üretelim — scaffold'dan önce."
+- **CONTEXT.md zaten var** → grill tamam say, atla (gerekirse tazeleme önerilebilir).
+- **Hiç döküman yok** → grill'i yine de öner ama opsiyonel: domain konuşarak da netleşebilir.
+
+> A.3'teki yerleşim kararı (tek `CONTEXT.md` vs çok-context `CONTEXT-MAP.md`) grill'in nereye yazacağını belirler — bu yüzden A.7, A.3'ten sonra gelir.
+
 ---
 
 ## Faz B — Diagnose (kişiselleştirme için)
@@ -117,6 +134,12 @@ Supabase backend + React SPA aynı repo'da sık birlikte gelir (BaaS + SPA) — 
 ## Faz C — Recommend Path (asıl değer)
 
 Faz B'nin 2 cevabına göre **karar matrisinden** kişiselleştirilmiş yol üret.
+
+> **Grill ön-adımı (A.7'den):** Analiz/domain dökümanı var ve `CONTEXT.md` yoksa, seçilen path'in **en başına** `grill-with-docs` eklenir. Gerekçe: domain glossary + mimari kararlar (monolith vs mikroservis dahil) scaffold'dan önce netleşmeli; `scaffold-backend` türünü bu karara göre seçer.
+>
+> ```
+> grill-with-docs → (karar muğlaksa) improve-codebase-architecture → <aşağıdaki matris path'i>
+> ```
 
 ### Karar Matrisi
 
@@ -179,6 +202,8 @@ Wizard daha önce çalıştırıldıysa **nerede kaldığını filesystem'den ok
 | `docs/agents/domain.md` var | A.3 tamam |
 | `<!-- rubion:baseline-start` CLAUDE.md'de | A.5 tamam |
 | `.claude/settings.json` var ve `[rubion-baseline]` içeriyor | A.6 tamam |
+| `CONTEXT.md` veya `CONTEXT-MAP.md` var | `grill-with-docs` (A.7) tamam — domain glossary çıkarılmış |
+| Serbest `.md` analiz dökümanı var ama `CONTEXT.md` yok | `grill-with-docs` henüz çalışmamış — **öner** |
 | `docs/memory/MOC.md` var | `setup-memory` tamam |
 | `docs/memory/20-modules/*.md` (template hariç) sayısı | Kaç modül memorize edildi |
 | `docs/adr/ADR-*.md` veya `docs/memory/30-decisions/ADR-*.md` sayısı | Kaç ADR var |
