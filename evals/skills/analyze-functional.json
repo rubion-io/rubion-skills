@@ -1,0 +1,27 @@
+{
+  "skill": "analyze-functional",
+  "description": "Description trigger dogrulugu icin 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Fonksiyonel analiz yap", "should_trigger": true },
+    { "query": "Bu proje kullanıcı gözünden ne yapıyor, çıkar", "should_trigger": true },
+    { "query": "Ekran haritasını çıkar", "should_trigger": true },
+    { "query": "Hangi buton hangi endpoint'i çağırıyor, haritala", "should_trigger": true },
+    { "query": "Kullanıcı akışlarını koddan çıkar", "should_trigger": true },
+    { "query": "Bu uygulamanın sayfa haritası nedir?", "should_trigger": true },
+    { "query": "Hangi ekran hangi tabloya yazıyor?", "should_trigger": true },
+    { "query": "Ürün haritasını çıkar", "should_trigger": true },
+    { "query": "Map the user flows of this app", "should_trigger": true },
+    { "query": "Domain varlıklarını ve terim adaylarını koddan listele", "should_trigger": true },
+
+    { "query": "Projeyi uçtan uca analiz et", "should_trigger": false },
+    { "query": "Teknik borç taraması yap", "should_trigger": false },
+    { "query": "Bu PRD'yi domain'le grille koy", "should_trigger": false },
+    { "query": "PRD üret", "should_trigger": false },
+    { "query": "Auth modülünü memorize et", "should_trigger": false },
+    { "query": "Sorgu neden boş dönüyor, debug et", "should_trigger": false },
+    { "query": "Yeni React frontend kur", "should_trigger": false },
+    { "query": "OrderDetails component'i için test yaz", "should_trigger": false },
+    { "query": "Mimari iyileştirme fırsatı bul", "should_trigger": false },
+    { "query": "Planı issue'lara böl", "should_trigger": false }
+  ]
+}

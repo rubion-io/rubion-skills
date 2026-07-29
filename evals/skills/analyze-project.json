@@ -1,0 +1,27 @@
+{
+  "skill": "analyze-project",
+  "description": "Description trigger dogrulugu icin 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Projeyi analiz et", "should_trigger": true },
+    { "query": "Bu projeyi bana anlat", "should_trigger": true },
+    { "query": "Tüm projeyi analiz et", "should_trigger": true },
+    { "query": "Bu legacy projeyi uçtan uca analiz et", "should_trigger": true },
+    { "query": "Devraldığım projeyi tanımam lazım, analiz çıkar", "should_trigger": true },
+    { "query": "Proje analiz raporu üret", "should_trigger": true },
+    { "query": "PROJECT_ANALYSIS raporu oluştur", "should_trigger": true },
+    { "query": "Analyze this project end to end", "should_trigger": true },
+    { "query": "Hem teknik hem fonksiyonel analiz yap", "should_trigger": true },
+    { "query": "Bu repo'da neler olduğunu tam analiz et", "should_trigger": true },
+
+    { "query": "Sadece teknik borç tara", "should_trigger": false },
+    { "query": "Sadece ekran haritası çıkar", "should_trigger": false },
+    { "query": "Mimari iyileştirme fırsatı bul", "should_trigger": false },
+    { "query": "Profile modülünü memorize et", "should_trigger": false },
+    { "query": "rubion init", "should_trigger": false },
+    { "query": "Memory iskeleti kur", "should_trigger": false },
+    { "query": "Bu bug'ı debug et", "should_trigger": false },
+    { "query": "PRD üret", "should_trigger": false },
+    { "query": "Migration güvenli mi", "should_trigger": false },
+    { "query": "Yeni feature scaffold et", "should_trigger": false }
+  ]
+}

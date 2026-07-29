@@ -1,6 +1,6 @@
 # Skill Kataloğu
 
-> 29 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
+> 32 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
 > Detaylar için ilgili `SKILL.md` dosyasını aç.
 
 Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — senaryo bazlı path.
@@ -50,6 +50,18 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 | **[review-memory](../skills/review-memory/SKILL.md)** | Bayatlık + broken link + git log cross-check raporu. Coverage analizi. | "memory bayat mı kontrol et" |
 
 > Kurulum için önce `setup-memory` çalıştır.
+
+---
+
+## 🔬 Analyze (Mevcut Projeyi Tanı)
+
+| Skill | Ne yapar | Örnek prompt |
+|-------|----------|--------------|
+| **[analyze-project](../skills/analyze-project/SKILL.md)** | **Orchestrator** — `analyze-codebase` + `analyze-functional` zincirini otomatik çalıştırır, `PROJECT_ANALYSIS.md` üretir (yönetici özeti + memory besleme + sıradaki adımlar). Legacy devralmada ilk analiz. | "Projeyi analiz et" · "Bu projeyi bana anlat" |
+| **[analyze-codebase](../skills/analyze-codebase/SKILL.md)** | Teknik röntgen — envanter (endpoint/tablo/modül) + mimari/test/bağımlılık/güvenlik/performans taraması, `dosya:satır` kanıtlı. Read-only. | "Tech debt tara" · "Teknik envanter çıkar" |
+| **[analyze-functional](../skills/analyze-functional/SKILL.md)** | Ürün haritası — ekranlar, buton→endpoint→tablo zincirleri, kullanıcı akışları, domain terim adayları, yarım feature tespiti. | "Bu proje ne yapıyor?" · "Ekran haritası çıkar" |
+
+> Rapor tek dosyada birikir: `docs/memory/99-meta/PROJECT_ANALYSIS.md` (memory yoksa kök). Analiz makine gözlemidir — `20-modules/` / ADR / glossary'ye yazmaz, onlara **aday** besler (memorize-module, scaffold-adr, grill-with-docs tüketir).
 
 ---
 
@@ -144,8 +156,10 @@ scaffold-backend → scaffold-frontend-react → scaffold-vsa-feature → tdd-do
 ### Mevcut projeyi anlama (Collecsi gibi)
 
 ```
-setup-rubion-skills → setup-memory → memorize-module (en sık dokunulan modüller için tekrar tekrar) → improve-codebase-architecture
+setup-rubion-skills → setup-memory → analyze-project → grill-with-docs (Rol 1: haritayı CONTEXT.md + ADR'ye) → improve-codebase-architecture → memorize-module (rapordaki churn top-5 için tekrar tekrar)
 ```
+
+> `analyze-project` içeride `analyze-codebase` + `analyze-functional`'ı otomatik zincirler; sonrası öneridir, otomatik tetiklenmez.
 
 ### Plan → Implementasyon (paralel)
 
@@ -185,6 +199,12 @@ Yeni kod yazacağım
 ├─ Yeni feature (Supabase)  → scaffold-supabase-feature
 ├─ Hızlı POC                → prototype
 └─ Test ile                 → tdd-dotnet / tdd-react / tdd-react-native / tdd-edge-function
+
+Mevcut projeyi tanıyacağım
+├─ Uçtan uca (teknik + fonksiyonel) → analyze-project
+├─ Sadece teknik borç / envanter    → analyze-codebase
+├─ Sadece ürün haritası / akışlar   → analyze-functional
+└─ Tek modülün doc'u                → memorize-module
 
 Mevcut kodu değiştireceğim
 ├─ Bug var (.NET)                → diagnose-dotnet

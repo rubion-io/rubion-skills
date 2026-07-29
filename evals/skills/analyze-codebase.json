@@ -1,0 +1,27 @@
+{
+  "skill": "analyze-codebase",
+  "description": "Description trigger dogrulugu icin 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Kod tabanını analiz et", "should_trigger": true },
+    { "query": "Bu projede tech debt taraması yap", "should_trigger": true },
+    { "query": "Teknik borç analizi çıkar", "should_trigger": true },
+    { "query": "Codebase'in teknik envanterini çıkar", "should_trigger": true },
+    { "query": "Bu repo'nun teknik sağlık raporunu üret", "should_trigger": true },
+    { "query": "Endpoint ve tablo envanterini çıkar", "should_trigger": true },
+    { "query": "Hangi dosyalar sık değişiyor ama testsiz, tara", "should_trigger": true },
+    { "query": "Bağımlılıklarda güvenlik açığı ve eski paket var mı tara", "should_trigger": true },
+    { "query": "Analyze the codebase for tech debt", "should_trigger": true },
+    { "query": "Projenin teknik röntgenini çek", "should_trigger": true },
+
+    { "query": "Projeyi analiz et", "should_trigger": false },
+    { "query": "Bu proje ne yapıyor, ekran haritası çıkar", "should_trigger": false },
+    { "query": "Bu endpoint neden yavaş, debug et", "should_trigger": false },
+    { "query": "Mimari iyileştirme fırsatlarını bul", "should_trigger": false },
+    { "query": "Migration güvenli mi kontrol et", "should_trigger": false },
+    { "query": "Yeni backend iskeleti kur", "should_trigger": false },
+    { "query": "OrderService'i VSA'ya taşı", "should_trigger": false },
+    { "query": "Profile modülünü memorize et", "should_trigger": false },
+    { "query": "Memory bayat mı denetle", "should_trigger": false },
+    { "query": "PlaceOrder feature'ı scaffold et", "should_trigger": false }
+  ]
+}

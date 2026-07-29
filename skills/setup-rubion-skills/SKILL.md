@@ -97,6 +97,7 @@ ls CONTEXT.md CONTEXT-MAP.md                        # zaten grill edilmiş mi?
 - **Analiz dökümanı var, CONTEXT.md yok** → `grill-with-docs`'u **path'in ilk build adımı** olarak işaretle (Faz C). Kullanıcıya: "Şu klasörde N analiz dökümanı buldum; `grill-with-docs` ile bunları domain'e karşı grilleyip CONTEXT.md + ADR üretelim — scaffold'dan önce."
 - **CONTEXT.md zaten var** → grill tamam say, atla (gerekirse tazeleme önerilebilir).
 - **Hiç döküman yok** → grill'i yine de öner ama opsiyonel: domain konuşarak da netleşebilir.
+- **Legacy proje + hiç döküman yok** → analiz dökümanını `analyze-project` üretir: Faz C'de path'in ilk build adımı analiz olur, grill onun `PROJECT_ANALYSIS.md` §2 Fonksiyonel Harita'sını girdi alır. (`PROJECT_ANALYSIS.md` da analiz dökümanı sayılır.)
 
 > A.3'teki yerleşim kararı (tek `CONTEXT.md` vs çok-context `CONTEXT-MAP.md`) grill'in nereye yazacağını belirler — bu yüzden A.7, A.3'ten sonra gelir.
 
@@ -141,6 +142,12 @@ Faz B'nin 2 cevabına göre **karar matrisinden** kişiselleştirilmiş yol üre
 > grill-with-docs → (karar muğlaksa) improve-codebase-architecture → <aşağıdaki matris path'i>
 > ```
 
+> **Analiz ön-adımı (legacy):** Proje **legacy** ise ilk build adımı `analyze-project`'tir (`setup-memory`'den hemen sonra — rapor `docs/memory/99-meta/`'ya doğsun). Hiç analiz dökümanı olmayan legacy projede grill'in girdisini de bu rapor üretir:
+>
+> ```
+> setup-memory → analyze-project → grill-with-docs (PROJECT_ANALYSIS.md §2'yi girdi alır) → <matris path'inin kalanı>
+> ```
+
 ### Karar Matrisi
 
 | Senaryo | Sıralı path |
@@ -150,13 +157,13 @@ Faz B'nin 2 cevabına göre **karar matrisinden** kişiselleştirilmiş yol üre
 | **Zero × React** | `setup-memory` → `scaffold-frontend-react` → `tdd-react` (gün 1 disiplin) |
 | **Zero × RN** | `setup-memory` → `tdd-react-native` |
 | **Zero × Mixed (.NET + React)** | `setup-memory` → `scaffold-backend` → `scaffold-frontend-react` → `setup-precommit-dotnet` + `setup-precommit-node` → `scaffold-vsa-feature` → `tdd-dotnet` + `tdd-react` → `setup-otel-dotnet` |
-| **Legacy × .NET** | `setup-memory` → `improve-codebase-architecture` → `scaffold-adr` (adayları belgele) → `memorize-module` (top 5) → `migrate-legacy-to-vsa` (gerekirse) → `setup-precommit-dotnet` |
-| **Legacy × Supabase** | `setup-memory` → `improve-codebase-architecture` → `scaffold-adr` → `memorize-module` (top 5) → `supabase-migration-review` (mevcut migration'lara) → `harden-webhook` (webhook'lara) → `setup-precommit-node` |
-| **Legacy × React** | `setup-memory` → `memorize-module` (top 5) → `tdd-react` (test açığı kapatma) |
-| **Legacy × RN** | `setup-memory` → `memorize-module` (top 5) → `tdd-react-native` |
-| **Legacy × Mixed** | `setup-memory` → önce backend path (.NET veya Supabase), sonra frontend |
+| **Legacy × .NET** | `setup-memory` → `analyze-project` → `improve-codebase-architecture` (rapordaki mimari adaylar) → `scaffold-adr` (adayları belgele) → `memorize-module` (top 5 — §5.1 churn listesi) → `migrate-legacy-to-vsa` (gerekirse) → `setup-precommit-dotnet` |
+| **Legacy × Supabase** | `setup-memory` → `analyze-project` → `improve-codebase-architecture` → `scaffold-adr` → `memorize-module` (top 5) → `supabase-migration-review` (mevcut migration'lara) → `harden-webhook` (webhook'lara) → `setup-precommit-node` |
+| **Legacy × React** | `setup-memory` → `analyze-project` → `memorize-module` (top 5) → `tdd-react` (test açığı — churn × testsiz listesinden) |
+| **Legacy × RN** | `setup-memory` → `analyze-project` → `memorize-module` (top 5) → `tdd-react-native` |
+| **Legacy × Mixed** | `setup-memory` → `analyze-project` (tüm stack tek raporda) → önce backend path (.NET veya Supabase), sonra frontend |
 
-> `scaffold-backend` türü (monolith/mikroservis) kullanıcıya sorar. `scaffold-frontend-react` çekirdeği kurar, opsiyonelleri (shadcn/Zustand/Playwright) sorar — her ikisi de sadece **sıfır** projede; legacy'de iskelet zaten var.
+> `scaffold-backend` türü (monolith/mikroservis) kullanıcıya sorar. `scaffold-frontend-react` çekirdeği kurar, opsiyonelleri (shadcn/Zustand/Playwright) sorar — her ikisi de sadece **sıfır** projede; legacy'de iskelet zaten var. `analyze-project` ise yalnızca **legacy** path'lerde — sıfır projede analiz edilecek kod yok.
 
 ### Yol Haritasını Sun
 
@@ -167,11 +174,13 @@ Faz B'nin 2 cevabına göre **karar matrisinden** kişiselleştirilmiş yol üre
 
 1. ✅ setup-rubion-skills           ← buradayız
 2. ⏭ setup-memory                   memory iskeleti — knowledge başlangıcı
-3. ⏭ improve-codebase-architecture  neyi düzeltmeliyiz? 3-4 aday üretir
-4. ⏭ scaffold-adr × N               (3) çıktısındaki her adayı ADR yap
-5. ⏭ memorize-module × 5            en sık dokunulan modüller (git log ile tespit)
-6. ⏭ migrate-legacy-to-vsa          (3) önerirse Strangler Fig
-7. ⏭ setup-precommit-dotnet         disiplin (son — refactor öncesi koymak gereksiz friction)
+3. ⏭ analyze-project                teknik + fonksiyonel analiz → PROJECT_ANALYSIS.md
+4. ⏭ grill-with-docs                (A.7) haritayı CONTEXT.md + ADR'lere resmileştir
+5. ⏭ improve-codebase-architecture  rapordaki mimari adayları grilling'le kararlaştır
+6. ⏭ scaffold-adr × N               kararları ADR yap
+7. ⏭ memorize-module × 5            PROJECT_ANALYSIS.md §5.1 churn listesinden
+8. ⏭ migrate-legacy-to-vsa          (5) önerirse Strangler Fig
+9. ⏭ setup-precommit-dotnet         disiplin (son — refactor öncesi koymak gereksiz friction)
 
 Sıradaki: setup-memory.
 Şimdi çalıştırayım mı? [evet/hayır/atla]
@@ -204,6 +213,8 @@ Wizard daha önce çalıştırıldıysa **nerede kaldığını filesystem'den ok
 | `.claude/settings.json` var ve `[rubion-baseline]` içeriyor | A.6 tamam |
 | `CONTEXT.md` veya `CONTEXT-MAP.md` var | `grill-with-docs` (A.7) tamam — domain glossary çıkarılmış |
 | Serbest `.md` analiz dökümanı var ama `CONTEXT.md` yok | `grill-with-docs` henüz çalışmamış — **öner** |
+| `docs/memory/99-meta/PROJECT_ANALYSIS.md` (veya kökte) var | `analyze-project` tamam — frontmatter `analyzed_commit` HEAD'den çok gerideyse tazeleme öner |
+| Kökte `PROJECT_ANALYSIS.md` var ama `docs/memory/` kurulu | Raporu `99-meta/`'ya taşımayı öner (+ MOC.md linki) |
 | `docs/memory/MOC.md` var | `setup-memory` tamam |
 | `docs/memory/20-modules/*.md` (template hariç) sayısı | Kaç modül memorize edildi |
 | `docs/adr/ADR-*.md` veya `docs/memory/30-decisions/ADR-*.md` sayısı | Kaç ADR var |

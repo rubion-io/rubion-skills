@@ -18,6 +18,20 @@ Tek bir modülün **knowledge memory**'sini üretir. Otonom analiz değil — ku
 
 ## Süreç
 
+### 0. Hızlandırıcı — PROJECT_ANALYSIS.md (varsa)
+
+`docs/memory/99-meta/PROJECT_ANALYSIS.md` (yoksa repo kökü) var mı bak. Varsa bu, [`analyze-project`](../analyze-project/SKILL.md) çıktısıdır — dört yerde kullan:
+
+- **Modül seçimi:** kullanıcı modül belirtmediyse §5.1'deki churn top-5 adaylarını öner.
+- **Kapsam + dosya listesi:** §3 envanterinden modülün endpoint/tablo/dosya listesini al — adım 3'teki "hangi 3-5 dosyayı okuyayım" keşfini kısaltır.
+- **Soruları keskinleştir:** adım 2'nin sorularını raporun o modül hakkındaki bulgularına yönelt. Örn. §4'te "OrderService, Inventory'ye senkron çağrı yapıyor" bulgusu varsa Soru 3/5'i şöyle sor: "Analiz senkron çağrı gösteriyor — bilinçli tercih mi, taşınacak borç mu?" Kullanıcının cevabı tam da makinenin çıkaramadığı bilgiyi yakalar.
+- **Taslak ön-doldurma:** "İlişkiler" ve "İlgili Kararlar" bölümlerini §2.4 / §5.3'ten taslakla — kullanıcı onaylar/düzeltir.
+
+İki koruma kuralı:
+
+1. **Bayatlık:** frontmatter `analyzed_commit` HEAD'den çok gerideyse raporu yalnızca ipucu say; adım 3'ün güncel koddan doğrulaması **hiçbir durumda atlanmaz** — rapor keşfi hızlandırır, gerçeğin kaynağı koddur.
+2. **Opsiyonel:** rapor yoksa normal akışa devam — önkoşul değil, hızlandırıcı.
+
 ### 1. Modül adını ve kapsamı belirle
 
 Kullanıcının prompt'undan modül adı çıkar (örn: "Profile modülünü memorize et" → `profile`).

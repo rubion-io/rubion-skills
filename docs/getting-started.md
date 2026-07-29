@@ -67,8 +67,9 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | # | Aşama | Skill | Çıktı |
 |---|---|---|---|
 | 0 | **Skill kütüphanesini bağla** | [`skills/setup-rubion-skills`](../skills/setup-rubion-skills/SKILL.md) → **Jira seç** | `docs/agents/issue-tracker.md` (Jira), `JIRA_*` env vars kurulumu |
-| 1 | **Mevcut durumu kavra** | [`adapted/improve-codebase-architecture`](../adapted/improve-codebase-architecture/SKILL.md) — Keşfet fazı | Shallow modüller, eksik seam'ler, sürtünme noktaları listesi |
-| 2 | **Domain'i dokümante et** (Rol 1) | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | Retrofit `CONTEXT.md` — 1 yıllık projede sözlük muhtemelen kafalardadır, dışarı çıkar |
+| 0b | **Projeyi uçtan uca analiz et** | [`skills/analyze-project`](../skills/analyze-project/SKILL.md) — içeride `analyze-codebase` + `analyze-functional`'ı otomatik zincirler | `PROJECT_ANALYSIS.md`: teknik envanter + sağlık bulguları + ürün haritası — sonraki tüm adımların hammaddesi |
+| 1 | **Mevcut durumu kavra** | [`adapted/improve-codebase-architecture`](../adapted/improve-codebase-architecture/SKILL.md) — Keşfet fazı, rapordaki mimari adaylarla (§4-A) başlar | Shallow modüller, eksik seam'ler, sürtünme noktaları listesi |
+| 2 | **Domain'i dokümante et** (Rol 1 — girdi: `PROJECT_ANALYSIS.md` §2 fonksiyonel harita) | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | Retrofit `CONTEXT.md` — 1 yıllık projede sözlük muhtemelen kafalardadır, dışarı çıkar |
 | 3 | **Kritik kararları ADR'le** | (grill-with-docs ADR teklif eder) | `docs/adr/000X-*.md` — geçmişte alınmış sözsüz kararlar yazılı hale |
 | 4 | Pre-commit eksik mi? | [`skills/setup-precommit-dotnet`](../skills/setup-precommit-dotnet/SKILL.md) (kurulu değilse) | Husky.Net retrofit |
 | 5 | Observability eksik mi? | [`skills/setup-otel-dotnet`](../skills/setup-otel-dotnet/SKILL.md) (kurulu değilse) | OTel retrofit — büyük projede 1-2 günlük iş |
@@ -93,6 +94,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | Boyut | Senaryo 1 (Sıfır + GitHub) | Senaryo 2 (1 yıllık + Jira) |
 |---|---|---|
 | **İlk skill** | `grill-with-docs` (domain üret) | `setup-rubion-skills` (Jira bağla) |
+| **`analyze-project`** | Yok — analiz edilecek kod yok | İlk build adımı (0b) — teknik + fonksiyonel harita |
 | **Ana faz** | İnşa | Anlama + boşluk doldurma |
 | **`improve-codebase-architecture`** | Karar aracı (önceden) | Refactor adayları (sonradan) |
 | **`migrate-legacy-to-vsa`** | Yok | Var (legacy mevcutsa) |
@@ -139,6 +141,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 [ ] JIRA_BASE_URL, JIRA_EMAIL, JIRA_API_TOKEN, JIRA_PROJECT_KEY env vars setlendi
 [ ] setup-rubion-skills çalıştırıldı → docs/agents/ kuruldu (Jira adapter)
 [ ] curl ile Jira API erişimi doğrulandı (myself endpoint)
+[ ] analyze-project çalıştırıldı → PROJECT_ANALYSIS.md (teknik + fonksiyonel harita)
 [ ] improve-codebase-architecture "Keşfet" fazı çalıştırıldı → ilk sürtünme listesi
 [ ] grill-with-docs ile mevcut domain dili dökümantasyona indirildi
 [ ] (Eksikse) setup-precommit-dotnet ve setup-otel-dotnet retrofit
@@ -150,6 +153,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 
 | Belirti | Atlanan Adım |
 |---|---|
+| Devralınan projede ne olduğu bilinmiyor, README gerçeği yansıtmıyor | Senaryo 2 Aşama 0b (`analyze-project`) |
 | Geliştiriciler aynı şeyi farklı isimle adlandırıyor | Senaryo 1/2 Aşama 1-3 (`grill-with-docs` + `CONTEXT.md`) |
 | Yeni feature başlatınca "nereye yazacağım?" sorusu | Senaryo 1 Aşama 8-10 (`to-prd` + `scaffold-vsa-feature`) |
 | Test'ler refactor'da kırılıyor | `tdd-dotnet` "davranışı test et" disiplinine geri dön |
