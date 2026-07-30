@@ -1,0 +1,27 @@
+{
+  "skill": "design-mockup",
+  "description": "Description trigger dogruluğu için 20 query (10 pos + 10 neg)",
+  "queries": [
+    { "query": "Sipariş detay sayfası için mockup yap", "should_trigger": true },
+    { "query": "Bu ekran nasıl görünsün, tasarım taslağı çıkar", "should_trigger": true },
+    { "query": "Yeni dashboard sayfasını tasarla, 3 varyant istiyorum", "should_trigger": true },
+    { "query": "Mobil app fikrimiz var, ekranların mockup'ını üret", "should_trigger": true },
+    { "query": "Mevcut projede profil sayfasının yeni tasarımını dummy data ile yap", "should_trigger": true },
+    { "query": "Login ekranı için hi-fi mockup hazırla", "should_trigger": true },
+    { "query": "Henüz proje yok, fikir aşamasındayız — HTML mockup çıkar", "should_trigger": true },
+    { "query": "Tasarımcı için checkout akışı taslağı oluştur", "should_trigger": true },
+    { "query": "Şu listeleme sayfasını backend'e bağlanmadan tasarla", "should_trigger": true },
+    { "query": "Saha ekibi uygulaması nasıl görünmeli, mockup istiyorum", "should_trigger": true },
+
+    { "query": "OrderList component için test yaz", "should_trigger": false },
+    { "query": "erp-web adında React frontend kur", "should_trigger": false },
+    { "query": "Bu pricing kuralı doğru mu, prototip yap", "should_trigger": false },
+    { "query": "React Native Expo uygulaması kur", "should_trigger": false },
+    { "query": "Bu tasarımı eleştir, usability feedback ver", "should_trigger": false },
+    { "query": "Onaylanan mockup'ı gerçek sayfaya dönüştür, TDD ile", "should_trigger": false },
+    { "query": "Endpoint contract'ı doğru mu, minimal API prototipi kur", "should_trigger": false },
+    { "query": "shadcn button component ekle (mevcut projede)", "should_trigger": false },
+    { "query": "Sayfanın erişilebilirlik denetimini yap", "should_trigger": false },
+    { "query": "PlaceOrder için VSA feature ekle", "should_trigger": false }
+  ]
+}

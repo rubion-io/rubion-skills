@@ -41,6 +41,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | 1 | **Domain anla** (Rol 1 — analiz dökümanları varsa onları besle) | [`adapted/grill-with-docs`](../adapted/grill-with-docs/SKILL.md) | İlk `CONTEXT.md` (terimler, sınırlar, tech kararlar) + ADR'ler |
 | 2 | **Mimari kararı netleştir** | [`adapted/improve-codebase-architecture`](../adapted/improve-codebase-architecture/SKILL.md) — Monolith → Mikroservis karar ağacı bölümü | Bounded context checklist sonucu, monolith/mikroservis kararı, ilk ADR'ler |
 | 3 | (Belirsizse) Kritik logic'i dene | [`adapted/prototype`](../adapted/prototype/SKILL.md) — Backend CLI veya API mode | Throwaway POC + kararın commit/ADR'sı, sonra silinir |
+| 3b | (UI fikri varsa) Görselleştir | [`skills/design-mockup`](../skills/design-mockup/SKILL.md) — Mod 2 (greenfield HTML) | Tek dosya mockup + `design-tokens.md` — token'lar 5b'de shadcn temasına girer |
 | 4 | **Issue tracker bağla** | [`skills/setup-rubion-skills`](../skills/setup-rubion-skills/SKILL.md) → **GitHub seç** | `docs/agents/issue-tracker.md` (GitHub), `docs/agents/domain.md` |
 | 5 | Backend iskelet | [`skills/scaffold-backend`](../skills/scaffold-backend/SKILL.md) — monolith mi mikroservis mi diye sorar | Solution + VSA düzeni + Docker (net10.0) |
 | 5b | Frontend iskelet (varsa) | [`skills/scaffold-frontend-react`](../skills/scaffold-frontend-react/SKILL.md) | Vite + Router + TanStack Query + test çekirdeği |
@@ -83,7 +84,7 @@ Jira Cloud kullanılacaksa        → Senaryo 2 default
 | 11 | DB değişikliği | [`skills/ef-core-migration-review`](../skills/ef-core-migration-review/SKILL.md) | 1 yıllık projede büyük tablo var → CONCURRENTLY önemli |
 | 12 | Bug / perf | [`adapted/diagnose-dotnet`](../adapted/diagnose-dotnet/SKILL.md) | EF Core N+1, DLX, dotnet-trace |
 | 13 | Refactor zamanı | [`adapted/improve-codebase-architecture`](../adapted/improve-codebase-architecture/SKILL.md) — Adaylar fazı | Numaralı deepening önerileri |
-| 14 | UI iyileştirme dene | [`adapted/prototype`](../adapted/prototype/SKILL.md) → Frontend variants | A/B/C variant'lar, ekibe seçtir |
+| 14 | UI iyileştirme dene | [`skills/design-mockup`](../skills/design-mockup/SKILL.md) — Mod 1 (proje içi, dummy data) → etkileşim sorusu doğarsa [`adapted/prototype`](../adapted/prototype/SKILL.md) | `design/*` branch'te `/_design` taslağı, A/B/C variant, ekibe seçtir |
 
 **Kritik nokta:** Aşama 1-3 (anlama + dokümantasyon) atlanırsa, her sonraki adım yarım iş olur. 1 yıllık projede gerçek mimari öğrenme süresi 1-2 hafta — bunu kabul et, kestirme arama.
 

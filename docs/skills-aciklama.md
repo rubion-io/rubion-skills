@@ -1,6 +1,6 @@
 # Rubion Skill'leri — Sözlü ve Teknik Açıklama
 
-> Bu doküman, `skills/` (yerli) ve `adapted/` (upstream'den türetilmiş) altındaki **32 skill'in** her birini iki katmanda anlatır:
+> Bu doküman, `skills/` (yerli) ve `adapted/` (upstream'den türetilmiş) altındaki **33 skill'in** her birini iki katmanda anlatır:
 >
 > - **🗣️ Sözlü** — bir ekip arkadaşına anlatır gibi: bu skill ne işe yarar, ne zaman elini uzatırsın?
 > - **⚙️ Teknik** — motor kapağının altı: hangi adımları izler, ne üretir, hangi stack'e dokunur?
@@ -20,6 +20,7 @@
 - [🔍 Diagnose & Review — Teşhis ve denetim](#-diagnose--review--teşhis-ve-denetim)
 - [🔄 Refactor](#-refactor)
 - [🧪 Prototype](#-prototype)
+- [🎨 Design](#-design)
 - [🎯 Orchestrate](#-orchestrate)
 - [📝 Plan & Document](#-plan--document)
 - [Terimler sözlüğü](#terimler-sözlüğü)
@@ -274,7 +275,18 @@ Var olan kodda sorun avlayan ve riskli değişiklikleri kapıda durduran skill'l
 
 **🗣️ Sözlü.** "Şu fikir/tasarım tutuyor mu, hızlıca bir deneyelim." Cila, test, mimari kaygısı olmadan tek amaçlı bir prototip kurar. Önemli fark: bu kod **silinecek** — o yüzden kalite baseline'ından muaftır.
 
-**⚙️ Teknik.** Dört moddan biriyle çalışır: Backend CLI, Minimal API, Vite UI variants, Expo. Ortak kurallar throwaway doğasına göre gevşetilmiştir. Tamamlandığında çıktının atılacağını açıkça işaretler. **Production kod için değildir** — bu, baseline'dan bilinçli muafiyet taşıyan tek skill'dir.
+**⚙️ Teknik.** Dört moddan biriyle çalışır: Backend CLI, Minimal API, Vite UI variants, Expo. Ortak kurallar throwaway doğasına göre gevşetilmiştir. Tamamlandığında çıktının atılacağını açıkça işaretler. **Production kod için değildir** — baseline'dan bilinçli muafiyet taşır (`design-mockup` ile birlikte).
+
+---
+
+## 🎨 Design
+
+### `design-mockup` — Tasarımcı için UI mockup
+*stack: react, react-native, expo, tailwind, shadcn, html*
+
+**🗣️ Sözlü.** Tasarımcının "bu ekran nasıl görünmeli?" sorusu için. Mevcut bir projede çalışıyorsan taslak sayfayı doğrudan projenin gerçek component'leriyle kurar — ama backend'e hiç dokunmadan, tüm veri sahte (fixture). Henüz proje yoksa fikri tek bir HTML dosyasında görselleştirir; tarayıcıda açılır, kurulum istemez. Her iki durumda da varyantlar (`?variant=a|b|c`) arasında gezip karşılaştırabilirsin.
+
+**⚙️ Teknik.** Modu kendisi tespit eder: repo'da frontend varsa **Mod 1** (`design/*` branch + `src/_design/` klasörü + DEV-guard'lı `/_design` route'u; data `fixtures.ts`'te, fetch/TanStack Query yasak), yoksa **Mod 2** (tek dosya HTML, dış bağımlılık sıfır, CSS token'ları shadcn adlarıyla → onaylanınca `scaffold-frontend-react` temasına kopyalanır; mobil fikirde 375×812 device-frame). Çıktı disiplini: gerçekçi Türkçe içerik, boş/loading durumları, a11y minimumu, `NOTES.md`'de component-eşleme handoff tablosu, greenfield'da `design-tokens.md`. **Promote-or-delete:** karar sonrası taslak ya `tdd-react`/`tdd-react-native` ile gerçek koda terfi eder ya silinir. Baseline'dan muaf (test/cila yok).
 
 ---
 

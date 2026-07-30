@@ -1,6 +1,6 @@
 # Skill Kataloğu
 
-> 32 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
+> 33 skill, kategorize. Her satır: ne yapar · ne zaman tetikle · örnek prompt.
 > Detaylar için ilgili `SKILL.md` dosyasını aç.
 
 Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — senaryo bazlı path.
@@ -94,6 +94,16 @@ Yeni başlıyorsan: **[docs/getting-started.md](./getting-started.md)** — sena
 
 ---
 
+## 🎨 Design
+
+| Skill | Ne yapar | Örnek prompt |
+|-------|----------|--------------|
+| **[design-mockup](../skills/design-mockup/SKILL.md)** | Tasarımcı için UI mockup. Mod 1: mevcut projede gerçek shadcn/RN component'leriyle dummy-data taslak (`design/*` branch + `/_design` route, backend'siz). Mod 2: greenfield fikir için tek dosya HTML mockup + design token çıktısı. **Baseline'dan muaf.** | "Sipariş detay sayfası için mockup yap" · "Mobil app fikri — 3 varyant tasarla" |
+
+> Sınır: etkileşim/gesture sorusu → `prototype`; onaylanan tasarımın implementasyonu → `tdd-react` / `tdd-react-native`; eleştiri/a11y → `design:*` plugin.
+
+---
+
 ## 🎯 Orchestrate
 
 | Skill | Ne yapar | Örnek prompt |
@@ -153,6 +163,15 @@ Tek prompt: "erp-web React frontend iskeleti kur"
 scaffold-backend → scaffold-frontend-react → scaffold-vsa-feature → tdd-dotnet + tdd-react
 ```
 
+### Tasarım → implementasyon
+
+```
+design-mockup → (karar: promote) → tdd-react / tdd-react-native
+design-mockup (greenfield) → scaffold-frontend-react (token'lar temaya) → tdd-react
+```
+
+Tek prompt: "Sipariş detay sayfası için mockup yap" — karar sonrası "Variant A'yı gerçek sayfaya dönüştür"
+
 ### Mevcut projeyi anlama (Collecsi gibi)
 
 ```
@@ -198,6 +217,7 @@ Yeni kod yazacağım
 ├─ Yeni feature (.NET)      → scaffold-vsa-feature
 ├─ Yeni feature (Supabase)  → scaffold-supabase-feature
 ├─ Hızlı POC                → prototype
+├─ UI mockup / tasarım      → design-mockup
 └─ Test ile                 → tdd-dotnet / tdd-react / tdd-react-native / tdd-edge-function
 
 Mevcut projeyi tanıyacağım

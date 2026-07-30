@@ -4,6 +4,16 @@ Tüm önemli değişiklikler bu dosyaya işlenir. Format: [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added (Hafta 13 — Design Mockup)
+- `skills/design-mockup/` (yeni yerli skill): Tasarımcı için UI mockup üretimi — repo'da ilk tasarımcı-odaklı skill. İki mod, tespit otomatik (repo'da frontend var mı):
+  - **Mod 1 — Proje İçi:** mevcut projenin gerçek shadcn/RN component'leri + temasıyla taslak sayfa/ekran. Yerleşim konvansiyonu: `design/<konu>` branch + `src/_design/<taslak>/` (web) veya `app/_design/` (Expo) + DEV-guard'lı `/_design/*` route (prod'a sızmaz). **Backend'e sıfır dokunuş** — tüm veri `fixtures.ts`'te hardcoded, `fetch`/TanStack Query/supabase import yasak; promote = fixture'ı hook ile değiştirmek.
+  - **Mod 2 — Greenfield:** proje yokken tek dosya HTML mockup (dış bağımlılık sıfır, offline açılır), CSS token'ları **shadcn adlarıyla** (`--primary`, `--radius`...) → onaylanınca `scaffold-frontend-react` temasına kopyala-yapıştır köprü. Mobil fikirde 375×812 device-frame. `design-tokens.md` mockup silinse bile yaşayan çıktı.
+  - Ortak disiplin: `?variant=a|b|c` varyant deseni (prototype'tan), gerçekçi Türkçe içerik (lorem ipsum yasak), boş/uzun/loading durumları zorunlu, a11y minimumu (kontrast 4.5:1, touch 44px, focus), `NOTES.md`'de component-eşleme handoff tablosu, **promote-or-delete** (design/* branch ≤ 2 hafta). `prototype` gibi baseline cila muafiyeti var.
+  - Sınır tablosu: etkileşim/gesture → `prototype`; implementasyon → `tdd-react`/`tdd-react-native`; iskelet → `scaffold-frontend-react`; eleştiri/a11y denetimi → `design:*` plugin. Web/mobil **tek skill'de** (ayrı skill değil) — token/marka tutarlılığı + repo'nun mod-tabanlı skill konvansiyonu (prototype, scaffold-backend) gerekçesiyle.
+  - Örnekler: `examples/01-inproject-order-detail.md` (Mod 1 — shadcn + fixture + DEV-guard route + handoff), `examples/02-greenfield-mobile-html.md` (Mod 2 — device-frame HTML + token çıktısı + RN eşlemeli handoff).
+- Eval: `evals/skills/design-mockup.json` (10 pos + 10 neg; negatifler prototype/tdd-react/scaffold-frontend-react/design-critique ayrımını test eder).
+- Doküman: `docs/skills-catalog.md` (32→33, yeni 🎨 Design kategorisi + "Tasarım → implementasyon" chain'i + karar ağacına "UI mockup / tasarım" dalı), `docs/skills-aciklama.md` (32→33 + 🎨 Design bölümü), `README.md` (skill sayısı).
+
 ### Added (Hafta 12 — Proje Analiz Üçlüsü)
 - 3 yeni yerli skill (`skills/`): mevcut/legacy projeyi devralırken çalışan analiz üçlüsü.
   - `analyze-codebase`: Teknik röntgen — envanter (endpoint/tablo/sayfa/modül/entegrasyon) + 4 boyutlu sağlık taraması (mimari, test borcu, bağımlılık/güvenlik, performans/hata yönetimi). Her bulgu `dosya:satır` kanıtlı, Önem (Critical/High/Medium/Low) + Çaba (S/M/L) etiketli. Churn × testsiz kesişimi + "Kötü Görünüyor Ama Sorun Değil" bölümü. Read-only. `PROJECT_ANALYSIS.md` §3-4'ü yazar. Örnek: `examples/01-legacy-dotnet-erp.md`.
